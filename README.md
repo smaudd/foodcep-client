@@ -35,8 +35,6 @@ Create a .env file on the root directory with
 
 If you don't use `PORT` 3000. You'll need to change it on the `proxy.config.json` base url.
 
-If you run `nodemon index.js` to start the server, .env will not be available. Instead use `nodemon server/index.js` from the root directory
 
-This app is not ready for production!
 
 
