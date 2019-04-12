@@ -1,0 +1,19 @@
+<form [formGroup]="editForm" (ngSubmit)="editRegistre(editForm.value)">
+    
+        <mat-form-field>
+            <input matInput placeholder="{{ 'INGREDIENTS.NAME' | translate }}" formControlName="name" [errorStateMatcher]="matcher" autocomplete="off">
+            <mat-error *ngIf="name.hasError('required')"><a translate>INGREDIENTS.NAME-REQUIRED</a></mat-error>
+            <mat-error *ngIf="name.hasError('pattern')"><a translate>INGREDIENTS.ONLY-LETTERS</a></mat-error>
+        </mat-form-field>
+        <div align="end">
+            <button type="submit" mat-icon-button *ngIf="editForm.valid && editForm.dirty">
+                <mat-icon color="accent">save</mat-icon>
+            </button>
+            <button type="button" mat-icon-button (click)="openDeleteDialog(category)"> 
+                <mat-icon color="warn">delete</mat-icon>
+            </button>
+        </div>
+</form>
+
+    
+ 

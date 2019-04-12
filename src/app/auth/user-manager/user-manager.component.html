@@ -1,0 +1,41 @@
+<mat-toolbar class="mat-elevation-z2" color="warn">
+  <span translate>AUTH.USERS</span>
+  <span class="spacer">
+      <div align="end" *ngIf="isOpenProfile">
+          <button mat-button (click)="toggleProfile()">
+              Close
+          <mat-icon>clear</mat-icon>
+          </button>
+      </div>
+  </span>
+</mat-toolbar>
+<mat-progress-bar *ngIf="loadingSubject$ | async" mode="indeterminate" color="accent"></mat-progress-bar> 
+
+<div *ngIf="!isOpenProfile; else profileComponent" class="container" [hidden]="loadingSubject$ | async">
+    <table mat-table [dataSource]="usersSubject$ | async" class="mat-elevation-z2">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef><a translate>AUTH.NAME</a></th>
+          <td mat-cell *matCellDef="let user"> {{ user.name }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef><a translate>AUTH.EMAIL</a></th>
+          <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef><a translate>AUTH.ROLE</a></th>
+          <td mat-cell *matCellDef="let user"> {{ user.role | titlecase }} </td>
+        </ng-container>
+       
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="user-row"  (click)="loadUser(row)"></tr>
+      </table>
+      <br>
+</div>
+
+<ng-template #profileComponent>
+      <app-user-profile [isAdmin]="true"></app-user-profile>
+</ng-template>
+

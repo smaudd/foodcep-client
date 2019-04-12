@@ -1,0 +1,11 @@
+mat-form-field {
+    width: calc(100% - 1rem);
+}
+
+div {
+    margin: 5px auto;
+    margin-top: 20px;
+    padding: 5px;
+}
+
+

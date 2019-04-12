@@ -1,0 +1,60 @@
+<div fxLayout="column" [@fadeInOut]>
+    
+    <app-dish-info [dishInfo]="dishInfo" (setInfo)="setInfo($event)" (toggler)="infoToggler($event)"></app-dish-info>
+    <br>
+    
+    <div [hidden]="hideOverview || data$.value.length > 0">
+      <small><a translate>DISHES.START</a></small>
+    </div>
+  <div [hidden]="hideOverview || data$.value.length === 0 || !dishInfo" [@fadeInOut]>
+    <table mat-table [dataSource]="data$ | async" multiTemplateDataRows class="mat-elevation-z2">
+        <!-- Column Cells -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>DISHES.NAME</a></th>
+          <td mat-cell *matCellDef="let ingredient">{{ ingredient.name }}</td>
+          <td mat-footer-cell *matFooterCellDef><strong translate>DISHES.TOTAL</strong></td>
+        </ng-container>
+    
+        <ng-container matColumnDef="gPP">
+            <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>DISHES.GPP</a></th>
+            <td mat-cell *matCellDef="let ingredient">{{ ingredient.gPP }} gr</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+    
+        <ng-container matColumnDef="pPP">
+            <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>DISHES.PPP</a></th>
+            <td mat-cell *matCellDef="let ingredient">{{ ingredient.pPP | currency:'EUR' }}</td>
+            <td mat-footer-cell *matFooterCellDef><strong> {{ total | currency:'EUR' }}</strong></td>
+        </ng-container>
+    
+
+        <!-- Expanded content -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let ingredient" [attr.colspan]="columnsToDisplay.length">
+            <div class="ingredient-detail" [@detailExpand]="ingredient === expandedIngredient ? 'expanded' : 'collapsed'">
+              <div class="edit-box">
+                  <br>
+                  <app-ingredient-box [ingredient]="ingredient" (setGrams)="setGrams($event)" (removeIngredient)="removeIngredient($event)"></app-ingredient-box>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let ingredient; columns: columnsToDisplay;"
+            class="ingredient-row"
+            [class.example-expanded-row]="expandedIngredient === ingredient"
+            (click)="expandedIngredient = expandedIngredient === ingredient ? null : ingredient;">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="ingredient-detail-row"></tr>
+        <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
+    
+        <br>
+      </table>
+      <br>
+      <div align="end" *ngIf="data$.value.length > 0">
+          <button mat-button type="submit" (click)="submitDish()"><a translate>DISHES.SAVE</a></button>
+      </div>
+    </div>
+
+    <app-ingredients-list (add)="addIngredient($event)" [hidden]="hideOverview"></app-ingredients-list>

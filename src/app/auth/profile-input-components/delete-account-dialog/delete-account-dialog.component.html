@@ -1,0 +1,25 @@
+<div *ngIf="!done">
+  <h4 translate>AUTH.ARE-YOU-SURE</h4>
+  <mat-divider></mat-divider>
+  <br>
+  <div fxLayoutGap="10px">
+    <mat-form-field *ngIf="!data.isAdmin">
+      <input matInput type="password" placeholder="{{ 'AUTH.PASSWORD' | translate }}" [formControl]="password">
+      <mat-error *ngIf="!password.valid"><a translate>AUTH.WRONG-PWD</a></mat-error>
+    </mat-form-field>
+    <div fxLayout="row">
+      <button mat-button color="warn" *ngIf="!data.isAdmin; else admin" (click)="deleteAccount(password.value)"><a translate>AUTH.DELETE</a></button>
+      <ng-template #admin>
+        <button mat-button color="warn" (click)="deleteAccount()"><a translate>AUTH.DELETE</a></button>
+      </ng-template>
+      <button mat-button color="primary" (click)="dialogRef.close()"><a translate>AUTH.CANCEL</a></button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="done">
+  <h4 translate>AUTH.DELETED</h4>
+  <mat-divider></mat-divider>
+  <br>
+  <p translate>AUTH.WILL-LOGOUT</p>
+</div>

@@ -1,0 +1,17 @@
+.dish-card {
+    max-width: 300px;
+    max-height: 150px;
+    margin: 2em;
+  } 
+
+img {
+  max-height: 100px;
+  max-width: 100px;
+}
+
+div {
+  justify-content: center;
+}
+
+
+ 

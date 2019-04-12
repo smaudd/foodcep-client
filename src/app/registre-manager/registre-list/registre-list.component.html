@@ -1,0 +1,79 @@
+<div [@fadeInOut]>
+<h4 *ngIf="emptyCollection"><a translate>INGREDIENTS.EMPTY</a></h4>
+
+<div [hidden]="emptyCollection">        
+        <div fxLayout="row">
+            <mat-form-field class="searchBar">
+                <input matInput placeholder="{{ 'INGREDIENTS.SEARCH' | translate }}" [formControl]="search" autocomplete="off" #filter>
+            </mat-form-field>
+            <div align="end" class="export">
+                <button mat-button (click)="pdf()"><a translate>INGREDIENTS.PDF</a></button>
+            </div>
+        </div>
+    <div class="cont">
+      <div class="table-container">
+        <div *ngIf="loadingSubject$ | async" class="loading-shade" [@fadeInOut]>
+            <mat-progress-bar mode="query" color="accent"></mat-progress-bar>
+        </div>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows [@fadeInOut] *ngIf="!emptyCollection"
+         class="mat-elevation-z2" matSort >
+            <!-- Column Cells -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.NAME</a></th>
+              <td mat-cell *matCellDef="let ingredient">{{ ingredient.name }}</td>
+              <td mat-footer-cell *matFooterCellDef><b>Not Found</b></td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.CATEGORY</a></th>
+                <td mat-cell *matCellDef="let ingredient">{{ ingredient.category }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+
+            <ng-container matColumnDef="pPK">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.PPK</a></th>
+                <td mat-cell *matCellDef="let ingredient">{{ ingredient.pPK | currency:'EUR' }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="finalPrice">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.COST</a></th>
+                <td mat-cell *matCellDef="let ingredient">{{ ingredient.finalPrice | currency:'EUR' }}</td>
+                <td mat-footer-cell *matFooterCellDef>
+                </td>
+            </ng-container>
+
+            <!-- Expanded content -->
+            <ng-container matColumnDef="expandedDetail" [@fadeInOut]>
+              <td mat-cell *matCellDef="let ingredient" [attr.colspan]="columnsToDisplay.length" [hidden]="!expandedIngredient">
+                <div class="ingredient-detail" fxLayout="column"
+                    [@detailExpand]="ingredient == expandedIngredient ? 'expanded' : 'collapsed'">
+                  <div class="edit-box">
+                    <br>
+                      <div align="end">
+                          <button mat-icon-button (click)="cancel()" color="primary">
+                              <mat-icon>clear</mat-icon>
+                          </button>
+                      </div>
+                      <app-edit-registre [ingredient]="ingredient" [categories]="categoriesSubject$ | async">
+                      </app-edit-registre>
+                  </div>
+                </div>
+              </td>
+            </ng-container>            
+          
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay" [hidden]="expandedIngredient"></tr>
+            <tr mat-row *matRowDef="let ingredient; columns: columnsToDisplay;"
+                class="ingredient-row" [hidden]="notFound || expandedIngredient"
+                [class.example-expanded-row]="expandedIngredient === ingredient"
+                (click)="expandedIngredient = expandedIngredient === ingredient ? null : ingredient; hideUnexpanded(ingredient)">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="ingredient-detail-row" [hidden]="notFound"></tr>
+            <tr mat-footer-row *matFooterRowDef="columnsToDisplay" [hidden]="!notFound"></tr>
+        </table>
+      </div>  
+    </div>
+    <mat-paginator [pageSize]="5" (page)="handlePaginator($event)" [hidden]="expandedIngredient !== null"></mat-paginator>
+    </div>
+        <app-add-registre [ingredients]="dataSource"></app-add-registre>
+    </div>

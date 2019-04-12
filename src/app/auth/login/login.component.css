@@ -1,0 +1,11 @@
+h2 {
+    font-family: Roboto
+}
+
+.login-card {
+    max-width: 500px;
+    padding: 40px;
+    margin: 20px auto;
+}
+
+

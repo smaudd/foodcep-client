@@ -1,0 +1,37 @@
+<div>
+  <form [formGroup]="editForm" (ngSubmit)="editIngredient(editForm.value)">
+      <mat-form-field>
+        <input matInput placeholder="{{ 'INGREDIENTS.NAME' | translate }}" formControlName="name" autocomplete="off">
+        <mat-error *ngIf="name.hasError('required')"><a translate>INGREDIENTS.NAME-REQUIRED</a></mat-error>
+        <mat-error *ngIf="name.hasError('pattern')"><a translate>INGREDIENTS.ONLY-LETTERS</a></mat-error>
+      </mat-form-field> 
+    
+      <mat-form-field>
+        <input matInput placeholder="{{ 'INGREDIENTS.PPK' | translate }}" formControlName="pPK" autocomplete="off" type="number"> 
+        <mat-error *ngIf="pPK.hasError('required')"><a translate>INGREDIENTS.PPK-REQUIRED</a></mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="{{ 'INGREDIENTS.LOSS' | translate }}" formControlName="loss" autocomplete="off" type="number">
+        <mat-error *ngIf="loss.hasError('required')"><a translate>INGREDIENTS.LOSS-REQUIRED</a></mat-error>
+      </mat-form-field>
+    
+      <mat-form-field>
+          <mat-select placeholder="{{ 'INGREDIENTS.CATEGORY' | translate }}" formControlName="category" autocomplete="off">
+              <mat-option *ngFor="let category of categories" value="{{ category.name }}">{{ category.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="category.hasError('required')"><a translate>INGREDIENTS.CATEGORY-REQUIRED</a></mat-error>
+      </mat-form-field>
+
+      <div align="end">
+        <button mat-icon-button type="submit" *ngIf="editForm.valid && editForm.dirty">
+            <mat-icon color="accent">save</mat-icon>
+        </button>
+
+          <button type="button" mat-icon-button  (click)="openDeleteDialog(ingredient)">
+              <mat-icon color="warn">delete_forever</mat-icon>
+          </button>
+      </div> 
+    </form>
+       
+</div>

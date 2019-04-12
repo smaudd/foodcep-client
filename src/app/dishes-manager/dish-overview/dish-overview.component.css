@@ -1,0 +1,58 @@
+.mat-form-field {
+    width: calc(100% - 1rem);
+}
+.editPanel {
+    width: calc(70% - 0.5rem);
+    text-align: right;
+}
+
+.spacer {
+    width: calc(100%, 1rem);
+}
+
+.icon {
+    font-size: 22px;
+}
+
+button {
+    margin: 0.5em;
+}
+
+table {
+    width: 100%;
+  }
+  
+  tr.ingredient-detail-row {
+    height: 0;
+  }
+  
+  .edit-box {
+    width: 100%;
+  } 
+  
+  tr.ingredient-row:not(.example-expanded-row):hover {
+    background: #f5f5f5;
+  }
+  
+  tr.ingredient-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .ingredient-detail {
+    overflow: hidden;
+    display: flex;
+    cursor: pointer;
+  }
+  
+  
+  .example-element-description {
+    padding: 16px;
+  }
+  
+  .example-element-description-attribution {
+    opacity: 0.5;
+  }
