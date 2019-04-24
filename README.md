@@ -1,4 +1,4 @@
-# ScandalApp
+# Bread & Butter
 
 The goal of this app is to create an ideal enviroment for the management and administration of restaurant's kitchens, providing the user with essential planning and organization tools 
 to keep track of the expenditures of any common restaurant kitchen.
