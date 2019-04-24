@@ -1,31 +1,48 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './auth/guards/auth.guard';
-import { AdminGuard } from './auth/guards/admin.guard';
-import { Error500Component } from './core/error500/error500.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
+import { Error404Component } from './core/error-components/error404.component';
+import { NavComponent } from './nav/nav.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/home' },
+
+  { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  {
-    path: 'dishes',
-    loadChildren: './dishes-manager/dish.module#DishModule'
+  { path: '',
+    component: NavComponent,
+    children: [
+      {
+        path: 'dishes',
+        loadChildren: './modules/dishes/dish.module#DishModule',
+        canActivate: [AdminGuard]
+      },
+      {
+        path: 'products',
+        loadChildren: './modules/products/products.module#ProductsModule'
+      },
+      {
+        path: 'user',
+        loadChildren: './modules/user/user.module#UserModule'
+      },
+      {
+        path: 'chef',
+        loadChildren: './modules/chef/chef.module#ChefModule'
+      },
+      {
+        path: 'orders-suppliers',
+        loadChildren: './modules/orders-suppliers/orders-suppliers.module#OrdersSuppliersModule'
+      }
+    ]
   },
   {
-    path: 'ingredients',
-    loadChildren: './registre-manager/registre.module#RegistreManagerModule'
+    path: '',
+    loadChildren: './landing-page/landing-page.module#LandingPageModule'
   },
-  {
-    path: 'user',
-    loadChildren: './auth/auth.module#AuthModule'
-  },
-  {
-    path: 'orders-suppliers',
-    loadChildren: './orders-suppliers/orders-suppliers.module#OrdersSuppliersModule'
-  },
-  { path: '500', component: Error500Component },
-  // { path: '**', redirectTo: '/home'}
+
+  { path: '404', component: Error404Component },
+  // { path: '**', redirectTo: '404'}
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const OrderContentShcema = new mongoose.Schema({
+const OrderContentSchema = new mongoose.Schema({
     name: {
       type: String,
       required: true
@@ -21,7 +21,7 @@ const OrderSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    order: [OrderContentShcema],
+    order: [OrderContentSchema],
     madeBy: {
       type: String,
       required: true

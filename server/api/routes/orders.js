@@ -4,7 +4,6 @@ const Order = require('../models/orders.model');
 
 router.get('/', async (req, res, next) => {
   try {
-    console.log(new Date());
     // Query for supplier, date of creation and count of items on the order content. Sorted by date. First is newest date. It doesnt include the whole list of items
     const orders = await Order.aggregate([
         { $project: { supplier: 1, date: 1, madeBy: 1, total_items: { $size: "$order" } } },
@@ -18,16 +17,23 @@ router.get('/', async (req, res, next) => {
 
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    res.status(200).send(order)
+  } catch(err) {
+    res.sendStatus(404)
+    return next(`There's no order with the id ${req.params.id}`)
+  }
+})
+
 router.post('/', async (req, res, next) => {
-  console.log(req.body.order)
   const { supplier, order, madeBy } = req.body;
-  console.log(order);
     const newOrder = new Order({
       supplier,
       order: [],
       madeBy
     })
-
   // Pushing all the items from the request to the created Order Model
   order.forEach((item) => {
       newOrder.order.push(item);

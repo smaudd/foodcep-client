@@ -1,0 +1,37 @@
+<mat-toolbar color="primary" [@toolbarSlide]><span translate>NAV.RESTAURANT</span></mat-toolbar>
+<div class="container" [@fadeInOut]>
+<br>
+  <mat-card>
+      <div fxLayout="column">
+        <form [formGroup]="resForm" (ngSubmit)="updateData(resForm.value)">
+          <mat-form-field>
+          <input matInput placeholder="{{ 'AUTH.NAME' | translate }}" formControlName="name">
+            <mat-error *ngIf="name.hasError('required')"><a translate>AUTH.NAME-REQUIRED</a></mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'AUTH.ADRESS' | translate }}" formControlName="adress">
+            <mat-error *ngIf="adress.hasError('required')"><a translate>AUTH.ADDRES-REQUIRED</a></mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <span matPrefix>+34 &nbsp;</span>
+            <input type="tel" matInput placeholder="{{ 'AUTH.PHONE' | translate }}" formControlName="phone">
+            <mat-error *ngIf="phone.hasError('required')"><a translate>AUTH.PHONE-REQUIRED</a></mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea matInput placeholder="{{ 'AUTH.DESCRIPTION' | translate }}" formControlName="description"></textarea>
+            <mat-error *ngIf="description.hasError('required')"><a translate>AUTH.DESCRIPTION-REQUIRED</a></mat-error>
+          </mat-form-field>
+
+          <div align="end">
+            <button mat-button [disabled]="resForm.invalid || !resForm.dirty">
+                <a translate>AUTH.SUBMIT</a>
+            </button>
+          </div>
+
+        </form>
+    </div>
+  </mat-card>
+</div>

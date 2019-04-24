@@ -1,0 +1,26 @@
+<div *ngIf="!shopping">
+<h3><a translate>LIST.INGREDIENTS</a></h3>
+<mat-divider></mat-divider>
+<br>
+</div>
+
+  <form #adder>
+    <mat-form-field>
+        <input matInput placeholder="{{ 'LIST.SEARCH' | translate }}" [formControl]="search" autocomplete="off">
+    </mat-form-field>
+  </form>
+
+  <mat-progress-bar mode="buffer" *ngIf="loadingSubject$ | async"></mat-progress-bar>
+  <mat-card *ngIf="notFound" class="table-container mat-elevation-z5" align="center" [@fadeInOut]><strong translate>LIST.NOT-FOUND</strong></mat-card>
+
+
+          <div *ngIf="!shopping" [@fadeInOut]>
+            <app-dish-table (add)="addIngredientToDish($event)"></app-dish-table>
+          </div>
+
+          <div *ngIf="shopping && ingredientsSubject$.value.length !== 0" class="table-container mat-elevation-z5" [@fadeInOut]>
+              <app-shopping-table (add)="addIngredientToShopping($event)"></app-shopping-table>
+          </div>
+
+
+

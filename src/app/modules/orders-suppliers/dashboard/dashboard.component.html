@@ -1,0 +1,50 @@
+<div class="container">
+
+  <div align="start" style="margin: 10px">
+    <button mat-button *ngIf="!isOrder; else cancel" color="primary" (click)="newOrder()">
+      <span translate>New Order</span>
+      <mat-icon>add_box</mat-icon>
+    </button>
+    <ng-template #cancel>
+      <div align="end">
+          <button mat-button color="warn" (click)="toggleIsOrder()">
+              <span translate>Cancel</span>
+              <mat-icon>clear</mat-icon>
+          </button>
+      </div>
+    </ng-template>
+  </div>
+
+  <div *ngIf="!isOrder; else order">
+        <mat-card-subtitle>
+          <div>
+              <span translate>Last orders</span>
+          </div>
+        </mat-card-subtitle>
+        <mat-card-content>
+            <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
+                <div *cdkVirtualFor="let order of orders$ | async" class="example-item">
+                  <mat-card>
+                    <mat-card-title>{{order.supplier}} @ {{ order.date | date:'H:m - d/MM/yy' }}</mat-card-title>
+                    <mat-card-content>
+                      <div fxLayout="row">
+                        <span translate>Ordered by <strong>{{ order.madeBy }}</strong></span>
+                      </div>
+                  </mat-card-content>
+                  <mat-card-actions align="end">
+                    <button mat-button (click)="repeatOrder(order)"><span translate>Repeat Order</span></button>
+                    <button mat-button (click)="openOverviewDialog(order, false)"><span translate>View Details</span></button>
+                  </mat-card-actions>
+                  </mat-card>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </mat-card-content>
+
+  </div>
+
+  <ng-template #order>
+    <app-orders [order_id]="order_id" (done)="toggleIsOrder()"></app-orders>
+  </ng-template>
+
+
+</div>

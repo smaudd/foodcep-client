@@ -1,0 +1,27 @@
+<mat-toolbar class="mat-elevation-z1" color="primary" [@toolbarSlide]>
+  <span translate>INGREDIENTS.INGREDIENTS</span>
+</mat-toolbar>
+<mat-tab-group>
+                <mat-tab label="{{ 'INGREDIENTS.INGREDIENTS' | translate }}">
+                        <div class="container">
+                                <app-products-list></app-products-list>
+                        </div>
+                </mat-tab>
+                <mat-tab label="{{ 'INGREDIENTS.CATEGORIES' | translate }}">
+                        <div class="container">
+                                <app-categories-list></app-categories-list>
+                        </div>
+                </mat-tab>
+                <mat-tab label="{{ 'INGREDIENTS.ABOUT' | translate }}">
+                                <div class="container">
+                                    <h3 translate>INGREDIENTS.EXPLANATION</h3>
+                                    <mat-divider></mat-divider>
+                                    <br>
+                                    <p translate>INGREDIENTS.TEXT-1</p>
+                                    <p translate>INGREDIENTS.TEXT-2</p>
+                                </div>
+                </mat-tab>
+</mat-tab-group>
+
+
+

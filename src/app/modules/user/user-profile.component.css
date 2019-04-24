@@ -1,0 +1,8 @@
+.mat-form-field {
+    width: calc(99% - 0.5rem);
+}
+
+.mat-card {
+    position: relative;
+    margin-top: 30px
+}

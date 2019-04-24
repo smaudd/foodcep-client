@@ -1,0 +1,65 @@
+<div class="container">
+    <div align="start" style="margin: 10px">
+      <button mat-button (click)="toggleNew()" color="primary" *ngIf="!newMenu">
+        <span translate>New Supplier</span>
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+    <div align="end">
+        <button mat-button (click)="toggleNew()" color="warn" *ngIf="newMenu">
+            <span translate>Cancel</span>
+            <mat-icon>clear</mat-icon>
+          </button>
+    </div>
+    <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z2" matSort *ngIf="!newMenu">
+      <!-- Column Cells -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Name</span></th>
+        <td mat-cell *matCellDef="let supplier">{{ supplier.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Email</span></th>
+          <td mat-cell *matCellDef="let supplier">{{ supplier.email }}</td>
+        </ng-container>
+
+      <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Telephone</span></th>
+          <td mat-cell *matCellDef="let supplier">{{ supplier.phone }}</td>
+        </ng-container>
+
+      <ng-container matColumnDef="comertial">
+          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Comertial</span></th>
+          <td mat-cell *matCellDef="let supplier">{{ supplier.comertial }}</td>
+      </ng-container>
+
+      <!-- Expanded content -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let supplier" [attr.colspan]="columnsToDisplay.length" [hidden]="!expandedSupplier">
+          <div class="supplier-detail" [hidden]="!expandedSupplier"
+              [@detailExpand]="supplier == expandedSupplier ? 'expanded' : 'collapsed'">
+            <div class="edit-box">
+              <br>
+                <div align="end">
+                    <button mat-icon-button (click)="close()" color="primary">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                </div>
+                <app-edit-supplier [supplier]="supplier" (init)="close()"></app-edit-supplier>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay" [hidden]="expandedSupplier"></tr>
+      <tr mat-row *matRowDef="let supplier; columns: columnsToDisplay;"
+          class="supplier-row" [hidden]="expandedSupplier"
+          [class.supplier-expanded-row]="expandedSupplier === supplier"
+          (click)="expandedSupplier = expandedSupplier === supplier ? null : supplier; hideUnexpanded(supplier)">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="supplier-detail-row"></tr>
+    </table>
+    <app-new-supplier *ngIf="newMenu" (done)="toggleNew()"></app-new-supplier>
+</div>
+
+

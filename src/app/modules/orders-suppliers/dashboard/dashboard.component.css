@@ -1,0 +1,39 @@
+.viewport {
+  height: 295px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.viewport::-webkit-scrollbar-track
+{
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.viewport::-webkit-scrollbar
+{
+  width: 5px;
+  height: 5px;
+  overflow-x: hidden;
+	background-color: #F5F5F5;
+}
+
+.viewport::-webkit-scrollbar-thumb
+{
+  background-color: gray;
+  border-radius: 10px;
+}
+
+.containerCard {
+  height: 360px;
+}
+
+mat-card {
+  margin: 10px;
+}
+
+mat-card-title {
+  font-size: 20px;
+}
+
+

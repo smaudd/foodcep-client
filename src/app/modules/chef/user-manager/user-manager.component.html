@@ -1,0 +1,32 @@
+<mat-toolbar class="mat-elevation-z2" color="primary" [@toolbarSlide]>
+  <span translate>AUTH.USERS</span>
+</mat-toolbar>
+<mat-progress-bar *ngIf="loadingSubject$ | async" mode="indeterminate" color="primary"></mat-progress-bar>
+<div class="container">
+  <mat-accordion class="accordion-container">
+    <mat-expansion-panel *ngFor="let user of usersSubject$ | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ user.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ user.email }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <mat-select [value]="user.role" [(ngModel)]="user.role" name="role" #role="ngModel">
+          <mat-option value="chef">Chef</mat-option>
+          <mat-option value="sous">Sous</mat-option>
+          <mat-option value="cook">Cook</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div align="end">
+        <button mat-button color="primary" [disabled]="role.untouched">Save Role Change</button>
+        <button mat-button color="warn">Drop user</button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+

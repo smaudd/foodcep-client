@@ -11,15 +11,18 @@ import { CookieService } from 'ngx-cookie-service';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { HomeComponent } from './home/home.component';
-import { Error500Component } from './core/error500/error500.component';
+import { Error404Component } from './core/error-components/error404.component';
 
-import { AuthModule } from './auth/auth.module';
-import { TokenInterceptor } from './auth/auth.interceptor';
+import { AuthModule } from './core/auth/auth.module';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { ErrorsInterceptor } from './core/interceptors/errors.interceptor'
+import { ErrorDialogComponent } from './core/error-components/error500-dialog.component';
+import { NavComponent } from './nav/nav.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,7 +33,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    Error500Component
+    Error404Component,
+    ErrorDialogComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
@@ -59,9 +64,15 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorsInterceptor,
+      multi: true
     }
 
   ],
+  entryComponents: [ ErrorDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

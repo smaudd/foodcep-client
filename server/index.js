@@ -32,16 +32,16 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(exjwt({ 
+app.use(exjwt({
     secret: config.JWT_SECRET,
     // Take the cookie with the token from the request
     getToken: (req) => {
         const token = req.cookies.TOKEN;
-        return token; 
+        return token;
     }
 }).unless({path: ['/api/auth', '/api/refresh', '/api/logout']}));
 
-app.use(function (err, req, res, next) {  
+app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(401);
         res.sendFile(path.join(__dirname, '../dist/ScandalApp/index.html'))
@@ -52,14 +52,14 @@ app.use('/api/refresh', refresh);
 app.use('/api/', user);
 app.use('/api/', api);
 
-app.listen(config.PORT, () => { 
+app.listen(config.PORT, () => {
     mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useFindAndModify: false });
 });
 
 const db = mongoose.connection;
 
 db.on('error', (err) => {
-    console.error(err, 'Cannot connect to DB. Check your connection string'); 
+    console.error(err, 'Cannot connect to DB. Check your connection string');
 })
 
 
@@ -68,6 +68,6 @@ db.once('open', () => {
 })
 
 // Default every route except the above to serve the index.html of front-end app
-app.get('*', function(req, res) {  
+app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, '../dist/ScandalApp/index.html'))
 });

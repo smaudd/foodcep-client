@@ -1,0 +1,34 @@
+  <mat-toolbar color="primary" class="mat-elevation-z2" [@toolbarSlide]>
+      <span>{{ menuName }}</span>
+      <span class="spacer"></span>
+      <div align="end">
+          <button mat-button *ngIf="!newDish && !editDish" (click)="createNewDish()" color="accent">
+              <a translate>DISHES.NEW</a>
+            <mat-icon>add_box</mat-icon>
+          </button>
+          <button mat-button *ngIf="newDish || editDish" (click)="initState()" color="accent">
+            <span translate>Cancel</span>
+            <mat-icon>clear</mat-icon>
+          </button>
+      </div>
+  </mat-toolbar>
+    <app-dishes-dashboard *ngIf="!editDish && !newDish" (loadEditor)="loadEditor($event)" [firstInit]="firstInit"></app-dishes-dashboard>
+    <div class="container">
+      <h4 *ngIf="emptyCollection && !newDish"><a translate>DISHES.EMPTY-COLLECTION</a></h4>
+      <div *ngIf="newDish">
+          <h3><a translate>DISHES.CREATOR</a></h3>
+          <p><a translate>DISHES.CREATE</a></p>
+          <mat-divider></mat-divider>
+          <br>
+          <div fxLayout="column" fxLayoutGap="20px">
+              <app-dish-overview (goToDashboard)="initState($event)" (init)="initState()"></app-dish-overview>
+          </div>
+      </div>
+      <div *ngIf="editDish">
+        <br>
+        <div fxLayout="column"
+            fxLayoutGap="20px">
+                <app-dish-overview [dish_id]="dish.dish_id" (edit)="changeTitle($event)" (init)="initState()"></app-dish-overview>
+        </div>
+      </div>
+    </div>

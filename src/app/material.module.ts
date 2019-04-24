@@ -22,6 +22,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule, MatMenu} from '@angular/material/menu';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {ScrollDispatchModule} from '@angular/cdk/scrolling';
              MatSidenavModule,
              MatProgressBarModule,
              MatMenuModule,
-             ScrollDispatchModule
+             ScrollDispatchModule,
+             MatBadgeModule
              ],
     exports: [MatButtonModule,
              MatCheckboxModule,
@@ -73,7 +75,8 @@ import {ScrollDispatchModule} from '@angular/cdk/scrolling';
              MatSidenavModule,
              MatProgressBarModule,
              MatMenuModule,
-             ScrollDispatchModule
+             ScrollDispatchModule,
+             MatBadgeModule
             ],
 })
 

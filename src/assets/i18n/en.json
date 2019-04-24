@@ -1,7 +1,7 @@
 {
     "NAV": {
         "SHOPPING": "Shopping List",
-        "INGREDIENTS": "Ingredients",
+        "INGREDIENTS": "Products",
         "ORDERS-SUPPLIERS": "Orders & Suppliers",
         "DISHES": "Dishes",
         "ADMINISTRATION": "Administration",
@@ -52,10 +52,10 @@
         "CATEGORY": "Category",
         "PPK": "Price Per Kilo",
         "COST": "Cost",
-        "LOSS": "Waste for kilo",
+        "LOSS": "Waste Per kilo",
         "EMPTY-CATEGORIES": "It looks like you don't have any registred categories! Start adding categories to your app",
         "REGISTERED-CATEGORIES": "Registered Categories",
-        "ADD-INGREDIENTS": "Add Ingredients",
+        "ADD-INGREDIENTS": "Add Products",
         "NAME-REQUIRED": "Name is required!",
         "ONLY-LETTERS": "Only spaces and letters allowed",
         "PPP-REQUIRED": "Price per kilo are required!",
@@ -67,9 +67,10 @@
         "INGREDIENT-LOSS": "Waste",
         "ADD-CATEGORY": "Add categories",
         "PDF": "Export as PDF",
-        "INGREDIENTS": "Ingredients",
+        "INGREDIENTS": "Products",
         "CATEGORIES": "Categories",
-        "ABOUT": "About"
+        "ABOUT": "About",
+        "MAX": "Max 1000"
     },
     "AUTH": {
         "REGISTRE": "New Account",

@@ -1,0 +1,43 @@
+<div fxLayout="row wrap" [hidden]="!loadingSubject$ | async">
+
+  <mat-progress-bar *ngIf="loadingSubject$ | async" mode="query" color="warn"></mat-progress-bar>
+
+  <div *ngFor="let dish of dishesSubject$ | async" [@fadeInOut] [hidden]="loadingSubject$ | async">
+      <mat-card class="dish-card">
+        <mat-card-header>
+          <div mat-card-avatar><mat-icon>restaurant_menu</mat-icon></div>
+          <mat-card-title>{{ dish.name }}</mat-card-title>
+
+          <mat-card-subtitle>{{ dish.category }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list dense>
+              <div fxLayout="row nowrap">
+                <div>
+                  <button mat-button (click)="selectDish(dish)">
+                  <a translate>DISHES.EDIT</a>
+                </button>
+                <button mat-button color="warn" (click)="openDeleteDialog(dish)">
+                  <a translate>DISHES.DELETE</a>
+                </button>
+                </div>
+                <div>
+                    <button mat-button [disabled]="true">
+                      <b><a translate>DISHES.COST</a> {{ dish.cost | currency:'EUR' }} </b>
+                    </button>
+                </div>
+              </div>
+            </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+          <div align="end">
+            <button mat-button color="primary" (click)="pdf(dish)">
+              <small><a translate>DISHES.PDF</a></small>
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+  </div>
+</div>
+
+

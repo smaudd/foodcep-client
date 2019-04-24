@@ -2,7 +2,7 @@
     "NAV": {
         "SHOPPING": "Lista de compras",
         "ORDERS-SUPPLIERS": "Proveedores & Pedidos",
-        "INGREDIENTS": "Ingredientes",
+        "INGREDIENTS": "Productos",
         "DISHES": "Platos",
         "ADMINISTRATION": "Administración",
         "MANAGER": "Administrador de usuarios",
@@ -31,7 +31,7 @@
         "COST": "Costo: ",
         "PDF": "Exportar como PDF",
         "DELETE": "Borrar",
-        "EMPTY-COLLECTION": "Woops! No tenemos platos registrados. No seas tímido y empieza con tu menú",
+        "EMPTY-COLLECTION": "Uups! No tenemos platos registrados. No seas tímido y empieza con tu menú",
         "CREATE": "Aquí puedes crear tus platos. Coloca un nombre, una categoría y añade ingredientes utilizando la barra de busqueda.",
         "CREATOR": "Creador de Platos",
         "OVERVIEW": "Reseña de Plato & Edición",
@@ -55,7 +55,7 @@
         "LOSS": "Merma Por Kilo",
         "EMPTY-CATEGORIES": "No tiene categorias registradas. Deberá registrar categorías para utilizar la aplicación",
         "REGISTERED-CATEGORIES": "Categorías Registradas",
-        "ADD-INGREDIENTS": "Añadir Ingredientes",
+        "ADD-INGREDIENTS": "Añadir Productos",
         "NAME-REQUIRED": "Nombre requerido",
         "ONLY-LETTERS": "Sólo espacios y letras permitidos",
         "PPK-REQUIRED": "Price por kilo requerido",
@@ -67,9 +67,10 @@
         "INGREDIENT-LOSS": "Merma",
         "ADD-CATEGORY": "Añadir Categorías",
         "PDF": "Exportar como PDF",
-        "INGREDIENTS": "Ingredientes",
+        "INGREDIENTS": "Productos",
         "CATEGORIES": "Categorias",
-        "ABOUT": "Acerca"
+        "ABOUT": "Acerca",
+        "MAX": "Máximo 1000"
     },
     "AUTH": {
         "REGISTRE": "Nuevo Usuario",

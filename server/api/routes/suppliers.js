@@ -15,6 +15,21 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+// Get one supplier
+router.get('/:name', async (req, res, next) => {
+  const { name } = req.params;
+  console.log(req.params.name)
+  try {
+      const supplier = await Supplier.findOne({ name: req.params.name });
+      console.log(supplier)
+      // const supplier = suppliers.filter(item => item.name === name)
+      // console.log(supplier)
+      res.status(200).send(supplier);
+  } catch(err) {
+      res.sendStatus(404);
+      return next(`Supplier with name ${name} not found`);
+  }
+})
 
 router.post('/', async (req, res, next) => {
 
@@ -36,7 +51,7 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-    
+
     try {
         const toEdit = await Supplier.findByIdAndUpdate(req.params.id, req.body, { new: true })
         res.status(200).send(toEdit);
@@ -48,7 +63,7 @@ router.put('/:id', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res, next) => {
-    
+
     try {
         const toDelete = await Supplier.findByIdAndDelete(req.params.id);
         res.status(200).send(toDelete);

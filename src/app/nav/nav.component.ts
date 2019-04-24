@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SessionDataService } from '../auth/services/session-data.service';
+import { SessionDataService } from '../modules/shared/services/session-data.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../core/http/auth-service/auth.service';
 
 @Component({
   selector: 'app-nav-component',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.scss']
 })
 
 export class NavComponent implements OnInit {
@@ -37,13 +37,11 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.logged = false;
-    this.authService.logout().subscribe(reply => {
-      this.router.navigate(['/login']);
-    });
+    this.authService.logout().subscribe();
   }
 
-  changeLenguaje(lenguaje: string) {
-    this.translateService.use(lenguaje);
+  changeLanguage(language: string) {
+    this.translateService.use(language);
   }
 
 }

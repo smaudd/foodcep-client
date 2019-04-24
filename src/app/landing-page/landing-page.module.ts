@@ -1,0 +1,18 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { LandingPageComponent } from './landing-page.component';
+import { LandingPageRoutingModule } from './landing-page-routing.module';
+
+@NgModule({
+  declarations: [
+    LandingPageComponent
+  ],
+  imports: [
+    LandingPageRoutingModule,
+    CommonModule
+  ],
+  exports: [
+    LandingPageComponent
+  ]
+})
+export class LandingPageModule { }

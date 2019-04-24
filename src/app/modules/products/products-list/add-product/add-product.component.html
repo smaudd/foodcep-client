@@ -1,0 +1,39 @@
+<h3 translate>INGREDIENTS.ADD-INGREDIENTS</h3>
+  <mat-divider></mat-divider>
+    <br>
+      <form [formGroup]="addForm" (ngSubmit)="submitIngredient(addForm.value)">
+          <mat-form-field>
+              <input type="text" matInput placeholder="{{ 'INGREDIENTS.NAME' | translate }}" autocomplete="off" formControlName="name" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="name.hasError('required')"><span translate>INGREDIENTS.NAME-REQUIRED</span></mat-error>
+              <mat-error *ngIf="name.hasError('pattern')"><span translate>INGREDIENTS.ONLY-LETTERS</span></mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+              <input type="number" matInput placeholder="{{ 'INGREDIENTS.PPK' | translate }}" autocomplete="off" formControlName="price" [errorStateMatcher]="matcher">
+              <span matSuffix>€&nbsp;</span>
+              <mat-error *ngIf="price.hasError('required')"><span translate>INGREDIENTS.PPK-REQUIRED</span></mat-error>
+              <mat-error *ngIf="price.hasError('max')"><span translate>INGREDIENTS.MAX</span></mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+              <input type="number" matInput placeholder="{{ 'INGREDIENTS.LOSS' | translate }}" formControlName="loss" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="loss.hasError('required')"><span translate>INGREDIENTS.LOSS-REQUIRED</span></mat-error>
+              <mat-error *ngIf="price.hasError('max')"><span translate>INGREDIENTS.MAX</span></mat-error>
+              <span matSuffix>gr&nbsp;</span>
+          </mat-form-field>
+
+          <mat-form-field>
+                <mat-select placeholder="{{ 'INGREDIENTS.CATEGORY' | translate }}" formControlName="category" [errorStateMatcher]="matcher">
+                <mat-option value="{{ category.category_id }}" *ngFor="let category of categorySubject$ | async">{{ category.name | titlecase }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="category.hasError('required')"><span translate>INGREDIENTS.CATEGORY-REQUIRED</span></mat-error>
+          </mat-form-field>
+
+          <div align="right">
+              <button mat-button type="submit" class="mdc-icon-button material-icons" type="submit" [disabled]="addForm.invalid || disableButton">Submit</button>
+          </div>
+      </form>
+
+
+
+
