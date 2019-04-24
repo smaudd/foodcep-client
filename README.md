@@ -16,24 +16,7 @@ to keep track of the expenditures of any common restaurant kitchen.
 - JWT-Cookie Authentication
 - Login System
 
-## Development server:
 
-Run `npm run dev` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Configuration & Installation:
-
-Run `npm install`
-
-You need to create your enviroment variables for development.
-
-Create a .env file on the root directory with 
-- `PORT` 
-- `NODE_ENV` 
-- `BASE_URL` 
-- `MONGODB_URI`
-- `JWT_SECRET`
-
-If you don't use `PORT` 3000. You'll need to change it on the `proxy.config.json` base url.
 
 
 
