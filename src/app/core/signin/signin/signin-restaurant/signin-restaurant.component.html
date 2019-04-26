@@ -1,0 +1,38 @@
+  <form [formGroup]="restaurantForm">
+      <div fxLayout="column">
+      <mat-form-field appearance="outline">
+          <input matInput placeholder="Restaurant Name" autocomplete="off" formControlName="restaurantName">
+          <mat-error *ngIf="restaurantName.hasError('required')">
+              <span translate>AUTH.NAME-REQUIRED</span>
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <input matInput placeholder="Adress" autocomplete="off" formControlName="adress">
+          <mat-error *ngIf="adress.hasError('required')">
+              <span translate>Adress required</span>
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <input matInput autocomplete="off" formControlName="phone" placeholder="Telephone">
+          <mat-error *ngIf="phone.hasError('required')">
+              <span translate>Telephone required</span>
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <input matInput type="textarea" formControlName="description"
+          placeholder="Description" autocomplete="off">
+          <mat-error *ngIf="description.hasError('required')">
+              <span translate>Description required</span>
+          </mat-error>
+      </mat-form-field>
+      </div>
+  </form>
+<div align="end">
+<button mat-button type="submit" [disabled]="restaurantForm.invalid" (click)="sendRestaurantData(restaurantForm.value)">
+  <span translate>AUTH.SUBMIT</span>
+</button>
+</div>
+

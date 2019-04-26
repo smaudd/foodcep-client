@@ -29,7 +29,7 @@ import { Subscription } from 'rxjs';
                   <p fxFlex="20">{{ item.quantity }}{{ item.unit }}</p>
                 </li>
             </ul>
-            <div *ngIf="data.isToSubmit" fxLayoutAlign="center">
+            <div *ngIf="data.isToSubmit" align="end" fxLayout="column">
               <div fxFlex="33.3">
                   <button mat-button color="primary" (click)="submitOrder('whatsapp')">
                     Send Whatsapp

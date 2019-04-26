@@ -7,13 +7,10 @@ import { AuthRoutingModule } from './auth-routing.module';
 
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
-import { NewAccountComponent } from './new-account/new-account.component';
-
 
 @NgModule({
   declarations: [
-    LoginComponent,
-    NewAccountComponent,
+    LoginComponent
   ],
   imports: [
     MaterialModule,
@@ -22,5 +19,8 @@ import { NewAccountComponent } from './new-account/new-account.component';
     AuthRoutingModule,
     HttpClientModule
   ],
+  exports: [
+    LoginComponent
+  ]
 })
 export class AuthModule { }

@@ -12,6 +12,7 @@ import { FormControl } from '@angular/forms';
 import { FilterCorrectFormatService } from '../../shared/services/filter-correct-format.service';
 import { Subscription } from 'rxjs';
 import { tableFadeInOut, fadeInOut } from '../../../animations/navigation-animations';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 
 @Component({
@@ -50,9 +51,20 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     private stateService: StateService,
     private categoriesStateService: CategoriesStateService,
     private pdfRender: PdfRenderService,
-    private filterCorrectFormat: FilterCorrectFormatService
+    private filterCorrectFormat: FilterCorrectFormatService,
+    private breakpointObserver: BreakpointObserver
     ) {
-  }
+      // Handles columns to display dependient on the screen size
+      this.subscription = this.breakpointObserver.observe([
+        '(max-width: 768px)'
+      ]).subscribe(result => {
+        if (result.matches) {
+          this.columnsToDisplay = ['name', 'finalPrice'];
+        } else {
+          this.columnsToDisplay = ['name', 'category', 'pPK', 'finalPrice'];
+        }
+      })
+     }
 
   ngOnInit() {
     this.stateService.get('?product=&&page=0');

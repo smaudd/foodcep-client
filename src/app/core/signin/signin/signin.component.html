@@ -1,0 +1,78 @@
+<div class="container" [@fadeInOut]>
+    <mat-card>
+        <form [formGroup]="userForm">
+            <div fxLayout="column">
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="{{ 'AUTH.NAME' | translate }}" autocomplete="off" formControlName="name">
+                <mat-error *ngIf="name.hasError('required')">
+                    <span translate>AUTH.NAME-REQUIRED</span>
+                </mat-error>
+                <mat-error *ngIf="name.hasError('pattern')">
+                    <span translate>AUTH.ONLY-LETTERS</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="{{ 'AUTH.EMAIL' | translate }}" autocomplete="off" formControlName="email">
+                <mat-error *ngIf="email.hasError('email')">
+                    <span translate>AUTH.VALID-EMAIL</span>
+                    </mat-error>
+                    <mat-error *ngIf="email.hasError('required')">
+                      <span translate>AUTH.EMAIL-REQUIRED</span>
+                    </mat-error>
+                    <mat-error *ngIf="email.hasError('email-repeated')">
+                        <span translate>Wrong invitation code</span>
+                    </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input matInput type="password" autocomplete="off" formControlName="password" placeholder="{{ 'AUTH.PASSWORD' | translate }}">
+                <mat-error *ngIf="password.hasError('required')">
+                    <span translate>AUTH.PWD-REQ</span>
+                </mat-error>
+                    <mat-error *ngIf="password.hasError('required')">
+                        <span translate>AUTH.PASSWORD-REQUIRED</span>
+                    </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input matInput type="password" #repeated formControlName="confirmPassword"
+                placeholder="{{ 'AUTH.REPEAT-PWD' | translate }}" autocomplete="off">
+                <mat-error *ngIf="email.hasError('pattern')">
+                    <span translate>AUTH.NOT-MATCH</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Type of registration</mat-label>
+                <mat-select required formControlName="type">
+                  <mat-option value="new">Registre a new restaurant</mat-option>
+                  <mat-option value="code">I have an invitation code</mat-option>
+                </mat-select>
+            </mat-form-field>
+            </div>
+            <div *ngIf="type.value === 'new'; else codeInput">
+              <app-signin-restaurant (restaurantData)="signinAsRestaurant(userForm.value, $event)"></app-signin-restaurant>
+            </div>
+            <ng-template #codeInput>
+                <mat-form-field appearance="outline" style="width: 100%" *ngIf="type.value !== null">
+                    <input matInput type="code" #repeated formControlName="code"
+                    placeholder="Invitation code" autocomplete="off">
+                    <mat-error *ngIf="code.hasError('required')">
+                        <span translate>Code required</span>
+                    </mat-error>
+                    <mat-error *ngIf="code.hasError('wrong-invitation')">
+                        <span translate>Wrong invitation code</span>
+                    </mat-error>
+                </mat-form-field>
+            </ng-template>
+
+        </form>
+        <div align="end">
+        <button mat-button type="submit" *ngIf="type.value === 'code'" [disabled]="userForm.invalid" (click)="registerUser(userForm.value)">
+            <span translate>AUTH.SUBMIT</span>
+        </button>
+        </div>
+    </mat-card>
+    <br>
+</div>

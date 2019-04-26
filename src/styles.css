@@ -3,9 +3,11 @@
     font-family: Roboto;
 }
 
-html, body {
-    margin: 0;
-  }
+html, body{
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
 
   .container {
     margin-left: 250px;
@@ -44,10 +46,6 @@ html, body {
     justify-content: flex-end;
 }
 
-.mat-toolbar {
-    width: 100%;
-}
-
 @media (max-width: 900px) {
     .container {
         margin-left: 5px;
@@ -55,9 +53,6 @@ html, body {
     }
 }
 
-.mat-sidenav-content {
-    background-color: white;
-}
 
 
 

@@ -5,7 +5,8 @@ export class User {
         readonly name?: string,
         readonly role?: string,
         public user_id?: string,
-        public language?: string
+        public language?: string,
+        public invitation_code?: string
         ) {
     }
 }

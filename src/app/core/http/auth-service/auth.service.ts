@@ -83,9 +83,9 @@ export class AuthService {
     return this.http.post<any>(this.logoutUrl, { malicious: malicious }, httpOptions).pipe(
       take(1),
       tap(reply => {
-        this.router.navigate(['/login']);
         this.logoutUser();
         this.loggedIn.next(false);
+        this.router.navigate(['/home']);
       }),
       mapTo(true)
     )

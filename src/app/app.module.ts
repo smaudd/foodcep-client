@@ -15,15 +15,12 @@ import { SharedModule } from './modules/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
-import { HomeComponent } from './home/home.component';
 import { Error404Component } from './core/error-components/error404.component';
 
 import { AuthModule } from './core/auth/auth.module';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { ErrorsInterceptor } from './core/interceptors/errors.interceptor'
 import { ErrorDialogComponent } from './core/error-components/error500-dialog.component';
-import { NavComponent } from './nav/nav.component';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,10 +29,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     Error404Component,
     ErrorDialogComponent,
-    NavComponent
   ],
   imports: [
     BrowserModule,

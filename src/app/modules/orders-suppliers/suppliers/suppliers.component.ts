@@ -4,6 +4,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { StateService } from './state.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-suppliers',
@@ -26,7 +27,17 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   newMenu: boolean;
 
-  constructor(private stateService: StateService, private router: Router) { }
+  constructor(private stateService: StateService, private breakpointObserver: BreakpointObserver) {
+    this.subscription = this.breakpointObserver.observe([
+      '(max-width: 768px)'
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.columnsToDisplay = ['name', 'email'];
+      } else {
+        this.columnsToDisplay = ['name', 'email', 'phone', 'comertial'];
+      }
+    })
+   }
 
   ngOnInit() {
     this.stateService.get();
