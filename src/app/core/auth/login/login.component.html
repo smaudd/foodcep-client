@@ -1,24 +1,23 @@
-<div class="contenedor">
-  <mat-card class="login-card">
+<div style="margin: 30px" (click)="$event.stopPropagation()" (keydown.tab)="$event.stopPropagation()">
     <form #login="ngForm">
-      <mat-card-title>Scandal Access</mat-card-title>
-      <br>
       <mat-card-content fxLayout="column">
-        <mat-form-field>
-          <input matInput type="text" [(ngModel)]="user" #usr="ngModel" name="usr"
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [formControl]="email"
           placeholder="Username" autocomplete="off">
         </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" [(ngModel)]="password" #pass="ngModel" name="pass"
-          placeholder="Password">
+        <mat-error *ngIf="email.hasError('wrong-credentials')">Invalid credentials</mat-error>
+        <mat-form-field appearance="outline">
+          <input matInput type="password" [formControl]="password" placeholder="Password">
         </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
+          <small routerLink="/signin">Forgot password?</small>
             <div align="end">
-                <button type="submit" mat-button (click)="doLogin()">Login</button>
+                <button type="submit" color="primary" mat-raised-button (click)="doLogin(email.value, password.value)">
+                  <span translate>Login</span>
+                </button>
             </div>
         </mat-card-actions>
       </form>
-  </mat-card>
 </div>
 

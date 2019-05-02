@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { User } from '../../auth/models/user.model';
 import { Restaurant } from '../../auth/models/restaurant.model';
 import { SessionDataService } from '../../../modules/shared/services/session-data.service';
+import { IUserChange } from 'src/app/modules/chef/user-manager/user-change.interface';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,7 +33,7 @@ export class ChefDataService {
     .pipe(
       tap(restaurant => {
         // Send the restaurant name to SesionDataService
-        this.sessionDataService.restaurantSubject.next(restaurant.name);
+        this.sessionDataService.restaurantSubject.next(restaurant.restaurant_name);
       })
     )
   }
@@ -40,5 +41,14 @@ export class ChefDataService {
   putRestaurantData(restaurant: Restaurant): Observable<Restaurant> {
     return this.http.put<Restaurant>(this.restaurant + '/update', restaurant, httpOptions)
   }
-}
+
+  putUser(user: IUserChange): Observable<User> {
+    console.log(user);
+    return this.http.put<User>(this.users + '/user/', user, httpOptions);
+  }
+
+  deleteUser(user_id: number): Observable<User> {
+    return this.http.delete<User>(this.users + '/delete/' + user_id, httpOptions);
+  }
+ }
 

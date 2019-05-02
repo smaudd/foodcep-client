@@ -26,29 +26,31 @@ export class StateService {
       private productPutService: ProductPutService
     ) {}
 
-  ingredientsSubject = new BehaviorSubject([]);
-  totalSumSubject = new BehaviorSubject(null);
-  loadingSubject = new BehaviorSubject(null);
-  errorsSubject = new BehaviorSubject(null);
+  readonly productsSubject = new BehaviorSubject([]);
+  readonly totalSumSubject = new BehaviorSubject(null);
+  readonly loadingSubject = new BehaviorSubject(null);
+  readonly notFoundSubject = new BehaviorSubject(null);
 
   get(query?: string) {
     this.loadingSubject.next(true);
     this.productService.getProducts(query)
     .subscribe((data: Data) => {
       this.loadingSubject.next(false);
-      this.ingredientsSubject.next(data.data);
+      this.productsSubject.next(data.data);
       this.totalSumSubject.next(data.count);
+      this.notFoundSubject.next(false);
     }, _ => {
+      this.productsSubject.next([]);
       this.loadingSubject.next(false);
-      this.errorsSubject.next(true);
+      this.notFoundSubject.next(true);
     });
   }
 
   post(ingredient: Ingredient): void {
       this.productsPostService.postProduct(ingredient)
       .subscribe(val => {
-          const list = this.addToList(val, this.ingredientsSubject.value);
-          this.ingredientsSubject.next(list);
+          const list = this.addToList(val, this.productsSubject.value);
+          this.productsSubject.next(list);
           // this.totalSumSubject.next(this.totalSumSubject.value + 1);
           this.get('?product=&&page=0');
       });
@@ -57,17 +59,17 @@ export class StateService {
   update(ingredient: Ingredient): void {
       this.productPutService.putProductData(ingredient)
       .subscribe(val => {
-          let list = this.removeFromList(val, this.ingredientsSubject.value);
+          let list = this.removeFromList(val, this.productsSubject.value);
           list = this.addToList(val, list);
-          this.ingredientsSubject.next(list);
+          this.productsSubject.next(list);
       });
   }
 
   delete(id: string): void {
       this.productDeleteService.deleteIngredient(id)
       .subscribe(val => {
-          const list = this.removeFromList(val, this.ingredientsSubject.value);
-          this.ingredientsSubject.next(list);
+          const list = this.removeFromList(val, this.productsSubject.value);
+          this.productsSubject.next(list);
           // this.totalSumSubject.next(this.totalSumSubject.value);
           // Actualize the page in order to keep 5 ingredients on it
           this.get('?product=&&page=0');

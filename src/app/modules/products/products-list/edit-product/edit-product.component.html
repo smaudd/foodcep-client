@@ -2,25 +2,26 @@
   <form [formGroup]="editForm" (ngSubmit)="editIngredient(editForm.value)">
       <mat-form-field>
         <input matInput placeholder="{{ 'INGREDIENTS.NAME' | translate }}" formControlName="name" autocomplete="off">
-        <mat-error *ngIf="name.hasError('required')"><a translate>INGREDIENTS.NAME-REQUIRED</a></mat-error>
-        <mat-error *ngIf="name.hasError('pattern')"><a translate>INGREDIENTS.ONLY-LETTERS</a></mat-error>
+        <mat-error *ngIf="name.hasError('required')"><span translate>INGREDIENTS.NAME-REQUIRED</span></mat-error>
+        <mat-error *ngIf="name.hasError('pattern')"><span translate>INGREDIENTS.ONLY-LETTERS</span></mat-error>
+        <mat-error *ngIf="name.hasError('repeated')"><span translate>INGREDIENTS.REPEATED</span></mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="{{ 'INGREDIENTS.PPK' | translate }}" formControlName="price" autocomplete="off" type="number">
-        <mat-error *ngIf="price.hasError('required')"><a translate>INGREDIENTS.PPK-REQUIRED</a></mat-error>
+        <mat-error *ngIf="price.hasError('required')"><span translate>INGREDIENTS.PPK-REQUIRED</span></mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="{{ 'INGREDIENTS.LOSS' | translate }}" formControlName="loss" autocomplete="off" type="number">
-        <mat-error *ngIf="loss.hasError('required')"><a translate>INGREDIENTS.LOSS-REQUIRED</a></mat-error>
+        <mat-error *ngIf="loss.hasError('required')"><span translate>INGREDIENTS.LOSS-REQUIRED</span></mat-error>
       </mat-form-field>
 
       <mat-form-field>
           <mat-select placeholder="{{ 'INGREDIENTS.CATEGORY' | translate }}" formControlName="category" autocomplete="off">
               <mat-option *ngFor="let category of categories" value="{{ category.name }}">{{ category.name }}</mat-option>
           </mat-select>
-          <mat-error *ngIf="category.hasError('required')"><a translate>INGREDIENTS.CATEGORY-REQUIRED</a></mat-error>
+          <mat-error *ngIf="category.hasError('required')"><span translate>INGREDIENTS.CATEGORY-REQUIRED</span></mat-error>
       </mat-form-field>
 
       <div align="end">

@@ -5,7 +5,9 @@
     <br>
 
     <div [hidden]="!isSetDishInfo || dish.ingredients.length !== 0">
-      <small><a translate>DISHES.START</a></small>
+      <small><span translate>DISHES.START</span></small>
+      <br>
+      <small><strong translate>DISHES.REMEMBER</strong></small>
     </div>
   <div [hidden]="!isSetDishInfo || dish.ingredients.length === 0" [@fadeInOut]>
     <table mat-table [dataSource]="ingredients$ | async" multiTemplateDataRows class="mat-elevation-z2">

@@ -1,7 +1,21 @@
 <div fxLayout="row wrap" [hidden]="!loadingSubject$ | async">
 
-  <mat-progress-bar *ngIf="loadingSubject$ | async" mode="query" color="warn"></mat-progress-bar>
-
+  <mat-progress-bar *ngIf="loadingSubject$ | async" mode="query" color="accent"></mat-progress-bar>
+  <div *ngIf="(dishesSubject$ | async)?.length === 0" class="container">
+    <h2>Welcome to your menu dashboard!</h2>
+    <br>
+    <p>Here you can add your menu's dishes to keep track of them</p>
+    <br>
+    <div align="center">
+        <p>Just click this button on top</p>
+        <button mat-raised-button color="primary" [disabled]="true">
+          <mat-icon>add_box</mat-icon>
+          <span translate>DISHES.NEW</span>
+        </button>
+    </div>
+    <p>Create your first dish and start saving time and money!</p>
+    <small>You need to have registered products in order to create your dishes, and don't worry, we'll take care of the calculations.</small>
+  </div>
   <div *ngFor="let dish of dishesSubject$ | async" [@fadeInOut] [hidden]="loadingSubject$ | async">
       <mat-card class="dish-card">
         <mat-card-header>
@@ -15,10 +29,10 @@
               <div fxLayout="row nowrap">
                 <div>
                   <button mat-button (click)="selectDish(dish)">
-                  <a translate>DISHES.EDIT</a>
+                  <span translate>DISHES.EDIT</span>
                 </button>
                 <button mat-button color="warn" (click)="openDeleteDialog(dish)">
-                  <a translate>DISHES.DELETE</a>
+                  <span translate>DISHES.DELETE</span>
                 </button>
                 </div>
                 <div>

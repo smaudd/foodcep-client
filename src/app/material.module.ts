@@ -23,6 +23,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule, MatMenu} from '@angular/material/menu';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import {MatBadgeModule} from '@angular/material/badge';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {MatBadgeModule} from '@angular/material/badge';
              MatProgressBarModule,
              MatMenuModule,
              ScrollDispatchModule,
-             MatBadgeModule
+             MatBadgeModule,
+             OverlayModule,
              ],
     exports: [MatButtonModule,
              MatCheckboxModule,
@@ -76,7 +78,8 @@ import {MatBadgeModule} from '@angular/material/badge';
              MatProgressBarModule,
              MatMenuModule,
              ScrollDispatchModule,
-             MatBadgeModule
+             MatBadgeModule,
+             OverlayModule,
             ],
 })
 

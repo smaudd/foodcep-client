@@ -9,11 +9,13 @@ import { CommonModule } from '@angular/common';
 
 import { UserManagerComponent } from './user-manager/user-manager.component';
 import { RestaurantProfileComponent } from './restaurant-profile/restaurant-profile.component';
+import { DropUserDialogComponent } from './user-manager/drop-user-dialog.component';
 
 @NgModule({
   declarations: [
     UserManagerComponent,
-    RestaurantProfileComponent
+    RestaurantProfileComponent,
+    DropUserDialogComponent
   ],
   imports: [
     MaterialModule,
@@ -22,5 +24,6 @@ import { RestaurantProfileComponent } from './restaurant-profile/restaurant-prof
     ChefRoutingModule,
     HttpClientModule
   ],
+  entryComponents: [ DropUserDialogComponent ]
 })
 export class ChefModule { }

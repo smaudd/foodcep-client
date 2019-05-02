@@ -1,0 +1,135 @@
+.toolbar {
+  position: sticky;
+  -webkit-position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+p {
+  font-family: Roboto;
+}
+
+.header {
+  height: 30vh;
+  width: 100%;
+  height: 100%;
+}
+
+.title-box {
+  margin: 30px;
+}
+
+.main-img {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.title {
+  margin-top: 10vh;
+  text-align: center;
+  font-size: 50px;
+  color: #A0C843;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.icon-text {
+  font-size: 15px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: gray;
+  font-size: 30px;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.p-title {
+  text-align: center;
+  font-size: 20px;
+  color: #A0C843;
+}
+
+
+
+main {
+  position: relative;
+  min-height: 90vh;
+  margin-bottom: 5vh;
+}
+
+.footer {
+  font-size: 14px;
+  width: 100%;
+}
+
+@media (max-width: 1280px) {
+
+  main {
+    width: 100%;
+  }
+
+  .main-img {
+    margin-right: 30px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    text-align: center
+  }
+}
+
+@media (max-width: 960px) {
+  .main-img {
+    max-width: 250px;
+    max-height: 250px;
+    margin-right: 0px;
+  }
+
+  .image {
+    text-align: center;
+  }
+
+  .box-paragraph {
+    width: 80%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .title {
+    font-size: 40px;
+    margin-top: 10px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    text-align: center
+  }
+
+  .p-title {
+    font-size: 20px;
+  }
+
+
+}
+
+@media (max-width: 600px) {
+
+  .image {
+    text-align: center;
+  }
+
+  .box-paragraph {
+    width: 100%;
+  }
+
+  .main-img {
+    max-width: 250px;
+    max-height: 250px;
+}
+
+  main {
+    margin-bottom: 5vh;
+  }
+
+}

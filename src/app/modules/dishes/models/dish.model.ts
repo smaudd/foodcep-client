@@ -6,6 +6,6 @@ export class Dish {
         public category: string,
         public ingredients: IngredientForDish[],
         public cost: number,
-        public dish_id?: string
+        public dish_id?: number
         ) {}
 }

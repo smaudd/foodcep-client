@@ -2,14 +2,15 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { ErrorStateMatcher } from '@angular/material';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Restaurant } from '../../../auth/models/restaurant.model';
 
 @Component({
-  selector: 'app-signin-restaurant',
-  templateUrl: './signin-restaurant.component.html'
+  selector: 'app-restaurant-form',
+  templateUrl: './restaurant-form.component.html'
 })
-export class SigninRestaurantComponent implements OnInit {
+export class RestaurantFormComponent implements OnInit {
 
-    @Output() restaurantData = new EventEmitter();
+    @Output() stepDone = new EventEmitter();
     matcher = new ErrorStateMatcher;
     restaurantForm: FormGroup;
 
@@ -41,8 +42,9 @@ export class SigninRestaurantComponent implements OnInit {
       });
     }
 
-    sendRestaurantData(formValue: any): void {
-      this.restaurantData.emit(formValue);
+    createRestaurant(formValue: any): void {
+      const restaurant = new Restaurant(formValue.restaurantName, formValue.description, formValue.adress, formValue.phone);
+      this.stepDone.emit(restaurant);
   }
 
 }

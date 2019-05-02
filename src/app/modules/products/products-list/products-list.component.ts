@@ -4,7 +4,7 @@ import { transition, trigger, useAnimation } from '@angular/animations';
 
 import { Ingredient } from '../../shared/models/ingredient.model';
 
-import { PdfRenderService } from '../../../core/http/pdf-render.service';
+import { PdfRenderService } from '../../shared/services/pdf-render.service';
 import { StateService } from './state.service';
 import { StateService as CategoriesStateService } from '../categories-list/state.service';
 import { tap, distinctUntilChanged, debounceTime, map } from 'rxjs/operators';
@@ -36,16 +36,14 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   columnsToDisplay = ['name', 'category', 'pPK', 'finalPrice'];
   expandedIngredient: Ingredient | null;
   collapsedIngredient: any;
-  dataSource = [];
-  emptyCollection: boolean;
-  notFound: boolean;
   search = new FormControl;
   subscription: Subscription;
-  tableSubject$ = this.stateService.ingredientsSubject;
+  data: Ingredient[];
+  productsSubject$ = this.stateService.productsSubject;
   totalSubject$ = this.stateService.totalSumSubject;
   categoriesSubject$ = this.categoriesStateService.categoriesSubject;
   loadingSubject$ = this.stateService.loadingSubject;
-  errorsSubject$ = this.stateService.errorsSubject;
+  notFoundSubject$ = this.stateService.notFoundSubject;
 
   constructor(
     private stateService: StateService,
@@ -68,49 +66,22 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.stateService.get('?product=&&page=0');
-    this.dataStore();
-    this.dataStoreErrors();
     this.searchBox();
     this.subscription = this.totalSubject$.subscribe(value => this.paginator.length = value);
+    this.subscription = this.productsSubject$.subscribe(value => this.data = value);
   }
 
   hideUnexpanded(ingredient: any) {
-    this.dataSource = [ingredient];
+    this.data = [ingredient];
   }
 
   cancel() {
     this.expandedIngredient = null;
-    this.dataSource = this.tableSubject$.value;
+    this.data = this.productsSubject$.value;
   }
 
   handlePaginator(e: any) {
     this.stateService.get(`?product=&&page=${e.pageIndex}`);
-  }
-
-  dataStore() {
-    this.subscription = this.tableSubject$
-    .pipe(
-      tap(value => {
-        this.emptyCollection = false;
-        this.notFound = false;
-        this.dataSource = value;
-        this.expandedIngredient = null;
-      })
-    ).subscribe(value => {
-        if (value.length === 0) {
-          this.emptyCollection = true;
-          return;
-        }
-    });
-  }
-
-  dataStoreErrors() {
-    this.subscription = this.errorsSubject$.
-    pipe(
-      tap(status => {
-        (status === 400) ? this.emptyCollection = true : this.notFound = true;
-      })
-    ).subscribe();
   }
 
   searchBox() {
@@ -132,9 +103,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  // pdf() {
-  //   this.pdfRender.ingredientsPDF(this.categoriesSubject$.value);
-  // }
+  pdf() {
+    this.pdfRender.productsPDF(this.categoriesSubject$.value);
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

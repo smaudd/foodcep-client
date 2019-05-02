@@ -1,7 +1,39 @@
 <mat-toolbar class="mat-elevation-z2" color="primary" [@toolbarSlide]>
-  <span translate>AUTH.USERS</span>
+  <span class="page-title" translate>AUTH.USERS</span>
 </mat-toolbar>
-<mat-progress-bar *ngIf="loadingSubject$ | async" mode="indeterminate" color="primary"></mat-progress-bar>
+<mat-progress-bar *ngIf="loadingSubject$ | async" mode="indeterminate" color="accent"></mat-progress-bar>
+<div *ngIf="(usersSubject$ | async)?.length === 0" class="container">
+  <div align="center">
+  <h3>You don't have people in your team!</h3>
+  <p>Generate invitation codes and share them with the people you want in your team.
+    <br><br>
+    You can generate invitation codes on the administration menu by going to "Invite to your restaurant"
+  </p>
+  <p>They should register on <strong>foodcep</strong> with your code.
+  <br>
+  Every user must have a role. There are 3 kind of roles.
+  </div>
+  <div style="text-align: justify">
+        <h4>- Chef</h4>
+        <p mat-line>
+            It's the highest rank. The chef can use every feature on the app. Only the chef is capable of generating invitation codes, edit restaurant info and manage the team. The chef is the one that registered the restaurant.
+        </p>
+
+      <mat-divider></mat-divider>
+
+      <h4>- Sous</h4>
+        <p mat-line> 
+            Is capable of adding, editing or deleting dishes and recipes. They can also add, edit or delete suppliers and make orders. 
+        </p>
+
+      <mat-divider></mat-divider>
+ 
+      <h4>- Cook</h4>
+        <p mat-line> 
+            Is capable of reading recipes. This role is useful to show every new person in your team your recipes.
+        </p>
+ 
+</div>
 <div class="container">
   <mat-accordion class="accordion-container">
     <mat-expansion-panel *ngFor="let user of usersSubject$ | async">
@@ -16,15 +48,19 @@
 
       <mat-form-field>
         <mat-label>Role</mat-label>
-        <mat-select [value]="user.role" [(ngModel)]="user.role" name="role" #role="ngModel">
+        <mat-select value="{{ user.role }}" [(ngModel)]="user.role" name="role" #role="ngModel">
           <mat-option value="chef">Chef</mat-option>
           <mat-option value="sous">Sous</mat-option>
           <mat-option value="cook">Cook</mat-option>
         </mat-select>
       </mat-form-field>
       <div align="end">
-        <button mat-button color="primary" [disabled]="role.untouched">Save Role Change</button>
-        <button mat-button color="warn">Drop user</button>
+        <button mat-button color="primary" [disabled]="role.untouched" (click)="roleChange(user.user_id, role.value)">
+          <span translate>Save Role Change</span>
+        </button>
+        <button mat-button color="warn" (click)="openDropDialog(user.user_id)">
+          <span translate>Drop User</span>
+        </button>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

@@ -28,8 +28,8 @@ export class RestaurantProfileComponent implements OnInit {
   restaurant_id: string;
   isNotSet = false;
 
-  get name() {
-    return this.resForm.get('name');
+  get restaurant_name() {
+    return this.resForm.get('restaurant_name');
   }
 
   get description() {
@@ -50,10 +50,10 @@ export class RestaurantProfileComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.resForm = this.fb.group({
-      name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      adress: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required])
+      restaurant_name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      description: new FormControl('', [Validators.required, , Validators.maxLength(200)]),
+      adress: new FormControl('', [Validators.required, Validators.maxLength(99)]),
+      phone: new FormControl('', [Validators.required, , Validators.maxLength(10)])
     });
 
   }
@@ -67,13 +67,14 @@ export class RestaurantProfileComponent implements OnInit {
   }
 
   setForm(restaurant: Restaurant) {
-    this.resForm.get('name').setValue(restaurant.name);
+    this.resForm.get('restaurant_name').setValue(restaurant.restaurant_name);
     this.resForm.get('description').setValue(restaurant.description);
     this.resForm.get('adress').setValue(restaurant.adress);
     this.resForm.get('phone').setValue(restaurant.phone);
   }
 
   updateData(formValues: Restaurant) {
+    console.log(formValues)
     this.chefDataService.putRestaurantData(formValues)
     .subscribe(restaurant => {
       if (restaurant) {
@@ -81,7 +82,6 @@ export class RestaurantProfileComponent implements OnInit {
         this.resetFields(restaurant);
         this.isNotSet = false;
         this.restaurant_id = restaurant.restaurant_id;
-        this.snackbar.open('Restaurant data correctly saved', null, 'green-snackbar', 2000);
       }
     });
   }

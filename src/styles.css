@@ -42,8 +42,23 @@ html, body{
     flex: 1 1 auto;
   }
 
+.page-title {
+  color: white;
+  font-family: 'Quicksand', sans-serif;
+}
+
   .mat-list .mat-list-item.right .mat-list-item-content{
     justify-content: flex-end;
+}
+
+button > span {
+  font-size: 15px;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.icon {
+  max-width: 30px;
+  max-height: 30px;
 }
 
 @media (max-width: 900px) {

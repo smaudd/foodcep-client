@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { MatDialog } from '@angular/material';
 import { FilterCorrectFormatService } from '../../../shared/services/filter-correct-format.service';
@@ -34,8 +34,9 @@ export class EditProductComponent implements OnChanges {
 
   @Input() ingredient: Ingredient;
   @Input() categories: Category[];
+  @Output() init = new EventEmitter();
   editForm: FormGroup;
-  ingredients$ = this.stateService.ingredientsSubject;
+  ingredients$ = this.stateService.productsSubject;
 
   ngOnChanges(changes: SimpleChanges) {
       this.editForm.get('name').setValue(this.ingredient.name);
@@ -51,9 +52,9 @@ export class EditProductComponent implements OnChanges {
               private stateService: StateService) {
 
       this.editForm = this.fb.group({
-        name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-        price: new FormControl('', [Validators.required]),
-        loss: new FormControl('', [Validators.required]),
+        name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(19)]),
+        price: new FormControl('', [Validators.required, Validators.max(1000)]),
+        loss: new FormControl('', [Validators.required, Validators.max(1000)]),
         category: new FormControl('', [Validators.required])
       });
 
@@ -66,7 +67,7 @@ export class EditProductComponent implements OnChanges {
         formValue.price === this.ingredient.price &&
         formValue.loss === this.ingredient.loss &&
         formValue.category === this.ingredient.category) {
-      this.snackBar.open(`${formValue.name} is already on the list`, null, 'warning-snackbar', 1000);
+      this.editForm.get('name').setErrors({ 'repeated': true });
       return;
     }
     const costPerLoss = formValue.loss * formValue.price / 1000;
@@ -80,11 +81,7 @@ export class EditProductComponent implements OnChanges {
         width: '550px',
         data: edition
       });
-      dialogEditRef.afterClosed().subscribe(result => {
-          if (result !== undefined) {
-            this.snackBar.open('OK', null, 'green-snackbar', 2000);
-          }
-      });
+      dialogEditRef.afterClosed().subscribe(_ => this.init.emit(true))
     }
 
     openDeleteDialog(current: Ingredient): void {
@@ -92,11 +89,7 @@ export class EditProductComponent implements OnChanges {
         width: '500px',
         data: current
       });
-      dialogDeleteRef.afterClosed().subscribe(result => {
-        if (result !== undefined) {
-            this.snackBar.open('OK', null, 'green-snackbar', 2000);
-        }
-      });
+      dialogDeleteRef.afterClosed().subscribe(_ => this.init.emit(true))
     }
 
 }

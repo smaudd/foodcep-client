@@ -68,6 +68,7 @@ export class SupplierFormComponent implements OnChanges {
   @Output() putSupplier = new EventEmitter();
   @Output() postSupplier = new EventEmitter();
   @Output() deleteSupplier = new EventEmitter();
+  @Output() toggleNew = new EventEmitter;
   supplierForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -100,6 +101,10 @@ export class SupplierFormComponent implements OnChanges {
 
   delete() {
     this.deleteSupplier.emit(this.supplier);
+  }
+
+  toggle() {
+    this.toggleNew.emit(false);
   }
 
 }

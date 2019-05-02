@@ -70,7 +70,8 @@
         "INGREDIENTS": "Productos",
         "CATEGORIES": "Categorias",
         "ABOUT": "Acerca",
-        "MAX": "Máximo 1000"
+        "MAX": "Máximo 1000",
+        "REPEATED": "Producto ya registrado"
     },
     "AUTH": {
         "REGISTRE": "Nuevo Usuario",

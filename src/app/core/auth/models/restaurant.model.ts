@@ -1,6 +1,6 @@
 export class Restaurant {
     constructor(
-        public name: string,
+        public restaurant_name: string,
         public description: string,
         public adress: string,
         public phone: string,

@@ -1,5 +1,4 @@
 <div class="container">
-
   <div align="start" style="margin: 10px">
     <button mat-button *ngIf="!isOrder; else cancel" color="primary" (click)="newOrder()">
       <span translate>New Order</span>
@@ -16,6 +15,28 @@
   </div>
 
   <div *ngIf="!isOrder; else order">
+        <div *ngIf="(orders$ | async)?.length === 0; else content">
+            <h3 style="text-align: center">Make your first order!</h3>
+            <p style="text-align: center">Just click on</p>
+            <div align="center">
+              <button mat-button [disabled]="true">
+                  <span translate>New Order</span>
+                  <mat-icon>add_box</mat-icon>
+              </button>
+            </div>
+            <p style="text-align: center">And start recording your activities!</p>
+            <br>
+            <p>
+              You can order via email using Gmail or Whatsapp to contact your supplier.
+              <br>
+              You will need to have your Gmail account or Whatsapp Web account logged on this browser in order to use this feature.
+              <br>
+              Order any of your registered products to any of your registered suppliers. Every order will be recorded and you can make as many as needed. It's possible to repeat orders.
+              <br>
+              <small>Remember! You will need registered products and suppliers to start making orders!</small>
+            </p>
+        </div>
+        <ng-template #content>
         <mat-card-subtitle>
           <div>
               <span translate>Last orders</span>
@@ -39,9 +60,8 @@
                 </div>
             </cdk-virtual-scroll-viewport>
         </mat-card-content>
-
+      </ng-template>
   </div>
-
   <ng-template #order>
     <app-orders [order_id]="order_id" (done)="toggleIsOrder()"></app-orders>
   </ng-template>

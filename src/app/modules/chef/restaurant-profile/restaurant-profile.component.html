@@ -1,12 +1,12 @@
-<mat-toolbar color="primary" [@toolbarSlide]><span translate>NAV.RESTAURANT</span></mat-toolbar>
+<mat-toolbar color="primary" [@toolbarSlide]><span class="page-title" translate>NAV.RESTAURANT</span></mat-toolbar>
 <div class="container" [@fadeInOut]>
 <br>
   <mat-card>
       <div fxLayout="column">
         <form [formGroup]="resForm" (ngSubmit)="updateData(resForm.value)">
           <mat-form-field>
-          <input matInput placeholder="{{ 'AUTH.NAME' | translate }}" formControlName="name">
-            <mat-error *ngIf="name.hasError('required')"><a translate>AUTH.NAME-REQUIRED</a></mat-error>
+          <input matInput placeholder="{{ 'AUTH.NAME' | translate }}" formControlName="restaurant_name">
+            <mat-error *ngIf="restaurant_name.hasError('required')"><a translate>AUTH.NAME-REQUIRED</a></mat-error>
           </mat-form-field>
 
           <mat-form-field>

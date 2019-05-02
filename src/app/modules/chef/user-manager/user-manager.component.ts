@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from './state.service';
-import { User } from '../../../core/auth/models/user.model';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { slide, fadeInOut } from 'src/app/animations/navigation-animations';
+import { IUserChange } from './user-change.interface';
+import { MatDialog } from '@angular/material';
+import { DropUserDialogComponent } from './drop-user-dialog.component';
+
 
 @Component({
   selector: 'app-user-manager',
@@ -19,8 +22,6 @@ import { slide, fadeInOut } from 'src/app/animations/navigation-animations';
 })
 export class UserManagerComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'email', 'role'];
-  isOpenProfile = false;
   // Subject for the list of users
   usersSubject$ = this.stateService.usersSubject;
   loadingSubject$ = this.stateService.loadingSubject;
@@ -28,6 +29,7 @@ export class UserManagerComponent implements OnInit {
 
   constructor(
     private stateService: StateService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -36,13 +38,18 @@ export class UserManagerComponent implements OnInit {
     this.stateService.getUsers();
   }
 
-  loadUser(user: User) {
-    // Notifies local state to profile state which user are we loading
-    this.toggleProfile();
+  roleChange(user_id: number, role: string) {
+    const user: IUserChange = {
+      role: role,
+      user_id: user_id
+    }
+    this.stateService.updateUser(user)
   }
 
-  toggleProfile() {
-    this.isOpenProfile ? this.isOpenProfile = false : this.isOpenProfile = true;
+  openDropDialog(user_id: number): void {
+    const dialogEditRef = this.dialog.open(DropUserDialogComponent, {
+      width: '550px',
+      data: user_id
+    });
   }
-
 }

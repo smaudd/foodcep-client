@@ -5,13 +5,24 @@
         <mat-icon>add_box</mat-icon>
       </button>
     </div>
-    <div align="end">
-        <button mat-button (click)="toggleNew()" color="warn" *ngIf="newMenu">
-            <span translate>Cancel</span>
-            <mat-icon>clear</mat-icon>
+    <div *ngIf="data.length === 0 && !newMenu">
+      <h3 style="text-align: center">Welcome to your suppliers list!</h3>
+      <br>
+      <p style="text-align: center">Click on</p>
+      <br>
+      <div align="center">
+          <button mat-button [disabled]="true">
+              <span translate>New Supplier</span>
+              <mat-icon>add_box</mat-icon>
           </button>
+      </div>
+      <br>
+      <span align="center">To registre your first supplier</span>
+      <p>
+        Your supplier's information will be used to contact your supplier via Whatsapp or Gmail every time you make an order.
+      </p>
     </div>
-    <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z2" matSort *ngIf="!newMenu">
+    <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z2" matSort *ngIf="!newMenu && data.length !== 0">
       <!-- Column Cells -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Name</span></th>

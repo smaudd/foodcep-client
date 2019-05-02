@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminGuard } from 'src/app/core/guards/admin.guard';
 import { LayoutComponent } from './layout.component';
-
+import { VerificationGuard } from '../guards/verification.guard';
 
 const routes: Routes = [
   {
@@ -30,8 +30,9 @@ const routes: Routes = [
         path: 'orders-suppliers',
         loadChildren: '../../modules/orders-suppliers/orders-suppliers.module#OrdersSuppliersModule'
       }
-    ]
-  },
+    ],
+    canActivate: [VerificationGuard]
+  }
 ];
 
 @NgModule({

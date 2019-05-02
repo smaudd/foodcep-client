@@ -2,10 +2,12 @@ import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Dish } from '../models/dish.model';
 import { DeleteDashboardDialogComponent } from './delete-dashboard-dialog/delete-dashboard-dialog.component';
-import { PdfRenderService } from '../../../core/http/pdf-render.service';
+import { PdfRenderService } from '../../shared/services/pdf-render.service';
 import { StateService } from '../services/state.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeInOut } from 'src/app/animations/navigation-animations';
+import { Subscription } from 'rxjs';
+import { skip, map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dishes-dashboard',
@@ -24,6 +26,7 @@ export class DishesDashboardComponent implements OnInit {
   dishesList: Dish[];
   dishesSubject$ = this.stateService.dishesSubject;
   loadingSubject$ = this.stateService.loadingSubject;
+  subscription: Subscription;
   loadedDish: Dish;
   changes: boolean;
 
@@ -37,6 +40,17 @@ export class DishesDashboardComponent implements OnInit {
     if (this.firstInit) {
     this.stateService.get();
     }
+  }
+
+  dashboardLength() {
+    return this.subscription = this.dishesSubject$
+    .pipe(
+      skip(2),
+      map((value: Dish[]) => {
+        value.length;
+        console.log(value.length)
+      })
+    ).subscribe();
   }
 
   selectDish(dish: Dish) {
@@ -53,7 +67,7 @@ export class DishesDashboardComponent implements OnInit {
   }
 
   pdf(dish: Dish) {
-    // this.pdfRender.dishPDF(dish);
+    this.pdfRender.dishPDF(dish);
   }
 
 }

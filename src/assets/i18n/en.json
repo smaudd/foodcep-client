@@ -13,7 +13,8 @@
         "CLOSE": "Close"
     },
     "DISHES": {
-        "START": "Start adding ingredients to the dish! Use the search bar to find the ingredients for this dish",
+        "START": "Start adding ingredients to the dish! Use the search bar to find the ingredients for this dish.",
+        "REMEMBER": "Remember! You need to have registered ingredients in order to create your dish.",
         "NAME": "Name",
         "TOTAL": "Total",
         "EDIT": "Edit",
@@ -37,15 +38,15 @@
         "OVERVIEW": "Dish Overview & Editor",
         "NEW": "New Dish",
         "CANCEL": "Cancel",
-        "DASHBOARD": "Dishes Dashboard",
+        "DASHBOARD": "Dashboard",
         "EDIT-DISH": "Edit Dish",
         "CREATE-DISH": "Create Dish"
     },
     "INGREDIENTS": {
-        "EXPLANATION": "How does the ingredients manager work?",
-        "TEXT-1": "Choose between the available tabs to see your registered ingredients and categories.",
-        "TEXT-2": "You can add, edit or remove ingredients and categories from their respective tab.",
-        "EMPTY": "It looks like you don't have any registred ingredient. Start adding ingredients to your app!",
+        "EXPLANATION": "How does the Product Manager work?",
+        "TEXT-1": "Choose between the available tabs to see your registered products and categories.",
+        "TEXT-2": "You can add, edit or remove products and categories from their respective tab.",
+        "EMPTY": "It looks like you don't have any registered products. Start adding products to your account.",
         "REGISTERED": "Registered Ingredients",
         "SEARCH": "Search",
         "NAME": "Name",
@@ -53,12 +54,12 @@
         "PPK": "Price Per Kilo",
         "COST": "Cost",
         "LOSS": "Waste Per kilo",
-        "EMPTY-CATEGORIES": "It looks like you don't have any registred categories! Start adding categories to your app",
+        "EMPTY-CATEGORIES": "It looks like you don't have any registered categories! Start adding categories to your account.",
         "REGISTERED-CATEGORIES": "Registered Categories",
         "ADD-INGREDIENTS": "Add Products",
         "NAME-REQUIRED": "Name is required!",
         "ONLY-LETTERS": "Only spaces and letters allowed",
-        "PPP-REQUIRED": "Price per kilo are required!",
+        "PPK-REQUIRED": "Price per kilo are required!",
         "LOSS-REQUIRED": "Ingredient waste per kilo is required!",
         "CATEGORY-REQUIRED": "Category is required!",
         "ARE-YOU-SURE": "Are you sure you want to delete?",
@@ -70,7 +71,9 @@
         "INGREDIENTS": "Products",
         "CATEGORIES": "Categories",
         "ABOUT": "About",
-        "MAX": "Max 1000"
+        "MAX": "Max 1000",
+        "REPEATED": "Product already registered",
+        "PRODUCTS-LIST": "PRODUCTS LIST"
     },
     "AUTH": {
         "REGISTRE": "New Account",

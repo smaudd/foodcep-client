@@ -7,10 +7,12 @@ import { AuthRoutingModule } from './auth-routing.module';
 
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
+import { VerificationDialogComponent } from './login/verification-dialog.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    VerificationDialogComponent
   ],
   imports: [
     MaterialModule,
@@ -21,6 +23,7 @@ import { CommonModule } from '@angular/common';
   ],
   exports: [
     LoginComponent
-  ]
+  ],
+  entryComponents: [ VerificationDialogComponent ]
 })
 export class AuthModule { }

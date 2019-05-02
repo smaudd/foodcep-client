@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="!isAdmin" class="mat-elevation-z2" color="primary" [@toolbarSlide]><span translate>AUTH.PROFILE</span></mat-toolbar>
+<mat-toolbar *ngIf="!isAdmin" class="mat-elevation-z2" color="primary" [@toolbarSlide]><span class="page-title" translate>AUTH.PROFILE</span></mat-toolbar>
 <div class="container" [@fadeInOut]>
         <mat-card>
                 <div align="end" *ngIf="isAdmin">
@@ -18,8 +18,8 @@
                                             <app-language [user]="user"></app-language>
                                         </ng-template>
                                     <mat-card-actions>
-                                        <button mat-button (click)="openPwdDialog()"><a translate>AUTH.CHANGE-PWD</a></button>
-                                        <button mat-button (click)="openDelDialog()"><a translate>AUTH.DELETE</a></button>
+                                        <button mat-button (click)="openPwdDialog()"><span translate>AUTH.CHANGE-PWD</span></button>
+                                        <button mat-button (click)="openDelDialog()" color="warn"><span translate>AUTH.DELETE</span></button>
                                     </mat-card-actions>
                         </mat-card-content>
                 </div>

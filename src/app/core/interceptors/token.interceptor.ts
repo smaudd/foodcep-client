@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../http/auth-service/auth.service';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take, retry } from 'rxjs/operators';
 import { Router} from '@angular/router';
 
 
@@ -25,6 +25,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 // If we have a response with 401 status retry the request in order to use the refreshed token
                     if (error.status === 401 && error instanceof HttpErrorResponse) {
                         return this.authService.refreshSession().pipe(
+                            retry(1),
                             take(1),
                             switchMap((response) => {
                                 if (response) {
@@ -48,7 +49,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     forbiden() {
         this.authService.logout(true).subscribe(response => {
-        return this.router.navigate(['/login']);
+        return this.router.navigate(['/home']);
     });
     }
 

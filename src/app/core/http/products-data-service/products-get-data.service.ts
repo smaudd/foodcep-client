@@ -29,6 +29,5 @@ export class ProductsService {
     return this.http.get<Category>(this.getCategoriesRoute, httpOptions);
   }
 
-
 }
 

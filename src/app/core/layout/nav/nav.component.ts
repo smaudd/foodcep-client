@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { SessionDataService } from '../../../modules/shared/services/session-data.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../http/auth-service/auth.service';
+import { MatDialog } from '@angular/material';
+import { InvitationDialogComponent } from 'src/app/modules/chef/invitation-dialog/invitation-dialog.component';
 
 @Component({
   selector: 'app-nav-component',
@@ -17,7 +19,9 @@ export class NavComponent implements OnInit {
     private sessionDataService: SessionDataService,
     private router: Router,
     private authService: AuthService,
-    public translateService: TranslateService) { }
+    public translateService: TranslateService,
+    private dialog: MatDialog
+    ) { }
 
   logged = false;
   role: string;
@@ -44,4 +48,11 @@ export class NavComponent implements OnInit {
     this.translateService.use(language);
   }
 
+
+  openInvitationDialog(): void {
+    const dialogEditRef = this.dialog.open(InvitationDialogComponent, {
+      width: '550px',
+      data: { calilo: 'null' }
+    });
+  }
 }

@@ -3,10 +3,10 @@ export class User {
         readonly email: string,
         readonly password?: string,
         readonly name?: string,
+        public invitation_code?: string,
+        public language?: string,
         readonly role?: string,
         public user_id?: string,
-        public language?: string,
-        public invitation_code?: string
         ) {
     }
 }
