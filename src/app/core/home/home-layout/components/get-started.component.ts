@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-get-started',
   template: `
-  <p>Great!</p>
+  <markdown [src]="'assets/documentation/get-started.md'"></markdown>
   `,
   styleUrls: ['../home-layout.component.scss']
 })

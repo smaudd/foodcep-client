@@ -10,6 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CookieService } from 'ngx-cookie-service';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 import { SharedModule } from './modules/shared/shared.module';
 
@@ -41,7 +42,22 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
       },
       isolate: true
-  }),
+    }),
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true,
+          tables: true,
+          breaks: false,
+          pedantic: false,
+          sanitize: false,
+          smartLists: true,
+          smartypants: false,
+        },
+      },
+    }),
     AppRoutingModule,
     AuthModule,
     HttpClientModule,

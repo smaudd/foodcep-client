@@ -10,6 +10,7 @@ import { HomeContentComponent } from './home-layout/components/content.component
 import { HomeFooterComponent } from './home-layout/components/footer.component';
 import { GetStartedComponent } from './home-layout/components/get-started.component';
 import { HomeHeaderComponent } from './home-layout/components/header.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HomeHeaderComponent } from './home-layout/components/header.component';
     CommonModule,
     AuthModule,
     SigninModule,
-    SharedModule
+    SharedModule,
+    MarkdownModule.forChild(),
   ],
   exports: []
 })
