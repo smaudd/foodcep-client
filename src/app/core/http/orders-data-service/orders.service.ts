@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Order } from '../../../modules/orders-suppliers/dashboard/models/order.model';
 
 
@@ -16,14 +16,18 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersGetService {
+export class OrdersService {
 
   odersEndpoint = '~api/orders';
+  cached: Order[] = null;
   constructor(
     private http: HttpClient
     ) {}
 
-  getOrder(order_id: number): Observable<Order> {
+  getOrder(order_id: number | string): Observable<Order> {
+    if (order_id === 'null') {
+      return of(null)
+    }
     return this.http.get<Order>(this.odersEndpoint+ '/read/' + order_id, httpOptions)
     .pipe(
       map(order => {
@@ -33,10 +37,23 @@ export class OrdersGetService {
   }
 
   getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.odersEndpoint+ '/read', httpOptions)
+    if (this.cached !== null) {
+      return of(this.cached)
+    }
+    return this.http.get<Order[]>(this.odersEndpoint + '/read', httpOptions)
     .pipe(
+      tap(value => this.cached = value),
       map(orders => {
         return this.formatToLocaleTimeOrders(orders);
+      })
+    )
+  }
+
+  getLastOrder(): Observable<Order> {
+    return this.http.get<Order>(this.odersEndpoint + '/read/last', httpOptions)
+    .pipe(
+      map(order => {
+        return this.formatToLocaleTimeOrder(order);
       })
     )
   }
@@ -52,15 +69,18 @@ export class OrdersGetService {
 
 
   formatToLocaleTimeOrder(order: Order) {
+    if (order !== null) {
       // Convert UTC to local date
       let date = new Date(order.date);
       const timeOffset = date.getTimezoneOffset();
       date.setMinutes(date.getMinutes() - timeOffset);
       order.date = date;
-    return order
+      return order
+    }
 }
 
   formatToLocaleTimeOrders(orders: Order[]) {
+    if (orders !== null) {
       orders.forEach(order => {
         // Convert UTC to local date
         let date = new Date(order.date);
@@ -69,5 +89,6 @@ export class OrdersGetService {
         order.date = date;
       })
       return orders
+    }
   }
 }

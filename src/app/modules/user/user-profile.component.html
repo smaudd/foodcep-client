@@ -1,22 +1,15 @@
-<mat-toolbar *ngIf="!isAdmin" class="mat-elevation-z2" color="primary" [@toolbarSlide]><span class="page-title" translate>AUTH.PROFILE</span></mat-toolbar>
-<div class="container" [@fadeInOut]>
+<mat-toolbar class="mat-elevation-z2" color="primary"><span class="page-title" translate>AUTH.PROFILE</span></mat-toolbar>
+<div class="container">
         <mat-card>
-                <div align="end" *ngIf="isAdmin">
-                    <button mat-icon-button (click)="closeProfile()">
-                    <mat-icon color="primary">clear</mat-icon>
-                    </button>
-                </div>
                 <div *ngIf="loadingSubject$ | async" class="loading-shade">
                         <mat-progress-bar mode="query" color="primary"></mat-progress-bar>
                 </div>
-                <div [hidden]="loadingSubject$ | async">
-                        <mat-card-content>
+                <div *ngIf="!(loadingSubject$ | async)">
+                        <mat-card-content [@fadeInOut]>
                                         <app-name [user]="user"></app-name>
-                                        <app-email [user]="user" [isAdmin]="isAdmin"></app-email>
-                                        <app-role *ngIf="isAdmin; else language" [user]="user"></app-role>
-                                        <ng-template #language>
-                                            <app-language [user]="user"></app-language>
-                                        </ng-template>
+                                        <app-email [user]="user"></app-email>
+                                        <app-language [user]="user"></app-language>
+                                        <app-currency [user]="user"></app-currency>
                                     <mat-card-actions>
                                         <button mat-button (click)="openPwdDialog()"><span translate>AUTH.CHANGE-PWD</span></button>
                                         <button mat-button (click)="openDelDialog()" color="warn"><span translate>AUTH.DELETE</span></button>

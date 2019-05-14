@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { ProfileService } from '../../../core/http/user-profile-data-service/profile.service';
 import { User } from '../../../core/auth/models/user.model';
-import { IEmailChange, IDelete, ILanguageChange, INameChange, IPasswordChange, IRoleChange } from '../../../core/auth/models/input.interfaces';
+import { IEmailChange, IDelete, ILanguageChange, INameChange, IPasswordChange, IRoleChange, ICurrencyChange } from '../../../core/auth/models/input.interfaces';
 import { take } from 'rxjs/operators';
 
 interface Notification {
@@ -40,7 +40,6 @@ export class StateService {
 
   // Change email
   updateEmail(userData: IEmailChange) {
-    this.loadingSubject.next(true);
     this.profileService.putEmail(userData)
     .subscribe(user => {
        this.userSubject.next(user);
@@ -63,6 +62,7 @@ export class StateService {
       this.errorsSubject.next(false);
     }, error => {
       this.errorsSubject.next(error.status);
+      this.loadingSubject.next(false);
     });
   }
 
@@ -94,6 +94,15 @@ export class StateService {
       this.userSubject.next(value);
       this.loadingSubject.next(false);
     });
+  }
+
+  updateCurrency(userData: ICurrencyChange) {
+    this.loadingSubject.next(true);
+    this.profileService.putCurrency(userData)
+    .subscribe(user => {
+      this.userSubject.next(user);
+      this.loadingSubject.next(false);
+    })
   }
 
   // Delete account

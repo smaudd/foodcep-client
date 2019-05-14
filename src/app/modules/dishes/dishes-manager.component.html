@@ -1,21 +1,23 @@
-  <mat-toolbar color="primary" class="mat-elevation-z2" [@toolbarSlide]>
+  <mat-toolbar class="mat-elevation-z1" color="primary">
       <span class="page-title">{{ menuName }}</span>
       <span class="spacer"></span>
-      <div align="end">
-          <button mat-button *ngIf="!newDish && !editDish" (click)="createNewDish()">
-            <span translate>DISHES.NEW</span>
-            <mat-icon>add_box</mat-icon>
-          </button>
-          <button mat-button *ngIf="newDish || editDish" (click)="initState()">
-            <span translate>Cancel</span>
-            <mat-icon>clear</mat-icon>
-          </button>
-      </div>
+        <div align="end">
+            <button mat-button *ngIf="!newDish && !editDish" (click)="createNewDish()">
+                <span translate class="toolbar-button">DISHES.NEW</span>
+                <mat-icon class="toolbar-button">add_box</mat-icon>
+            </button>
+            <button mat-button *ngIf="newDish || editDish" (click)="initState()">
+              <span translate class="toolbar-button">Cancel</span>
+              <mat-icon class="toolbar-button">clear</mat-icon>
+            </button>
+        </div>
+        <button mat-icon-button (click)="openHelp()">
+            <mat-icon class="toolbar-button">help_outline</mat-icon>
+        </button>
   </mat-toolbar>
     <app-dishes-dashboard *ngIf="!editDish && !newDish" (loadEditor)="loadEditor($event)" [firstInit]="firstInit"></app-dishes-dashboard>
     <div class="container">
-      <h4 *ngIf="emptyCollection && !newDish"><a translate>DISHES.EMPTY-COLLECTION</a></h4>
-      <div *ngIf="newDish">
+      <div *ngIf="newDish" [@fadeInOut]>
           <h3><span translate>DISHES.CREATOR</span></h3>
           <p><span translate>DISHES.CREATE</span></p>
           <mat-divider></mat-divider>

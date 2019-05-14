@@ -52,7 +52,7 @@ export class EditProductComponent implements OnChanges {
               private stateService: StateService) {
 
       this.editForm = this.fb.group({
-        name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(19)]),
+        name: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*'), Validators.maxLength(19)]),
         price: new FormControl('', [Validators.required, Validators.max(1000)]),
         loss: new FormControl('', [Validators.required, Validators.max(1000)]),
         category: new FormControl('', [Validators.required])

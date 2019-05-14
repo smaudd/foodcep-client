@@ -6,39 +6,37 @@ import { StateService } from '../../state.service';
 @Component({
   selector: 'app-edit-dialog',
   template: `
-  <h1 mat-dialog-title><a translate>INGREDIENTS.ARE-YOU-SURE-2</a></h1>
-        <div mat-dialog-content>
-                <div style="align-content: center">
-                        <mat-list>
-                        <mat-list-item>
-                                <h4 mat-line>{{ data.name }}</h4>
-                                <p mat-line><small translate>INGREDIENTS.NAME</small></p>
-                        </mat-list-item>
-                        <mat-list-item>
-                                <h4 mat-line>{{ data.price | currency:'EUR' }}</h4>
-                                <p mat-line><small translate>INGREDIENTS.PPK</small></p>
-                        </mat-list-item>
-                        <mat-list-item>
-                                <h4 mat-line>{{ data.loss }}gr</h4>
-                                <p mat-line><small translate>INGREDIENTS.INGREDIENT-LOSS</small></p>
-                        </mat-list-item>
-                        <mat-list-item>
-                                <h4 mat-line>{{ data.category }}</h4>
-                                <p mat-line><small translate>INGREDIENTS.CATEGORY</small></p>
-                        </mat-list-item>
-                        </mat-list>
+  <h1 mat-dialog-title><span translate>INGREDIENTS.ARE-YOU-SURE-2</span></h1>
+        <div mat-dialog-content align="center" style="overflow: hidden">
+              <div fxLayout="row" fxLayoutGap="20px">
+                  <div>
+                    <h4>{{ data.name }}</h4>
+                    <p><small translate>INGREDIENTS.NAME</small></p>
                   </div>
-          </div>
+                  <div>
+                    <h4>{{ data.price | currency:'EUR' }}</h4>
+                    <p><small translate>INGREDIENTS.PPK</small></p>
+                  </div>
+                  <div>
+                    <h4>{{ data.loss }}gr</h4>
+                    <p><small translate>INGREDIENTS.INGREDIENT-LOSS</small></p>
+                  </div>
+                  <div>
+                    <h4>{{ data.category }}</h4>
+                    <p><small translate>INGREDIENTS.CATEGORY</small></p>
+                  </div>
+                </div>
+              <div>
           <div mat-dialog-actions align="end">
-                  <button mat-icon-button color="accent" (click)="putData()">
-                          <mat-icon>save</mat-icon>
+                  <button mat-icon-button (click)="putData()">
+                          <mat-icon color="accent">save</mat-icon>
                   </button>
-                  <button mat-icon-button color="warn" (click)="onNoClick()">
-                          <mat-icon>cancel</mat-icon>
+                  <button mat-icon-button (click)="onNoClick()">
+                          <mat-icon color="warn">cancel</mat-icon>
                   </button>
           </div>
-  `,
-  styleUrls: ['./edit-dialog.component.css']
+          <br>
+  `
 })
 
 export class EditDialogComponent {

@@ -1,18 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../http/auth-service/auth.service';
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInOut } from 'src/app/animations/navigation-animations';
+import { anim } from 'src/app/animations/navigation-animations';
 
 @Component({
   selector: 'app-home-layout',
   templateUrl: './home-layout.component.html',
   styleUrls: ['./home-layout.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '.5s' } })])
-    ])
-  ]
+  animations: [anim]
 })
 export class HomeLayoutComponent implements OnInit {
 
@@ -28,6 +23,11 @@ export class HomeLayoutComponent implements OnInit {
         this.router.navigate(['/'])
       }
     })
+  }
+
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData.animation && outlet.activatedRouteData['animation'];
   }
 
 }

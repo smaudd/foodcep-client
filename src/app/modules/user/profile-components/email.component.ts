@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { StateService } from './state.service';
 import { IEmailChange } from '../../../core/auth/models/input.interfaces';
@@ -11,22 +11,28 @@ import { Subscription } from 'rxjs';
     template:
     `
     <div>
-        <form [formGroup]="emailForm" fxLayout="row">
-                <mat-form-field>
+        <form [formGroup]="emailForm" fxLayout="column">
+                <mat-form-field appearance="outline">
                         <input matInput placeholder="{{ 'AUTH.EMAIL' | translate }}" formControlName="email" autocomplete="off">
-                        <mat-error *ngIf="email.hasError('required')"><a translate>AUTH.EMAIL-REQUIRED</a></mat-error>
+                        <mat-error *ngIf="email.hasError('required')"><span translate>AUTH.EMAIL-REQUIRED</span></mat-error>
                         <mat-error *ngIf="email.hasError('email')"><a translate>AUTH.VALID-EMAIL</a></mat-error>
-                        <mat-error *ngIf="email.hasError('repeated')"><a translate>AUTH.EMAIL-REPEATED</a></mat-error>
-                        <mat-error *ngIf="email.hasError('no-changes')"><a translate>AUTH.NO-CHANGES</a></mat-error>
+                        <mat-error *ngIf="email.hasError('repeated')"><span translate>AUTH.EMAIL-REPEATED</span></mat-error>
+                        <mat-error *ngIf="email.hasError('no-changes')"><span translate>AUTH.NO-CHANGES</span></mat-error>
                 </mat-form-field>
-                <mat-form-field *ngIf="email.dirty && email.value !== '' && email.value !== user.email">
-                        <input matInput type="password" placeholder="{{ 'AUTH.PASSWORD' | translate }}" formControlName="password" #pwd>
-                        <mat-error *ngIf="password.hasError('required')"><a translate>AUTH.PASSWORD-REQUIRED</a></mat-error>
-                        <mat-error *ngIf="password.hasError('wrong-password')"><a translate>AUTH.WRONG-PWD</a></mat-error>
-                </mat-form-field>
-                <button mat-icon-button *ngIf="emailForm.valid && emailForm.dirty" (click)="saveEmail(emailForm.value)">
-                        <mat-icon color="warn">check</mat-icon>
-                </button>
+                <div fxLayout="row" *ngIf="email.dirty && email.value !== '' && email.value !== user.email">
+                  <div fxFlex="100" style="width: 100%">
+                    <mat-form-field appearance="outline">
+                            <input matInput type="password" placeholder="{{ 'AUTH.PASSWORD' | translate }}" formControlName="password" #pwd>
+                            <mat-error *ngIf="password.hasError('required')"><span translate>AUTH.PASSWORD-REQUIRED</span></mat-error>
+                            <mat-error *ngIf="password.hasError('wrong-password')"><span translate>AUTH.WRONG-PWD</span></mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <button mat-icon-button *ngIf="emailForm.valid && emailForm.dirty" (click)="saveEmail(emailForm.value)">
+                            <mat-icon color="warn">check</mat-icon>
+                    </button>
+                  </div>
+                </div>
         </form>
     </div>
     `,
@@ -77,10 +83,11 @@ export class EmailComponent implements OnChanges {
         this.errorsSubscription = this.errors$
         .pipe(
           skip(1),
-          take(1)
+          take(2)
         )
         .subscribe(error => {
             if (error) {
+              console.log(error)
                 switch (error) {
                     case 422:
                     this.emailForm.get('password').setErrors({ 'wrong-password': 'error' });
@@ -90,7 +97,7 @@ export class EmailComponent implements OnChanges {
                     break;
                 }
             } else {
-                this.emailForm.reset();
+              this.emailForm.reset()
             }
         });
     }

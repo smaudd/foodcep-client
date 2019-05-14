@@ -1,47 +1,63 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Supplier } from '../models/supplier.model';
-import { StateService } from '../state.service';
+import { MatDialog } from '@angular/material';
+import { DeleteSupplierDialogComponent } from './delete-supplier-dialog.component';
 
 @Component({
   selector: 'app-supplier-form',
   template: `
           <div>
             <form [formGroup]="supplierForm" fxLayout="column" (ngSubmit)="supplier !== undefined ? put(supplierForm.value) : post(supplierForm.value)">
-              <mat-form-field>
-                  <input matInput type="text" autocomplete="off" placeholder="Name" formControlName="name">
-                  <mat-error *ngIf="name.hasError('required')">Name is required</mat-error>
-                  <mat-error *ngIf="name.hasError('pattern')">Only letters and spaces allowed</mat-error>
+              <mat-form-field appearance="outline">
+                  <input matInput type="text" autocomplete="off" placeholder="{{'AUTH.NAME'|translate}}" formControlName="name">
+                  <mat-error *ngIf="name.hasError('required')">
+                    <span translate>AUTH.NAME-REQUIRED</span>
+                  </mat-error>
+                  <mat-error *ngIf="name.hasError('pattern')">
+                    <span translate>AUTH.ONLY-LETTERS</span>
+                  </mat-error>
               </mat-form-field>
 
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                   <input matInput type="text" autocomplete="off" placeholder="Email" formControlName="email">
-                  <mat-error *ngIf="email.hasError('required')">Email is required</mat-error>
-                  <mat-error *ngIf="email.hasError('email')">Correct Email</mat-error>
+                  <mat-error *ngIf="email.hasError('required')">
+                    <span translate>AUTH.EMAIL-REQUIRED</span>
+                  </mat-error>
+                  <mat-error *ngIf="email.hasError('email')">
+                    <span translate>AUTH.VALID-EMAIL</span>
+                  </mat-error>
               </mat-form-field>
 
-              <mat-form-field>
-                  <input matInput autocomplete="off" placeholder="Telephone" formControlName="phone">
-                  <mat-error *ngIf="phone.hasError('required')">Phone is required</mat-error>
-                  <mat-error *ngIf="phone.hasError('pattern')">At least 6 max 9. Only numbers</mat-error>
+              <mat-form-field appearance="outline">
+                  <input matInput autocomplete="off" placeholder="{{'AUTH.PHONE'|translate}}" formControlName="phone">
+                  <mat-error *ngIf="phone.hasError('required')">
+                    <span translate>AUTH.PHONE-REQUIRED</span>
+                  </mat-error>
               </mat-form-field>
 
-              <mat-form-field>
-                  <input matInput type="text" autocomplete="off" placeholder="Comertial" formControlName="comertial">
-                  <mat-error *ngIf="comertial.hasError('required')">Comertial is required</mat-error>
-                  <mat-error *ngIf="comertial.hasError('pattern')">Only letters and spaces allowed</mat-error>
+              <mat-form-field appearance="outline">
+                  <input matInput type="text" autocomplete="off" placeholder="{{'ORDERS.COMERTIAL' | translate}}" formControlName="comertial">
+                  <mat-error *ngIf="comertial.hasError('required')">
+                    <span translate>ORDERS.COMERTIAL-REQUIRED</span>
+                  </mat-error>
+                  <mat-error *ngIf="comertial.hasError('pattern')">
+                    <span translate>AUTH.ONLY-LETTERS</span>
+                  </mat-error>
               </mat-form-field>
 
               <div align="end" *ngIf="supplier !== undefined">
                 <button mat-icon-button type="submit" *ngIf="supplierForm.valid && supplierForm.dirty">
-                      <mat-icon color="warn">check</mat-icon>
+                      <mat-icon color="warn">save</mat-icon>
                 </button>
-                <button mat-icon-button type="button" (click)="delete()">
+                <button mat-icon-button type="button" (click)="openDeleteDialog(supplierForm.value)">
                       <mat-icon color="warn">delete</mat-icon>
                 </button>
               </div>
               <div align="end" *ngIf="supplier === undefined">
-                <button mat-button type="submit" [disabled]="supplierForm.invalid">Submit</button>
+                <button mat-button type="submit" [disabled]="supplierForm.invalid">
+                  <span translate>AUTH.SUBMIT</span>
+                </button>
               </div>
               <br>
             </form>
@@ -71,12 +87,12 @@ export class SupplierFormComponent implements OnChanges {
   @Output() toggleNew = new EventEmitter;
   supplierForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.supplierForm = this.fb.group({
-      name: new FormControl('', [Validators.required, , Validators.pattern('[a-zA-Z-áéíóúñ ]*')]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{6,12}')]),
-      comertial: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z-áéíóúñ ]*')]),
+      name: new FormControl('', [Validators.required, , Validators.pattern('[a-zA-Z-áéíóúñ ]*'), Validators.maxLength(20)]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(30)]),
+      phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{9,12}'), Validators.maxLength(20)]),
+      comertial: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z-áéíóúñ ]*'), Validators.maxLength(20)]),
     });
    }
 
@@ -99,8 +115,15 @@ export class SupplierFormComponent implements OnChanges {
     this.postSupplier.emit(supplier);
   }
 
-  delete() {
-    this.deleteSupplier.emit(this.supplier);
+  openDeleteDialog(supplierForm: Supplier) {
+    const supplier = new Supplier(supplierForm.name, supplierForm.email, supplierForm.phone, supplierForm.comertial, this.supplier.supplier_id);
+    this.postSupplier.emit(supplier);
+    const dialogRef = this.dialog.open(DeleteSupplierDialogComponent, {
+      data: supplier
+    })
+    dialogRef.afterClosed().subscribe(_ => {
+      this.deleteSupplier.emit(this.supplier);
+    })
   }
 
   toggle() {

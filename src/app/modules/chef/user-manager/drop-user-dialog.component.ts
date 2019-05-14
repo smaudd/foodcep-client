@@ -6,9 +6,8 @@ import { StateService } from './state.service';
   selector: 'app-drop-user-dialog',
   template: `
   <div>
-    <h3>Are you sure you want to drop this user from your team?</h3>
-    <p>This action will delete this users account</p>
-    <small>It will be notified via email</small>
+    <h3><span translate>TEAM.ARE-YOU-SURE</span></h3>
+    <p translate>TEAM.THIS-ACTION</p>
     <div align="end">
       <button mat-icon-button (click)="deleteUser()">
         <mat-icon color="warn">check</mat-icon>

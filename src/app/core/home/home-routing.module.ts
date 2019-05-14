@@ -9,12 +9,20 @@ const routes: Routes = [
     path: '',
     component: HomeLayoutComponent,
     children: [
-      { path: '', component: HomeContentComponent },
+      { path: '', component: HomeContentComponent, data: { animation: 'one' }},
       {
         path: 'signin',
-        loadChildren: '../signin/signin.module#SigninModule'
+        loadChildren: '../signin/signin.module#SigninModule',
+        data: { animation: 'two' }
+
       },
-      { path: 'get-started', component: GetStartedComponent }
+      {
+        path: 'login',
+        loadChildren: '../auth/auth.module#AuthModule',
+        data: { animation: 'four' }
+
+      },
+      { path: 'get-started', component: GetStartedComponent, data: { animation: 'three' }}
     ]
   },
 ];

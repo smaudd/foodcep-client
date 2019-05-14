@@ -6,11 +6,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   template: `
     <div fxLayout="column" align="center">
         <mat-icon color="warn">report_problem</mat-icon>
-        <h3>Something went wrong :(</h3>
+        <h3><span translate>ERROR.WRONG</span></h3>
     </div>
-    <i>Status {{ data.status }}</i>
+    <i><span translate>ERROR.STATUS</span> {{ data.status }}</i>
     <div align="end">
-        <button mat-raised-button color="warn" (click)="onNoClick()">Try Again</button>
+        <button mat-raised-button color="warn" (click)="onNoClick()">
+          <span translate>ERROR.TRY-AGAIN</span>
+        </button>
     </div>
   `,
 })

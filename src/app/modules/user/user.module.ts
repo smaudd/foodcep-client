@@ -11,6 +11,7 @@ import { EmailComponent } from './profile-components/email.component';
 import { LanguageComponent } from './profile-components/language.component';
 import { ChangePwdDialogComponent } from './profile-components/change-pwd-dialog/change-pwd-dialog.component';
 import { DeleteAccountDialogComponent } from './profile-components/delete-account-dialog/delete-account-dialog.component';
+import { CurrencyComponent } from './profile-components/currency.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { DeleteAccountDialogComponent } from './profile-components/delete-accoun
     RoleComponent,
     EmailComponent,
     LanguageComponent,
+    CurrencyComponent,
     ChangePwdDialogComponent,
     DeleteAccountDialogComponent
   ],

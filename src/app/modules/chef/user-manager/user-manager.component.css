@@ -5,3 +5,7 @@
 .accordion-container {
   max-height: 400px;
 }
+
+.manual {
+  margin: 5px;
+}

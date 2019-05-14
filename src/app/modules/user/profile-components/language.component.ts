@@ -9,7 +9,7 @@ import { StateService } from './state.service';
   selector: 'app-language',
   template: `
   <div fxLayout="row">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
               <mat-label><a translate>AUTH.DEFAULT-LENG</a></mat-label>
               <mat-select [formControl]="language">
                   <mat-option value="spa"><a translate>AUTH.SPA</a></mat-option>
@@ -43,6 +43,7 @@ export class LanguageComponent implements OnChanges {
         language: language
       };
       this.stateService.updateLanguage(userData);
+      this.translateService.setDefaultLang(language);
       this.translateService.use(language);
       this.language.reset();
     }

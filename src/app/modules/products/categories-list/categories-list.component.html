@@ -1,18 +1,21 @@
-<mat-progress-bar *ngIf="isLoading" mode="query" color="warn"></mat-progress-bar> 
-<h4 *ngIf="emptyCollection"><a translate>INGREDIENTS.EMPTY-CATEGORIES</a></h4>
-<div *ngIf="!isLoading">
-  <br>
-  <mat-accordion *ngIf="!isLoading">
-      <mat-expansion-panel *ngFor="let category of categoriesSubject$ | async">
-          <mat-expansion-panel-header>
-              <mat-panel-title>
-                        {{ category.name }}
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <app-edit-category [categories]="categoriesSubject$ | async" [category]="category"></app-edit-category>
-        </mat-expansion-panel>
-  </mat-accordion>
-  <br>
-</div>
-<app-add-category [categories]="categoriesSubject$ | async"></app-add-category>
+<mat-progress-bar *ngIf="loadingSubject$ | async; else content" mode="query" color="primary"></mat-progress-bar>
+<ng-template #content>
+    <div *ngIf="(categoriesSubject$ | async)?.length > 0; else manual" class="list">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let category of categoriesSubject$ | async">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                          {{ category.name }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-edit-category [categories]="categoriesSubject$ | async" [category]="category"></app-edit-category>
+          </mat-expansion-panel>
+    </mat-accordion>
+    </div>
 
+    <ng-template #manual>
+      <h4><span translate>INGREDIENTS.EMPTY-CATEGORIES</span></h4>
+    </ng-template>
+
+    <app-add-category [categories]="categoriesSubject$ | async"></app-add-category>
+</ng-template>

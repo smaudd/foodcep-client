@@ -1,22 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-nav',
   template: `
-  <mat-toolbar class="toolbar mat-elevation-z2" color="primary">
-    <button mat-button routerLink="/home" fxLayoutGap="5px">
-      <img class="icon" src="../../../assets/logo/loco-circle.png">
-      <span class="icon-text" style="margin-left: 5px">foodcep</span>
+  <mat-toolbar class="toolbar mat-elevation-z2">
+    <button mat-button routerLink="/land" fxLayoutGap="5px">
+      <span style="margin-left: 5px">FOODCEP</span>
     </button>
+    <div fxShow="true" fxHide.lt-sm="true">
+      <small>
+        <button mat-button (click)="changeLanguage('en')">EN</button>
+        <span> | </span>
+        <button mat-button (click)="changeLanguage('spa')">ESP</button>
+      </small>
+    </div>
     <span class="spacer"></span>
     <button mat-button routerLink="get-started">
-        <span class="icon-text">Get Started</span>
+        <span translate>HOME.GET-STARTED</span>
     </button>
     <button mat-button>
-      <span class="icon-text" [matMenuTriggerFor]="login">Login</span>
+      <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="login" translate>HOME.LOGIN</span>
     </button>
     <mat-menu #login="matMenu">
-        <app-login></app-login>
+        <app-login (closeMe)="menuTrigger.closeMenu()"></app-login>
     </mat-menu>
   </mat-toolbar>
   `,
@@ -24,9 +31,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
   }
+
+  changeLanguage(language: string) {
+    this.translateService.use(language);
+    this.translateService.setDefaultLang(language);
+  }
+
 
 }

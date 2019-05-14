@@ -31,7 +31,7 @@ export class EditCategoryComponent implements OnChanges, OnInit {
 
   ngOnInit() {
     this.editForm = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')])
+      name: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*')])
     });
     this.editForm.get('name').setValue(this.category.name);
   }
@@ -39,7 +39,7 @@ export class EditCategoryComponent implements OnChanges, OnInit {
   ngOnChanges() {}
 
   editRegistre(formValue: Category): void {
-    const validFormat = this.filterFormatService.filterCategory(formValue.name);
+    const validFormat = this.filterFormatService.filterInput(formValue.name);
     if (this.categories.find(item => item.name === validFormat)) {
       this.snackBar.open(`${validFormat} is already on the list`, 'Done', 'warning-snackbar');
       return;

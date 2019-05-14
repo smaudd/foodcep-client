@@ -35,16 +35,16 @@ export class AddCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.addForm = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')])
+      name: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*'), Validators.maxLength(19)])
     });
   }
 
   validateForm(formValue: Category) {
     this.disableSubmit = true;
-    const validFormat = this.filterCorrectFormat.filterCategory(formValue.name);
+    const validFormat = this.filterCorrectFormat.filterInput(formValue.name);
     if (this.categories.find(item => item.name === validFormat)) {
       this.disableSubmit = false;
-      this.snackBar.open(`${formValue.name} is already registred!`, null, 'warning-snackbar');
+      this.addForm.get('name').setErrors({ 'repeated': true })
       return;
     }
     const category = new Category(validFormat);

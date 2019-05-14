@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { slide, fadeInOut } from '../../animations/navigation-animations';
+import { MatDialog } from '@angular/material';
+import { HelpDialogComponent } from 'src/app/core/layout/help-dialog/help-dialog.component';
+
 
 @Component({
   selector: 'app-orders-suppliers',
   templateUrl: './orders-suppliers.component.html',
   styleUrls: ['./orders-suppliers.component.css'],
-  animations: [
-    trigger('toolbarSlide', [
-      transition('* <=> void', [useAnimation(slide, { params: { time: '.25s' } })])
-    ]),
-    trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '1s' } })])
-    ])
-  ]
 })
 export class OrdersSuppliersComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  isOrder = false;
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {}
+
+  toggleIsOrder() {
+    this.isOrder ? this.isOrder = false : this.isOrder = true;
+  }
+
+  newOrder() {
+    this.isOrder = true;
+  }
+
+  openHelp() {
+    this.dialog.open(HelpDialogComponent, { data: 'ons.md', height: '90vh' })
+  }
 
 }

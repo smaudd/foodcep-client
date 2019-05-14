@@ -19,7 +19,6 @@ export class NavComponent implements OnInit {
     private sessionDataService: SessionDataService,
     private router: Router,
     private authService: AuthService,
-    public translateService: TranslateService,
     private dialog: MatDialog
     ) { }
 
@@ -34,20 +33,14 @@ export class NavComponent implements OnInit {
     this.isLoggedIn$ = this.authService.isLoggedIn;
     this.userName$ = this.authService.userName;
     this.restaurantName$ = this.sessionDataService.restaurantName;
-    this.authService.userRole.subscribe(response => {
-      this.role = response;
-    });
+    this. role =  this.sessionDataService.getRole();
+
   }
 
   logout() {
     this.logged = false;
     this.authService.logout().subscribe();
   }
-
-  changeLanguage(language: string) {
-    this.translateService.use(language);
-  }
-
 
   openInvitationDialog(): void {
     const dialogEditRef = this.dialog.open(InvitationDialogComponent, {

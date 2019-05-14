@@ -1,6 +1,10 @@
 <div class="products">
-  <mat-toolbar class="mat-elevation-z1" color="primary" [@toolbarSlide]>
+  <mat-toolbar class="mat-elevation-z1" color="primary">
     <span class="page-title" translate>INGREDIENTS.INGREDIENTS</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="openHelp()">
+        <mat-icon class="toolbar-button">help_outline</mat-icon>
+    </button>
   </mat-toolbar>
   <mat-tab-group>
                   <mat-tab label="{{ 'INGREDIENTS.INGREDIENTS' | translate }}">

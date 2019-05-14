@@ -1,80 +1,63 @@
-<div>
-    <div class=searchbar>
-        <app-products-finder [shopping]="true" (add)="addToList($event)"></app-products-finder>
-    </div>
-      <div class="mat-elevation-z2 box">
+<mat-toolbar color="primary" class="mat-elevation-z2">
+    <button mat-icon-button [routerLink]="['/orders-suppliers']">
+      <mat-icon class="toolbar-button">arrow_back_ios</mat-icon>
+    </button>
+    <span class="page-title" translate>ORDERS.ORDER</span>
+</mat-toolbar>
+<div [@fader] class="container">
           <form [formGroup]="shoppingForm">
-                <div class="spinner" *ngIf="isLoading$ | async; else items">
+                <div *ngIf="isLoading$ | async; else items">
                     <mat-progress-bar mode="undeterminate" color="primary"></mat-progress-bar>
                 </div>
-                <ng-template #items>
-                    <div style="padding: 20px">
-                        <div fxFlex="90">
-                            <mat-form-field>
-                                <mat-select placeholder="Supplier" formControlName="supplier">
-                                  <mat-option [value]="supplier" *ngFor="let supplier of suppliers$ | async">{{ supplier.name }}</mat-option>
+                  <ng-template #items>
+                    <mat-form-field class="supplier-box" appearance="outline">
+                        <mat-select placeholder="{{'ORDERS.SUPPLIER' | translate }}" formControlName="supplier">
+                          <mat-option [value]="supplier" *ngFor="let supplier of suppliers$ | async">{{ supplier.name }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div formArrayName="items" [@fader]>
+                      <mat-list class="mat-elevation-z1">
+                            <div *ngIf="this.itemsForms.value.length === 0" class="empty">
+                                <mat-icon color="warn">notification_important</mat-icon>
+                                <br>
+                                <strong><span translate>SHOPPING.EMPTY</span></strong>
+                            </div>
+                            <mat-list-item *ngFor="let item of itemsForms.controls; let i = index" [formGroupName]="i" [@fadeInOut]>
+                              <a mat-line>{{item.value.name}}</a>
+                              <button mat-icon-button (mousedown)="clickHandler('sub', i, itemsForms.value[i].quantity)"
+                                [disabled]="this.itemsForms.value[i].quantity === 0">
+                                <mat-icon color="warn">remove_circle</mat-icon>
+                              </button>
+                              <mat-form-field class="quantity">
+                                <input matInput type="number" placeholder="{{ 'SHOPPING.QUANTITY' | translate }}" [errorStateMatcher]="matcher"
+                                autocomplete="off" formControlName="quantity">
+                              </mat-form-field>
+                              <button mat-icon-button (mousedown)="clickHandler('sum', i, itemsForms.value[i].quantity)">
+                                <mat-icon color="primary">add_circle</mat-icon>
+                              </button>
+                              <mat-form-field class="unit">
+                                <mat-select placeholder="{{ 'SHOPPING.UNIT' | translate }}" autocomplete="off" formControlName="unit" [errorStateMatcher]="matcher">
+                                  <mat-option value="u">u</mat-option>
+                                  <mat-option value="gr">gr</mat-option>
+                                  <mat-option value="kg">Kg</mat-option>
                                 </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="10" style="font-size: 15px; font-weight: bold">
-                            <mat-icon matBadge="{{ itemsForms.value.length }}" color="primary" matBadgeColor="accent">shopping_basket</mat-icon>
-                        </div>
+                              </mat-form-field>
+                              <button mat-icon-button (click)="deleteItem(i)">
+                                <mat-icon>clear</mat-icon>
+                              </button>
+                            </mat-list-item>
+                      </mat-list>
                     </div>
-
-                    <div formArrayName="items" class="list" [@fadeInOut]>
-                        <div *ngIf="this.itemsForms.value.length === 0" class="empty">
-                            <mat-icon color="warn">notification_important</mat-icon>
-                            <br>
-                            <strong><a translate>SHOPPING.EMPTY</a></strong>
-                    </div>
-                      <div class="list">
-                          <ul>
-                            <div>
-                              <div *ngFor="let item of itemsForms.controls; let i = index" class="item" [formGroupName]="i">
-                                  <li>
-                                    <div fxFlex="60" fxFlex.xs="30">
-                                        <p mat-line>{{ item.value.name }}</p>
-                                    </div>
-                                    <div>
-                                      <button mat-icon-button (mousedown)="clickHandler('sub', i, itemsForms.value[i].quantity)"
-                                      [disabled]="this.itemsForms.value[i].quantity === 0">
-                                          <mat-icon color="warn">remove_circle</mat-icon>
-                                      </button>
-                                      <mat-form-field class="quantity">
-                                          <input matInput type="number" placeholder="{{ 'SHOPPING.QUANTITY' | translate }}" [errorStateMatcher]="matcher"
-                                          autocomplete="off" formControlName="quantity">
-                                      </mat-form-field>
-                                      <button mat-icon-button (mousedown)="clickHandler('sum', i, itemsForms.value[i].quantity)">
-                                          <mat-icon color="primary">add_circle</mat-icon>
-                                      </button>
-
-                                      <mat-form-field class="unit">
-                                          <mat-select placeholder="{{ 'SHOPPING.UNIT' | translate }}" autocomplete="off" formControlName="unit" [errorStateMatcher]="matcher">
-                                                <mat-option value="u">u</mat-option>
-                                                <mat-option value="gr">gr</mat-option>
-                                                <mat-option value="kg">Kg</mat-option>
-                                          </mat-select>
-                                      </mat-form-field>
-                                    </div>
-                                    <button mat-icon-button (click)="deleteItem(i)">
-                                        <mat-icon>clear</mat-icon>
-                                    </button>
-                                  </li>
-                                  <mat-divider></mat-divider>
-                                </div>
-                                  <br>
-                              </div>
-                          </ul>
+                      <div align="end">
+                          <button mat-button [disabled]="itemsForms.value.length === 0 || shoppingForm.invalid" (click)="openOverviewDialog(shoppingForm.value, true)">
+                              <span translate>ORDERS.SEND</span>
+                          </button>
                       </div>
-                    </div>
                 </ng-template>
           </form>
-    </div>
-<br>
-<div align="end">
-    <button mat-button [disabled]="itemsForms.value.length === 0 || shoppingForm.invalid" (click)="openOverviewDialog(shoppingForm.value, true)">Send</button>
+          <br>
+      <div class="searchbar">
+          <app-products-finder [shopping]="true" (add)="addToList($event)"></app-products-finder>
+      </div>
+      <br>
 </div>
-
-
-
-

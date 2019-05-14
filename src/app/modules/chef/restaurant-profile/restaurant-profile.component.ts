@@ -5,21 +5,13 @@ import { SnackbarService } from 'src/app/modules/shared/services/snackbar.servic
 
 import { Restaurant } from '../../../core/auth/models/restaurant.model';
 import { AuthService } from '../../../core/http/auth-service/auth.service';
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { slide, fadeInOut } from 'src/app/animations/navigation-animations';
+import { fader } from 'src/app/animations/navigation-animations';
 
 @Component({
   selector: 'app-restaurant-profile',
   templateUrl: './restaurant-profile.component.html',
   styleUrls: ['./restaurant-profile.component.css'],
-  animations: [
-    trigger('toolbarSlide', [
-      transition('* <=> void', [useAnimation(slide, { params: { time: '.25s' } })])
-    ]),
-    trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '1s' } })])
-    ])
-  ]
+  animations: [fader]
 })
 export class RestaurantProfileComponent implements OnInit {
 
@@ -53,7 +45,7 @@ export class RestaurantProfileComponent implements OnInit {
       restaurant_name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       description: new FormControl('', [Validators.required, , Validators.maxLength(200)]),
       adress: new FormControl('', [Validators.required, Validators.maxLength(99)]),
-      phone: new FormControl('', [Validators.required, , Validators.maxLength(10)])
+      phone: new FormControl('', [Validators.required, , Validators.maxLength(15)])
     });
 
   }

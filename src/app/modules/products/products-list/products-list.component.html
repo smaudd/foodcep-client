@@ -1,42 +1,45 @@
-<div [@fadeInOut]>
-<h4 *ngIf="emptyCollection"><a translate>INGREDIENTS.EMPTY</a></h4>
+<div [@fader]>
+<h4 *ngIf="(productsSubject$ | async)?.length === 0 && notFoundSubject$.value === false; else table">
+  <span translate>INGREDIENTS.EMPTY</span>
+</h4>
 
-<div [hidden]="emptyCollection">
+<ng-template #table>
+<div>
         <div fxLayout="row">
-            <mat-form-field class="searchBar">
+            <mat-form-field class="searchBar" fxFlex="90">
                 <input matInput placeholder="{{ 'INGREDIENTS.SEARCH' | translate }}" [formControl]="search" autocomplete="off" #filter>
             </mat-form-field>
-            <div align="end" class="export">
+            <div class="export" fxLayouAlign="end">
                 <button mat-button (click)="pdf()"><span translate>INGREDIENTS.PDF</span></button>
             </div>
         </div>
     <div class="cont">
       <div class="table-container">
-        <div *ngIf="loadingSubject$ | async" class="loading-shade">
+        <div *ngIf="(loadingSubject$ | async)" class="loading-shade">
             <mat-progress-bar mode="query" color="primary"></mat-progress-bar>
         </div>
-        <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z2" matSort>
+        <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z2" matSort [@fader]>
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.NAME</a></th>
+              <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>INGREDIENTS.NAME</span></th>
               <td mat-cell *matCellDef="let ingredient">{{ ingredient.name }}</td>
               <td mat-footer-cell *matFooterCellDef><b>Not Found</b></td>
             </ng-container>
 
             <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.CATEGORY</a></th>
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>INGREDIENTS.CATEGORY</span></th>
                 <td mat-cell *matCellDef="let ingredient">{{ ingredient.category }}</td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
 
             <ng-container matColumnDef="pPK">
-                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.PPK</a></th>
-                <td mat-cell *matCellDef="let ingredient">{{ ingredient.price | currency:'EUR' }}</td>
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>INGREDIENTS.PPK</span></th>
+                <td mat-cell *matCellDef="let ingredient">{{ ingredient.price | currency:currency }}</td>
                 <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
 
             <ng-container matColumnDef="finalPrice">
-                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><a translate>INGREDIENTS.COST</a></th>
-                <td mat-cell *matCellDef="let ingredient">{{ ingredient.cost | currency:'EUR' }}</td>
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>INGREDIENTS.COST</span></th>
+                <td mat-cell *matCellDef="let ingredient">{{ ingredient.cost | currency:currency }}</td>
                 <td mat-footer-cell *matFooterCellDef>
                 </td>
             </ng-container>
@@ -73,5 +76,6 @@
     </div>
     <mat-paginator [pageSize]="5" (page)="handlePaginator($event)" [hidden]="expandedIngredient !== null"></mat-paginator>
   </div>
-        <app-add-product [ingredients]="productsSubject$ | async"></app-add-product>
+</ng-template>
+<app-add-product [ingredients]="productsSubject$ | async"></app-add-product>
 </div>

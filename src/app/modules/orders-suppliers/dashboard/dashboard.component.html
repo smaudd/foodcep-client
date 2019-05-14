@@ -1,60 +1,29 @@
-<div class="container">
-  <div align="start" style="margin: 10px">
-    <button mat-button *ngIf="!isOrder; else cancel" color="primary" (click)="newOrder()">
-      <span translate>New Order</span>
-      <mat-icon>add_box</mat-icon>
-    </button>
-    <ng-template #cancel>
-      <div align="end">
-          <button mat-button color="warn" (click)="toggleIsOrder()">
-              <span translate>Cancel</span>
-              <mat-icon>clear</mat-icon>
-          </button>
-      </div>
-    </ng-template>
-  </div>
-
-  <div *ngIf="!isOrder; else order">
-        <div *ngIf="(orders$ | async)?.length === 0; else content">
-            <h3 style="text-align: center">Make your first order!</h3>
-            <p style="text-align: center">Just click on</p>
-            <div align="center">
-              <button mat-button [disabled]="true">
-                  <span translate>New Order</span>
-                  <mat-icon>add_box</mat-icon>
-              </button>
-            </div>
-            <p style="text-align: center">And start recording your activities!</p>
-            <br>
-            <p>
-              You can order via email using Gmail or Whatsapp to contact your supplier.
-              <br>
-              You will need to have your Gmail account or Whatsapp Web account logged on this browser in order to use this feature.
-              <br>
-              Order any of your registered products to any of your registered suppliers. Every order will be recorded and you can make as many as needed. It's possible to repeat orders.
-              <br>
-              <small>Remember! You will need registered products and suppliers to start making orders!</small>
-            </p>
+<div class="container" [@fader]>
+  <div>
+        <div *ngIf="orders$ | async as orders">
+          <div *ngIf="orders.length === 0 && orders !== null; else content">
+            <markdown [@fader] [src]="src"></markdown>
+          </div>
         </div>
         <ng-template #content>
         <mat-card-subtitle>
           <div>
-              <span translate>Last orders</span>
+              <span translate>ORDERS.LAST</span>
           </div>
         </mat-card-subtitle>
-        <mat-card-content>
+        <mat-card-content [@fader]>
             <cdk-virtual-scroll-viewport itemSize="50" class="viewport">
-                <div *cdkVirtualFor="let order of orders$ | async" class="example-item">
+                <div *cdkVirtualFor="let order of orders$ | async">
                   <mat-card>
-                    <mat-card-title>{{order.supplier}} @ {{ order.date | date:'H:m - d/MM/yy' }}</mat-card-title>
+                    <mat-card-title>{{order.supplier}} @ {{ order.date | date:'HH:mm - d/MM/yy' }}</mat-card-title>
                     <mat-card-content>
-                      <div fxLayout="row">
-                        <span translate>Ordered by <strong>{{ order.madeBy }}</strong></span>
-                      </div>
+                    <span translate [translateParams]="{value:order.madeBy}">LAND.O-BY</span>
                   </mat-card-content>
                   <mat-card-actions align="end">
-                    <button mat-button (click)="repeatOrder(order)"><span translate>Repeat Order</span></button>
-                    <button mat-button (click)="openOverviewDialog(order, false)"><span translate>View Details</span></button>
+                    <button mat-button routerLink="order" [queryParams]="{id: order.order_id}">
+                      <span translate>ORDERS.REPEAT-ORDER</span>
+                    </button>
+                    <button mat-button (click)="openOverviewDialog(order, false)"><span translate>ORDERS.DETAILS</span></button>
                   </mat-card-actions>
                   </mat-card>
                 </div>
@@ -62,9 +31,4 @@
         </mat-card-content>
       </ng-template>
   </div>
-  <ng-template #order>
-    <app-orders [order_id]="order_id" (done)="toggleIsOrder()"></app-orders>
-  </ng-template>
-
-
 </div>

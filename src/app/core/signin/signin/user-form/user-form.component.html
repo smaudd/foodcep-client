@@ -19,7 +19,7 @@
             <span translate>AUTH.EMAIL-REQUIRED</span>
           </mat-error>
           <mat-error *ngIf="email.hasError('email-repeated')">
-              <span translate>Email already in use</span>
+              <span translate>AUTH.EMAIL-USED</span>
           </mat-error>
   </mat-form-field>
 
@@ -42,35 +42,43 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Default language for the interface</mat-label>
+    <mat-label><span translate>AUTH.DEF-LANG</span></mat-label>
     <mat-select matNativeControl formControlName="language">
-      <mat-option value="spa"><span translate>Spanish</span></mat-option>
-      <mat-option value="en"><span translate>English</span></mat-option>
+      <mat-option value="spa"><span translate>AUTH.SPA</span></mat-option>
+      <mat-option value="en"><span translate>AUTH.EN</span></mat-option>
     </mat-select>
       <mat-error *ngIf="language.hasError('required')">
-          <span translate>Default language required</span>
+          <span translate>AUTH.DEF-LANG-REQ</span>
       </mat-error>
   </mat-form-field>
+
+  <mat-form-field appearance="outline">
+      <mat-label><span translate>AUTH.CURRENCY</span></mat-label>
+      <mat-select matNativeControl formControlName="currency">
+        <mat-option *ngFor="let currency of currencies$ | async" value="{{ currency.symbol }}">{{ currency.symbol }}</mat-option>
+      </mat-select>
+        <mat-error *ngIf="currency.hasError('required')">
+            <span translate>AUTH.CURRENCY-REQ</span>
+        </mat-error>
+    </mat-form-field>
 
   <mat-form-field appearance="outline" *ngIf="isWithCode">
       <input matInput formControlName="code"
-      placeholder="Invitation Code" autocomplete="off">
+      placeholder="{{ 'AUTH.INV-CODE' | translate }}" autocomplete="off">
       <mat-error *ngIf="code.hasError('required')">
-          <span translate>Invitation code required</span>
+          <span translate>AUTH.INV-CODE-REQ</span>
       </mat-error>
       <mat-error *ngIf="code.hasError('invalid-code')">
-          <span translate>Invalid invitation code</span>
+          <span translate>AUTH.WRONG-INV-CODE</span>
       </mat-error>
   </mat-form-field>
-
   </div>
 </form>
 <div align="end">
-<button mat-raised-button type="submit" color="primary" [disabled]="userForm.invalid" (click)="done(userForm.value)">
+<button mat-button type="submit" [disabled]="userForm.invalid" (click)="done(userForm.value)">
   <span translate *ngIf="isWithCode; else next">AUTH.SUBMIT</span>
   <ng-template #next>
-    <span translate>Next</span>
+    <span translate>AUTH.NEXT</span>
   </ng-template>
 </button>
 </div>
-

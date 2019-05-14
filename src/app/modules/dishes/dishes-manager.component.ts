@@ -4,19 +4,18 @@ import { Ingredient } from '../shared/models/ingredient.model';
 import { Dish } from './models/dish.model';
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { HelpDialogComponent } from 'src/app/core/layout/help-dialog/help-dialog.component';
+import { fadeInOut } from 'src/app/animations/navigation-animations';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { slide, fadeInOut } from '../../animations/navigation-animations';
 
 @Component({
   selector: 'app-dishes-manager',
   templateUrl: './dishes-manager.component.html',
   styleUrls: ['./dishes-manager.component.css'],
   animations: [
-    trigger('toolbarSlide', [
-      transition('* <=> void', [useAnimation(slide, { params: { time: '.25s' } })])
-    ]),
     trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '1s' } })])
+      transition('void => *', [useAnimation(fadeInOut, { params: { time: '.5s' } })])
     ])
   ]
 })
@@ -31,7 +30,7 @@ export class DishesManagerComponent implements OnInit {
   emptyCollection: boolean;
   firstInit = true;
 
-  constructor(public translate: TranslateService) { }
+  constructor(public translate: TranslateService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.translateValue('DISHES.DASHBOARD');
@@ -68,4 +67,7 @@ export class DishesManagerComponent implements OnInit {
     this.editDish = editDish;
   }
 
+  openHelp() {
+    this.dialog.open(HelpDialogComponent, { data: 'dishes.md', height: '90vh' })
+  }
 }

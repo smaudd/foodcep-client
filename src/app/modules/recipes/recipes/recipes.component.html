@@ -1,0 +1,55 @@
+<div [@fadeInOut] *ngIf="role">
+    <mat-toolbar class="mat-elevation-z1" color="primary">
+      <span class="page-title" translate>NAV.RECIPES</span>
+      <span class="spacer"></span>
+      <div *ngIf="role !== 'cook'">
+        <button mat-button (click)="creatorToggle()" *ngIf="!newRecipe; else cancel">
+          <span translate class="toolbar-button">RECIPE.NEW-RECIPE</span>
+          <mat-icon class="toolbar-button">add_box</mat-icon>
+        </button>
+      </div>
+      <ng-template #cancel>
+          <button mat-button (click)="creatorToggle()">
+              <span translate class="toolbar-button">RECIPE.CANCEL</span>
+              <mat-icon class="toolbar-button">clear</mat-icon>
+            </button>
+      </ng-template>
+      <button mat-icon-button (click)="openHelp()" *ngIf="role !== 'cook'">
+        <mat-icon class="toolbar-button">help_outline</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-progress-bar mode="indeterminate" *ngIf="(loading$ | async) as loading; else content"></mat-progress-bar>
+    <ng-template #content>
+    <div *ngIf="!newRecipe; else creator" class="container">
+      <mat-list>
+        <div *ngIf="recipes$ | async as recipes">
+            <div *ngIf="recipes.length > 0; else manual">
+              <mat-list-item *ngFor="let recipe of recipes$ | async" [@fadeInOut]>
+                    <a mat-line>{{ recipe.name }}</a>
+                    <button mat-button routerLink="view" [queryParams]="{recipe: recipe.recipe_id}">
+                      <mat-icon color="primary">open_in_new</mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="role !== 'cook'">
+                        <mat-icon color="accent" routerLink="edit" [queryParams]="{recipe: recipe.recipe_id, update: true}">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="openDeleteDialog(recipe)" *ngIf="role !== 'cook'">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                    <mat-divider></mat-divider>
+              </mat-list-item>
+            </div>
+        </div>
+      </mat-list>
+    </div>
+    <ng-template #creator>
+      <div [@fadeInOut] *ngIf="newRecipe; else edit">
+          <app-create-recipe (done)="creatorToggle()"></app-create-recipe>
+      </div>
+    </ng-template>
+    <ng-template #manual>
+        <div [@fadeInOut]>
+          <markdown [src]="src"></markdown>
+        </div>
+    </ng-template>
+  </ng-template>
+</div>

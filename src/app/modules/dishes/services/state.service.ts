@@ -18,7 +18,7 @@ interface IPatch {
 })
 export class StateService {
 
-    dishesSubject = new BehaviorSubject([]);
+    dishesSubject = new BehaviorSubject(null);
     dishSubject = new BehaviorSubject(null);
     loadingSubject = new BehaviorSubject(null);
 

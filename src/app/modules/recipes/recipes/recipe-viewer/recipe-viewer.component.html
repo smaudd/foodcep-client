@@ -1,0 +1,20 @@
+<div [@fader]>
+  <mat-toolbar color="primary" class="mat-elevation-z2">
+      <button mat-button routerLink="/recipes">
+        <mat-icon class="toolbar-button">arrow_back_ios</mat-icon>
+      </button>
+    <div *ngIf="!notFound; else not">
+        <span>{{recipe.name}}</span>
+    </div>
+    <ng-template #not>
+        <span translate>RECIPE.RECIPE-NOT-FOUND</span>
+    </ng-template>
+  </mat-toolbar>
+  <div class="container" *ngIf="!notFound">
+    <app-dish-table [dish_id]="recipe.dish_id" [isNewOrEditRecipe]="false" [min_prod_value]="recipe.minimum_production"></app-dish-table>
+    <h3><span translate>RECIPE.DIRECTIONS</span></h3>
+    <p>{{recipe.recipe}}</p>
+  </div>
+</div>
+
+

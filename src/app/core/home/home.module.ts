@@ -8,7 +8,6 @@ import { HomeLayoutComponent } from './home-layout/home-layout.component';
 import { HomeNavComponent } from './home-layout/components/nav.component';
 import { HomeContentComponent } from './home-layout/components/content.component';
 import { HomeFooterComponent } from './home-layout/components/footer.component';
-import { GetStartedComponent } from './home-layout/components/get-started.component';
 import { HomeHeaderComponent } from './home-layout/components/header.component';
 import { MarkdownModule } from 'ngx-markdown';
 
@@ -19,7 +18,6 @@ import { MarkdownModule } from 'ngx-markdown';
     HomeLayoutComponent,
     HomeHeaderComponent,
     HomeFooterComponent,
-    GetStartedComponent,
     HomeNavComponent
   ],
   imports: [

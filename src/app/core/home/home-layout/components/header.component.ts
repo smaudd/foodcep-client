@@ -3,16 +3,14 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-home-header',
   template: `
-  <div>
   <div class="header" fxLayoutAlign="center">
-    <div>
-      <div class="image">
-          <img class="main-img" src="../../../assets/logo/loco-circle.png">
-      </div>
-        <div>
-            <h1 class="title">foodcep</h1>
-            <h2 class="subtitle">Evaluate your food</h2>
-        </div>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-md="30px">
+    <div class="image">
+        <img class="main-img" src="../../../assets/logo/loco-circle.png">
+    </div>
+      <div>
+          <h1 class="title">FOODCEP</h1>
+          <h2 class="subtitle">Evaluate your food</h2>
       </div>
     </div>
   </div>

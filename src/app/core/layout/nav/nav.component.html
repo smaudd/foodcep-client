@@ -1,24 +1,32 @@
 <!-- Mobile -->
-<mat-toolbar *ngIf="isLoggedIn$ | async" color="primary" fxShow="true" fxHide.gt-sm class="mat-elevation-z2">
-      <button mat-button routerLink="/home">
+<div *ngIf="role">
+<mat-toolbar *ngIf="isLoggedIn$ | async" fxShow="true" fxHide.gt-md class="mat-elevation-z2">
+      <button mat-button routerLink="/" [disabled]="role === 'cook'">
         <img class="icon" src="../../../assets/logo/loco-circle.png">
+        <span fxShow="true" fxHide.lt-sm="true" class="res-name">
+          {{ restaurantName$ | async }}
+        </span>
       </button>
       <span class="spacer"></span>
-        <a mat-button [matMenuTriggerFor]="storeMenu">
+        <button mat-button [matMenuTriggerFor]="storeMenu">
             <mat-icon>store</mat-icon>
-        </a>
+        </button>
         <mat-menu #storeMenu="matMenu">
-            <button mat-menu-item routerLink="/orders-suppliers" *ngIf="role === 'chef'">
+            <button mat-menu-item routerLink="/orders-suppliers" *ngIf="role !== 'cook'">
               <mat-icon>shop_two</mat-icon>
               <span translate>NAV.ORDERS-SUPPLIERS</span>
             </button>
-            <button mat-menu-item routerLink="/products" *ngIf="role === 'chef'">
+            <button mat-menu-item routerLink="/products" *ngIf="role !== 'cook'">
               <mat-icon>kitchen</mat-icon>
               <span translate>NAV.INGREDIENTS</span>
             </button>
-            <button mat-menu-item routerLink="/dishes" *ngIf="role === 'chef'">
+            <button mat-menu-item routerLink="/dishes" *ngIf="role !== 'cook'">
               <mat-icon>restaurant_menu</mat-icon>
               <span translate>NAV.DISHES</span>
+            </button>
+            <button mat-menu-item routerLink="/recipes">
+              <mat-icon>book</mat-icon>
+              <span translate>NAV.RECIPES</span>
             </button>
         </mat-menu>
         <button mat-button [matMenuTriggerFor]="adminMenu" *ngIf="role === 'chef'">
@@ -27,7 +35,7 @@
         <mat-menu #adminMenu="matMenu">
             <button mat-menu-item routerLink="/chef/team">
               <mat-icon>supervisor_account</mat-icon>
-              <span translate>My Team</span>
+              <span translate>NAV.TEAM</span>
             </button>
             <button mat-menu-item routerLink="/chef/restaurant">
               <mat-icon>store</mat-icon>
@@ -35,12 +43,12 @@
             </button>
             <button mat-menu-item (click)="openInvitationDialog()">
               <mat-icon>insert_invitation</mat-icon>
-              <span translate>Invite to your restaurant</span>
+              <span translate>NAV.INV</span>
             </button>
         </mat-menu>
-        <a mat-button [matMenuTriggerFor]="accountMenu">
+        <button mat-button [matMenuTriggerFor]="accountMenu">
           <mat-icon>account_box</mat-icon>
-        </a>
+        </button>
         <mat-menu #accountMenu="matMenu">
             <button mat-menu-item [disabled]="true">
               <span translate>{{ userName$ | async }}</span>
@@ -54,31 +62,28 @@
         </mat-menu>
 </mat-toolbar>
 
-<mat-toolbar *ngIf="isLoggedIn$ | async" color="primary" fxShow="true" fxHide.lt-md="true" class="mat-elevation-z2">
+<mat-toolbar *ngIf="isLoggedIn$ | async" fxShow="true" fxHide.lt-lg="true" class="mat-elevation-z2">
     <button mat-button routerLink="/">
       <img class="icon" src="../../../assets/logo/loco-circle.png">
-      <span>{{ restaurantName$ | async }}</span>
+      <span class="res-name">{{ restaurantName$ | async }}</span>
       <span fxHide.lt-md="true"></span>
     </button>
-    <div fxShow="true" fxHide.lt-md="true">
-      <small>
-        <button mat-button (click)="changeLanguage('en')">EN</button>
-        <span> | </span>
-        <button mat-button (click)="changeLanguage('spa')">ESP</button>
-      </small>
-    </div>
     <span class="spacer"></span>
-        <button mat-button routerLink="/orders-suppliers" *ngIf="role === 'chef'">
+        <button mat-button routerLink="/orders-suppliers" *ngIf="role !== 'cook'">
           <mat-icon>shop_two</mat-icon>
           <span translate fxShow="true" fxHide.lt-md="true">NAV.ORDERS-SUPPLIERS</span>
         </button>
-      <button mat-button routerLink="/products" *ngIf="role === 'chef'">
+      <button mat-button routerLink="/products" *ngIf="role !== 'cook'">
         <mat-icon>kitchen</mat-icon>
         <span translate fxShow="true" fxHide.lt-md="true">NAV.INGREDIENTS</span>
       </button>
-      <button mat-button routerLink="/dishes" *ngIf="role === 'chef'">
+      <button mat-button routerLink="/dishes" *ngIf="role !== 'cook'">
         <mat-icon>restaurant_menu</mat-icon>
         <span translate fxShow="true" fxHide.lt-md="true">NAV.DISHES</span>
+      </button>
+      <button mat-button routerLink="/recipes">
+        <mat-icon>book</mat-icon>
+        <span translate fxShow="true" fxHide.lt-md="true">NAV.RECIPES</span>
       </button>
       <button mat-button [matMenuTriggerFor]="adminMenu" *ngIf="role === 'chef'">
         <mat-icon>settings</mat-icon>
@@ -87,7 +92,7 @@
       <mat-menu #adminMenu="matMenu">
           <button mat-menu-item routerLink="/chef/team">
             <mat-icon>supervisor_account</mat-icon>
-            <span translate>My Team</span>
+            <span translate>NAV.TEAM</span>
           </button>
           <button mat-menu-item routerLink="/chef/restaurant">
             <mat-icon>store</mat-icon>
@@ -95,7 +100,7 @@
           </button>
           <button mat-menu-item (click)="openInvitationDialog()">
             <mat-icon>insert_invitation</mat-icon>
-            <span translate>Invite to your restaurant</span>
+            <span translate>NAV.INV</span>
           </button>
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="accountMenu">
@@ -111,6 +116,6 @@
           </button>
       </mat-menu>
 </mat-toolbar>
-
+</div>
 
 

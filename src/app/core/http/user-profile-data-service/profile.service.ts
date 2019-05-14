@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SessionDataService } from '../../../modules/shared/services/session-data.service';
 
 import { User } from '../../auth/models/user.model';
-import { INameChange, IPasswordChange, IEmailChange, ILanguageChange, IDelete, IRoleChange } from '../../auth/models/input.interfaces';
+import { INameChange, IPasswordChange, IEmailChange, ILanguageChange, IDelete, IRoleChange, ICurrencyChange } from '../../auth/models/input.interfaces';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -41,7 +41,11 @@ export class ProfileService {
   }
 
   putRole(userData: IRoleChange): Observable<User> {
-    return this.http.put<IRoleChange>('~/api/user/role/update', userData, httpOptions)
+    return this.http.put<IRoleChange>('~/api/user/role/update', userData, httpOptions);
+  }
+
+  putCurrency(userData: ICurrencyChange): Observable<User> {
+    return this.http.put<any>('~/api/user/currency/update', userData, httpOptions)
   }
 
   deleteAccount(userData: IDelete): Observable<any> {

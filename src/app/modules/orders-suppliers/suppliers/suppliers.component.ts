@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Supplier } from './models/supplier.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { StateService } from './state.service';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import { TranslateService } from '@ngx-translate/core';
+import { fader } from 'src/app/animations/navigation-animations';
 
 @Component({
   selector: 'app-suppliers',
@@ -16,6 +17,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
       state('expanded', style({opacity: 1})),
       transition('expanded <=> collapsed', animate(300)),
     ]),
+    fader
   ]
 })
 export class SuppliersComponent implements OnInit, OnDestroy {
@@ -26,8 +28,14 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   data: Supplier[];
   subscription: Subscription;
   newMenu: boolean;
+  lang = this.translateService.getDefaultLang();
+  src = `assets/documentation/i18n/${this.lang}/manuals/suppliers.md`
 
-  constructor(private stateService: StateService, private breakpointObserver: BreakpointObserver) {
+  constructor(
+    private stateService: StateService,
+    private breakpointObserver: BreakpointObserver,
+    private translateService: TranslateService
+    ) {
     this.subscription = this.breakpointObserver.observe([
       '(max-width: 768px)'
     ]).subscribe(result => {

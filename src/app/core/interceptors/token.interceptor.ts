@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../http/auth-service/auth.service';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, switchMap, take, retry } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
+import { catchError, switchMap, take, filter, first } from 'rxjs/operators';
 import { Router} from '@angular/router';
 
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  private subject = new BehaviorSubject<boolean>(false);
   isRefreshing = false;
-  firstRequest = new Array();
-  i = 0;
+  requestSubject = new BehaviorSubject<any>(null);
 
   constructor(public authService: AuthService, private router: Router) { }
 
@@ -21,20 +19,11 @@ export class TokenInterceptor implements HttpInterceptor {
     if (request) {
         return next.handle(request)
         .pipe(
+            //delay(500),
             catchError(error => {
                 // If we have a response with 401 status retry the request in order to use the refreshed token
                     if (error.status === 401 && error instanceof HttpErrorResponse) {
-                        return this.authService.refreshSession().pipe(
-                            retry(1),
-                            take(1),
-                            switchMap((response) => {
-                                if (response) {
-                                    return next.handle(request);
-                                } else {
-                                  this.forbiden();
-                                }
-                            })
-                        );
+                        return this.handle401(request, next);
                     }
 
                     if (error.status === 403) {
@@ -48,9 +37,37 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     forbiden() {
-        this.authService.logout(true).subscribe(response => {
-        return this.router.navigate(['/home']);
+        this.authService.logout(true)
+        .pipe(
+          first(),
+          take(1)
+        )
+        .subscribe(response => {
+        return this.router.navigate(['/land']);
     });
+    }
+
+    handle401(request, next) {
+      if (!this.isRefreshing) {
+        this.isRefreshing = true;
+        this.requestSubject.next(null);
+
+          return this.authService.refreshSession().pipe(
+            switchMap((response: any) => {
+              this.isRefreshing = false;
+              this.requestSubject.next(true);
+              return next.handle(request);
+            })
+          )
+      } else {
+        return this.requestSubject.pipe(
+          filter(value => value != null),
+          take(1),
+          switchMap(value => {
+            return next.handle(request);
+          })
+        )
+      }
     }
 
 }

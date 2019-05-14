@@ -20,7 +20,7 @@ export class ResendVerificationService {
   ) { }
 
   resend(user_id: number): Observable<object> {
-    return this.http.post(this.route + user_id, httpOptions)
+    return this.http.post(this.route, { user_id: user_id }, httpOptions)
   }
 
 }

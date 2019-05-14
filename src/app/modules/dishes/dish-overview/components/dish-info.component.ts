@@ -15,7 +15,7 @@ import { fadeInOut } from 'src/app/animations/navigation-animations';
                             <h3> {{ dishInfo.name }} <small>   | {{ dishInfo.category }}</small></h3>
                             <div align="end">
                                 <button mat-icon-button>
-                                <mat-icon color="warn" *ngIf="isInfoSet" (click)="toggleSet()">edit</mat-icon>
+                                <mat-icon color="accent" *ngIf="isInfoSet" (click)="toggleSet()">edit</mat-icon>
                                 <mat-icon color="warn" *ngIf="!isInfoSet" (click)="toggleSet()">cancel</mat-icon>
                                 </button>
                         </div>
@@ -72,8 +72,8 @@ export class DishInfoComponent implements OnChanges {
 
     ngOnChanges() {
         this.dishInfoForm = this.fb.group({
-            name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-            category: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')])
+            name: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*'), Validators.maxLength(50)]),
+            category: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*'), Validators.maxLength(19)])
         });
 
         if (this.dishInfo !== undefined) {

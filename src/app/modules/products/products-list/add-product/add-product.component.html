@@ -6,17 +6,18 @@
               <input type="text" matInput placeholder="{{ 'INGREDIENTS.NAME' | translate }}" autocomplete="off" formControlName="name" [errorStateMatcher]="matcher">
               <mat-error *ngIf="name.hasError('required')"><span translate>INGREDIENTS.NAME-REQUIRED</span></mat-error>
               <mat-error *ngIf="name.hasError('pattern')"><span translate>INGREDIENTS.ONLY-LETTERS</span></mat-error>
+              <mat-error *ngIf="name.hasError('repeated-product')"><span translate>INGREDIENTS.REPEATED</span></mat-error>
           </mat-form-field>
 
           <mat-form-field>
               <input type="number" matInput placeholder="{{ 'INGREDIENTS.PPK' | translate }}" autocomplete="off" formControlName="price" [errorStateMatcher]="matcher">
-              <span matSuffix>€&nbsp;</span>
+              <span matSuffix>{{ currency }}&nbsp;</span>
               <mat-error *ngIf="price.hasError('required')"><span translate>INGREDIENTS.PPK-REQUIRED</span></mat-error>
               <mat-error *ngIf="price.hasError('max')"><span translate>INGREDIENTS.MAX</span></mat-error>
           </mat-form-field>
 
           <mat-form-field>
-              <input type="number" matInput placeholder="{{ 'INGREDIENTS.LOSS' | translate }}" formControlName="loss" [errorStateMatcher]="matcher">
+              <input type="number" matInput placeholder="{{ 'INGREDIENTS.LOSS' | translate }}" formControlName="loss" [errorStateMatcher]="matcher" autocomplete="off">
               <mat-error *ngIf="loss.hasError('required')"><span translate>INGREDIENTS.LOSS-REQUIRED</span></mat-error>
               <mat-error *ngIf="price.hasError('max')"><span translate>INGREDIENTS.MAX</span></mat-error>
               <span matSuffix>gr&nbsp;</span>
@@ -31,7 +32,7 @@
 
           <div align="right">
               <button mat-button type="submit" class="mdc-icon-button material-icons" type="submit" [disabled]="addForm.invalid || disableButton">
-                <span translate>AUTH.SUBMIT</span>
+                <span translate>INGREDIENTS.ADD</span>
               </button>
           </div>
       </form>

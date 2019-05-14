@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeInOut } from 'src/app/animations/navigation-animations';
+import { anim } from 'src/app/animations/navigation-animations';
+import { RouterOutlet } from '@angular/router';
+import { SessionDataService } from 'src/app/modules/shared/services/session-data.service';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '.5s' } })])
-    ])
-  ]
+  animations: [anim]
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  role: string = null;
+  constructor(private sessionDataService: SessionDataService) { }
 
   ngOnInit() {
+    this. role =  this.sessionDataService.getRole();
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData.animation && outlet.activatedRouteData['animation'];
   }
 
 }

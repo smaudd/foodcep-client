@@ -1,18 +1,105 @@
-
-* {
-    font-family: Arial;
-}
-
 html, body{
+  width: 100%;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  background-color: #FFFBE6;
 }
 
-  .container {
-    margin-left: 250px;
-    margin-right: 250px;
-    margin-top: 50px;
+.mat-table {
+  border-radius: 10px
+}
+
+ul, li, .mat-form-field, .mat-select, .mat-option {
+  font-family: Montserrat;
+  color: #356859;
+}
+
+p, .mat-list, .mat-line {
+  font-family: Lekton;
+  font-size: 18px;
+  color: #356859;
+}
+
+tr, td, b {
+  font-family: Montserrat;
+  color: #356859;
+}
+
+small > span, strong {
+  font-size: 16px;
+  font-family: Lekton;
+  color: #356859;
+}
+
+.little-text {
+  font-size: 14px;
+  font-family: Lekton;
+}
+
+.mat-line, .mat-list-item {
+  font-weight: bolder;
+  font-size: 22px;
+}
+
+h1, h2, h4, h5, h6, h3 > span, h3 {
+  font-family: Montserrat;
+  color: #356859;
+}
+
+.mat-dialog-title {
+  font-family: Montserrat;
+  font-family: 16px;
+}
+
+.dialog-content-will-delete {
+  font-size: 24px;
+  font-family: Lekton;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mat-paginator {
+  background-color: #FFFBE6;
+}
+
+.mat-expansion-panel,
+.mat-expansion-panel-header,
+.mat-panel-title > span,
+.mat-table,
+.mat-dialog-container,
+.mat-expansion-panel-header-title,
+.mat-content > span,
+.mat-expanded,
+.mat-toolbar,
+table,
+.mat-cell,
+.mat-option,
+.mat-option-active,
+.mat-selected,
+.mat-select-value,
+.mat-active {
+  background-color: #FFFBE6;
+  color: #356859;
+  font-family: Montserrat;
+}
+
+.mat-tab-label {
+  color: #356859;
+  font-family: Lekton;
+  font-size: 16px;
+}
+
+.mat-card {
+  font-family: Lekton;
+  background-color: #FFFBE6;
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover { background: #FFFBE6; }
+
+.container {
+  margin-left: 250px;
+  margin-right: 250px;
+  margin-top: 40px;
 }
 
 .mat-simple-snackbar-action {
@@ -29,11 +116,6 @@ html, body{
     background: #ffae42;
 }
 
-.danger-snackbar {
-    color: white;
-    background: red;
-}
-
 .mat-spinner {
     margin: 0 auto;
 }
@@ -43,17 +125,44 @@ html, body{
   }
 
 .page-title {
-  color: white;
-  font-family: 'Quicksand', sans-serif;
+  font-family: Montserrat;
 }
 
-  .mat-list .mat-list-item.right .mat-list-item-content{
-    justify-content: flex-end;
+.res-name {
+  color: #FD5523;
+}
+
+.mat-list .mat-list-item.right .mat-list-item-content{
+  justify-content: flex-end;
+}
+
+.mat-menu-item, .mat-menu, .mat-menu-content {
+  background-color: #FFFBE6;
 }
 
 button > span {
+  color: #356859;
+  font-family: Montserrat;
+  font-weight: bold;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.toolbar-button {
+  color: white;
+  font-weight: lighter;
+}
+
+.mat-toolbar > button > span {
   font-size: 15px;
-  font-family: 'Quicksand', sans-serif;
+  font-family: Montserrat;
+}
+
+.mat-toolbar > div > button > span {
+  font-size: 15px;
+  font-family: Montserrat;
 }
 
 .icon {
@@ -61,12 +170,55 @@ button > span {
   max-height: 30px;
 }
 
+@media (max-width: 1280px) {
+  .container {
+      margin-left: 150px;
+      margin-right: 150px;
+  }
+}
+
 @media (max-width: 900px) {
     .container {
-        margin-left: 5px;
-        margin-right: 5px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 }
+
+.mid-title {
+  font-family: Montserrat;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+
+}
+
+::-webkit-scrollbar-track {
+  background: #e1e1e1;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #999999;
+  opacity: 0.5;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+
+}
+
 
 
 

@@ -1,0 +1,73 @@
+<div>
+<mat-toolbar color="primary">
+  <div translate [translateParams]="{value: user}">LAND.HELLO</div>
+</mat-toolbar>
+<div class="container">
+
+  <h2>
+    <div translate [translateParams]="{value: restaurant}">
+      LAND.HOWS-GOING
+    </div>
+  </h2>
+
+  <div>
+    <div *ngIf="(lastOrder$ | async) as lastOrder">
+      <p translate>LAND.LAST-ORDER</p>
+      <div *ngIf="lastOrder">
+          <mat-card>
+              <mat-card-title style="font-size: 14px">{{ lastOrder.supplier }} @ {{ lastOrder.date | date:'HH:mm - d/MM/yy' }}</mat-card-title>
+              <mat-card-content>
+                <div fxLayout="row">
+                  <div translate [translateParams]="{value: lastOrder.madeBy}">
+                    LAND.O-BY
+                  </div>
+                </div>
+            </mat-card-content>
+            </mat-card>
+      </div>
+      <ng-template #manual></ng-template>
+  </div>
+    <div *ngIf="(stats$ | async) as stats">
+        <p translate>LAND.TRAKED</p>
+        <mat-card>
+          <mat-list>
+            <mat-list-item>
+              <mat-icon mat-list-icon color="primary">kitchen</mat-icon>
+              <span mat-line translate>NAV.INGREDIENTS</span>
+              <span class="stats">{{ stats.products }}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <mat-icon mat-list-icon color="primary">restaurant_menu</mat-icon>
+                <span mat-line translate>NAV.DISHES</span>
+                <span class="stats">{{ stats.dishes }}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <mat-icon mat-list-icon color="primary">book</mat-icon>
+                <span mat-line translate>NAV.RECIPES</span>
+                <span class="stats">{{ stats.recipes }}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <mat-icon mat-list-icon color="primary">shopping_basket</mat-icon>
+                <span mat-line translate>ORDERS.ORDERS</span>
+                <span class="stats">{{ stats.orders }}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <mat-icon mat-list-icon color="primary">shop</mat-icon>
+                <span mat-line translate>ORDERS.SUPPLIERS</span>
+                <span class="stats">{{ stats.suppliers }}</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <mat-icon mat-list-icon color="primary">supervised_user_circle</mat-icon>
+                <span mat-line translate>RESTAURANT.TEAM-MEMBERS</span>
+                <span class="stats">{{ stats.users }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card>
+    </div>
+</div>
+</div>

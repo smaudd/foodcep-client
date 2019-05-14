@@ -1,7 +1,8 @@
-import { Component, OnInit, OnChanges, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, EventEmitter, Output, Input, SimpleChanges, AfterViewInit } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { CurrenciesService } from 'src/app/core/http/user-profile-data-service/currencies.service';
 
 @Component({
   selector: 'app-user-form',
@@ -15,6 +16,7 @@ export class UserFormComponent implements OnChanges, OnInit {
     get confirmPassword() { return this.userForm.get('confirmPassword');}
     get code() { return this.userForm.get('code');}
     get language() { return this.userForm.get('language');}
+    get currency() { return this.userForm.get('currency');}
     @Input() isWithCode: boolean;
     @Input() errors: number;
     @Output() stepDone = new EventEmitter();
@@ -22,14 +24,16 @@ export class UserFormComponent implements OnChanges, OnInit {
     matcher = new ErrorStateMatcher;
     userForm: FormGroup;
     subscription: Subscription;
+    currencies$ = this.currenciesService.getCurrencies();
 
-    constructor(public fb: FormBuilder) {
+    constructor(public fb: FormBuilder, private currenciesService: CurrenciesService) {
       this.userForm = this.fb.group({
         email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(30)]),
-        name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(5), Validators.maxLength(30)]),
+        name: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*'), Validators.minLength(5), Validators.maxLength(30)]),
         password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9]).{8,}$'), Validators.minLength(2), Validators.maxLength(19)]),
-        confirmPassword: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        confirmPassword: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.minLength(2)]),
         language: new FormControl('', [Validators.required]),
+        currency: new FormControl('', Validators.required),
         code: new FormControl('', [Validators.required])
       });
     }
@@ -38,11 +42,10 @@ export class UserFormComponent implements OnChanges, OnInit {
       if (changes) {
         // If isn't with code ignore validators for code input
         if (!this.isWithCode) {
-          this.userForm.get('code').setValidators(null);
+          this.userForm.get('code').setValidators([]);
         }
 
         if (this.errors) {
-          console.log(this.errors)
           switch (this.errors) {
             case 409:
             this.userForm.get('email').setErrors({ 'email-repeated': true });

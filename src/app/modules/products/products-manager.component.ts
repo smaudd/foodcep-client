@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { slide } from '../../animations/navigation-animations';
-
+import { MatDialog } from '@angular/material';
+import { HelpDialogComponent } from 'src/app/core/layout/help-dialog/help-dialog.component';
 
 @Component({
   selector: 'app-products-manager',
   templateUrl: './products-manager.component.html',
-  styleUrls: ['./products-manager.css'],
-  animations: [
-    trigger('toolbarSlide', [
-      transition('* <=> void', [useAnimation(slide, { params: { time: '.25s' } })])
-    ])
-  ]
+  styleUrls: ['./products-manager.css']
 })
 export class ProductsManagerComponent {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
+  openHelp() {
+    this.dialog.open(HelpDialogComponent, { data: 'products.md', height: '90vh' })
+  }
 }
+

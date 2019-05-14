@@ -7,6 +7,7 @@ import { ErrorMatcher } from '../../../shared/errorMatcher';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { StateService } from '../state.service';
 import { StateService as CategoryStateService } from '../../categories-list/state.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-product',
@@ -20,6 +21,7 @@ export class AddProductComponent implements OnInit {
   matcher = new ErrorMatcher();
   categorySubject$ = this.categoryStateService.categoriesSubject;
   _ingredients: Ingredient[];
+  currency = this.cookieService.get('CURRENCY');
 
   get name() {
     return this.addForm.get('name');
@@ -46,7 +48,7 @@ export class AddProductComponent implements OnInit {
   }
 
   constructor(
-    private snackBar: SnackbarService,
+    private cookieService: CookieService,
     private filterCorrectFormat: FilterCorrectFormatService,
     private stateService: StateService,
     private fb: FormBuilder,
@@ -55,7 +57,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {
     this.addForm = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      name: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*'), Validators.maxLength(19)]),
       price: new FormControl('', [Validators.required, Validators.max(1000)]),
       loss: new FormControl('', [Validators.required, Validators.max(1000)]),
       category: new FormControl('', [Validators.required])
@@ -67,7 +69,7 @@ export class AddProductComponent implements OnInit {
     const validFormat = this.filterCorrectFormat.filterInput(formValue.name);
     if (this.ingredients.find(item => item.name === validFormat)) {
       this.disableButton = false;
-      this.snackBar.open(`${validFormat} is already on the registre!`, null, 'warning-snackbar', 3000);
+      this.addForm.get('name').setErrors({'repeated-product': true });
       return;
     }
     let cost = (formValue.loss * formValue.price / 1000) + formValue.price;

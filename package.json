@@ -43,6 +43,7 @@
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.13",
     "mongoose-timestamp": "^0.6.0",
+    "ngx-captcha": "^6.4.0",
     "ngx-cookie-service": "^2.1.0",
     "ngx-markdown": "^7.1.5",
     "rxjs": "~6.4.0",

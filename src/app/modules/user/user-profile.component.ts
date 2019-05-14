@@ -14,9 +14,6 @@ import { IDialogData } from '../../core/auth/models/input.interfaces';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
   animations: [
-    trigger('toolbarSlide', [
-      transition('* <=> void', [useAnimation(slide, { params: { time: '.25s' } })])
-    ]),
     trigger('fadeInOut', [
       transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '.5s' } })])
     ])
@@ -51,9 +48,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   openDelDialog(): void {
-    const dialogData: IDialogData = {
+    const dialogData = {
       email: this.user.email,
-      isAdmin: false
     }
     const dialogRef = this.dialog.open(DeleteAccountDialogComponent, {
       width: '400px',

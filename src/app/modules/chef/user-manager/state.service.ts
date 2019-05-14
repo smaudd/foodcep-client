@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChefDataService } from '../../../core/http/chef-data-service/chef-data.service';
 import { BehaviorSubject } from 'rxjs';
-import { User } from 'src/app/core/auth/models/user.model';
 import { IUserChange } from './user-change.interface';
 
 
@@ -10,7 +9,7 @@ import { IUserChange } from './user-change.interface';
 })
 export class StateService {
 
-    usersSubject = new BehaviorSubject([]);
+    usersSubject = new BehaviorSubject(null);
     adminSubject = new BehaviorSubject(null);
     loadingSubject = new BehaviorSubject(null);
     constructor(

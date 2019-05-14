@@ -1,37 +1,37 @@
 <form [formGroup]="restaurantForm">
       <div fxLayout="column">
       <mat-form-field appearance="outline">
-          <input matInput placeholder="Restaurant Name" autocomplete="off" formControlName="restaurantName">
+          <input matInput placeholder="{{ 'RESTAURANT.NAME' | translate }}" autocomplete="off" formControlName="restaurantName">
           <mat-error *ngIf="restaurantName.hasError('required')">
               <span translate>AUTH.NAME-REQUIRED</span>
           </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-          <input matInput placeholder="Adress" autocomplete="off" formControlName="adress">
+          <input matInput placeholder="{{ 'AUTH.ADRESS' | translate }}" autocomplete="off" formControlName="adress">
           <mat-error *ngIf="adress.hasError('required')">
-              <span translate>Adress required</span>
+              <span translate>AUTH.ADRESS</span>
           </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-          <input matInput autocomplete="off" formControlName="phone" placeholder="Telephone">
+          <input matInput autocomplete="off" formControlName="phone" placeholder="{{ 'RESTAURANT.PHONE' | translate }}">
           <mat-error *ngIf="phone.hasError('required')">
-              <span translate>Telephone required</span>
+              <span translate>RESTAURANT.PHONE-REQ</span>
           </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
           <input matInput type="textarea" formControlName="description"
-          placeholder="Description" autocomplete="off">
+          placeholder="{{ 'RESTAURANT.DESCRIPTION' | translate }}" autocomplete="off">
           <mat-error *ngIf="description.hasError('required')">
-              <span translate>Description required</span>
+              <span translate>RESTAURANT.DES-REQ</span>
           </mat-error>
       </mat-form-field>
       </div>
   </form>
 <div align="end">
-<button mat-raised-button color="primary" type="submit" [disabled]="restaurantForm.invalid" (click)="createRestaurant(restaurantForm.value)">
+<button mat-button type="submit" [disabled]="restaurantForm.invalid" (click)="createRestaurant(restaurantForm.value)">
   <span translate>AUTH.SUBMIT</span>
 </button>
 </div>

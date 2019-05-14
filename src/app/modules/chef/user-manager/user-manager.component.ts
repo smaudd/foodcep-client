@@ -1,41 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from './state.service';
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { slide, fadeInOut } from 'src/app/animations/navigation-animations';
 import { IUserChange } from './user-change.interface';
 import { MatDialog } from '@angular/material';
 import { DropUserDialogComponent } from './drop-user-dialog.component';
+import { skip } from 'rxjs/operators';
+import { fader } from 'src/app/animations/navigation-animations';
+import { TranslateService } from '@ngx-translate/core';
+import { HelpDialogComponent } from 'src/app/core/layout/help-dialog/help-dialog.component';
 
 
 @Component({
   selector: 'app-user-manager',
   templateUrl: './user-manager.component.html',
   styleUrls: ['./user-manager.component.css'],
-  animations: [
-    trigger('toolbarSlide', [
-      transition('* <=> void', [useAnimation(slide, { params: { time: '.25s' } })])
-    ]),
-    trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '.5s' } })])
-    ])
-  ]
+  animations: [fader]
 })
+
 export class UserManagerComponent implements OnInit {
 
   // Subject for the list of users
   usersSubject$ = this.stateService.usersSubject;
   loadingSubject$ = this.stateService.loadingSubject;
   profile = false;
+  lang = this.translateService.getDefaultLang();
+  src = `assets/documentation/i18n/${this.lang}/manuals/user-manager.md`;
 
   constructor(
     private stateService: StateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
-    this.usersSubject$.subscribe();
     // Getting the list of users
     this.stateService.getUsers();
+    this.usersSubject$.pipe(skip(1)).subscribe();
   }
 
   roleChange(user_id: number, role: string) {
@@ -51,5 +50,9 @@ export class UserManagerComponent implements OnInit {
       width: '550px',
       data: user_id
     });
+  }
+
+  openHelp() {
+    this.dialog.open(HelpDialogComponent, { data: 'rnt.md', height: '90vh' })
   }
 }

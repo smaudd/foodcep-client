@@ -1,10 +1,28 @@
-<mat-toolbar color="primary" class="mat-elevation-z1" [@toolbarSlide]><span class="page-title" translate>NAV.ORDERS-SUPPLIERS</span></mat-toolbar>
+<mat-toolbar color="primary" class="mat-elevation-z1">
+  <span class="page-title" translate>NAV.ORDERS-SUPPLIERS</span>
+  <span class="spacer"></span>
+  <div [hidden]="tabGroup.selectedIndex !== 0">
+      <button mat-button *ngIf="!isOrder; else cancel" routerLink="order" [queryParams]="{id: 'null'}">
+        <span fxHide.xs="true" translate class="toolbar-button" translate>ORDERS.NEW-ORDER</span>
+        <mat-icon class="toolbar-button">add_box</mat-icon>
+      </button>
+      <ng-template #cancel>
+            <button mat-button (click)="toggleIsOrder()">
+                <span fxHide.xs="true" class="toolbar-button" translate>ORDERS.CANCEL</span>
+                <mat-icon class="toolbar-button">clear</mat-icon>
+            </button>
+      </ng-template>
+  </div>
+  <button mat-icon-button (click)="openHelp()">
+      <mat-icon class="toolbar-button">help_outline</mat-icon>
+  </button>
+</mat-toolbar>
 <div>
-  <mat-tab-group>
-      <mat-tab label="Dashboard">
+  <mat-tab-group #tabGroup>
+      <mat-tab label="{{ 'ORDERS.DASH' | translate}}">
           <app-dashboard></app-dashboard>
       </mat-tab>
-      <mat-tab label="Suppliers">
+      <mat-tab label="{{'ORDERS.SUPPLIERS'| translate}}">
           <app-suppliers></app-suppliers>
       </mat-tab>
   </mat-tab-group>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { StateService } from './state.service';
 import { INameChange } from '../../../core/auth/models/input.interfaces';
@@ -10,9 +10,9 @@ import { User } from '../../../core/auth/models/user.model';
     `
     <div>
         <form [formGroup]="nameForm" fxLayout="row">
-            <mat-form-field style="width: 100%">
+            <mat-form-field style="width: 100%" appearance="outline">
                     <input matInput placeholder="{{ 'AUTH.NAME' | translate }}" formControlName="name" autocomplete="off">
-                    <mat-error *ngIf="name.hasError('required')"><a translate>AUTH.NAME-REQUIRED</a></mat-error>
+                    <mat-error *ngIf="name.hasError('required')"><span translate>AUTH.NAME-REQUIRED</span></mat-error>
             </mat-form-field>
                     <button mat-icon-button *ngIf="name.dirty && name.valid" (click)="saveName(name.value)">
                             <mat-icon color="warn">check</mat-icon>
@@ -36,7 +36,7 @@ export class NameComponent implements OnChanges {
         private stateService: StateService
         ) {
             this.nameForm = this.fb.group({
-                name: new FormControl('', [Validators.required])
+                name: new FormControl('', [Validators.required, Validators.pattern('[A-Za-zÑñáéíóúüÁÉÍÓÚ ]*')])
             });
         }
 

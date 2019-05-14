@@ -1,9 +1,10 @@
 <div *ngIf="!done">
   <h4 translate>AUTH.ARE-YOU-SURE</h4>
+  <p>This changes can't be undone.</p>
   <mat-divider></mat-divider>
   <br>
   <div fxLayoutGap="10px">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput type="password" placeholder="{{ 'AUTH.PASSWORD' | translate }}" [formControl]="password">
       <mat-error *ngIf="!password.valid"><a translate>AUTH.WRONG-PWD</a></mat-error>
     </mat-form-field>

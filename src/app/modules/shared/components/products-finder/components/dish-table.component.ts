@@ -6,6 +6,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { StateService } from '../state.service';
 import { ErrorMatcher } from '../../../errorMatcher';
 import { OperationsService } from '../../../../dishes/dish-overview/services/operations.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-dish-table',
@@ -37,9 +38,9 @@ import { OperationsService } from '../../../../dishes/dish-overview/services/ope
 
                       </div>
                   </form>
-                   <div fxLayout="row" fxLayoutGap="10px">
-                      <small><strong><a translate>DISHES.PPP </a>:  {{ grams.value * ingredient.cost / 1000 | currency:'EUR' }}</strong></small>
-                      <small><strong><a translate>INGREDIENTS.PPK </a>: {{ ingredient.cost | currency:'EUR' }}</strong></small>
+                   <div fxLayout="column" fxLayoutGap="10px" class="little-text">
+                      <span><span translate>DISHES.PPP</span>:  {{ grams.value * ingredient.cost / 1000 | currency:currency }}</span>
+                      <span><span translate>INGREDIENTS.PPK </span>: {{ ingredient.cost | currency:currency }}</span>
                     </div>
                   </mat-expansion-panel>
             </mat-accordion>
@@ -55,6 +56,7 @@ export class DishTableComponent implements OnInit {
   gramsForm: FormGroup;
   notFound: boolean;
   matcher = new ErrorMatcher;
+  currency = this.cookieService.get('CURRENCY');
 
 
   get grams() {
@@ -64,12 +66,13 @@ export class DishTableComponent implements OnInit {
   constructor(
     private stateService: StateService,
     private fb: FormBuilder,
-    private operationsService: OperationsService
+    private operationsService: OperationsService,
+    private cookieService: CookieService
     ) {}
 
     ngOnInit() {
       this.gramsForm = this.fb.group({
-        grams: new FormControl('', [Validators.required, Validators.pattern('([1-9](\.[0-9]+)?)|(0\.[0-9]*[1-9])')])
+        grams: new FormControl('', [Validators.required, Validators.pattern('([1-9](\.[0-9]+)?)|(0\.[0-9]*[1-9])'), Validators.max(9000)])
       });
     }
 

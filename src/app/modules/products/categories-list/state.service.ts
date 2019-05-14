@@ -26,30 +26,30 @@ export class StateService {
     ) {}
 
   categoriesSubject = new BehaviorSubject([]);
+  loadingSubject = new BehaviorSubject(null);
   errorsSubject = new BehaviorSubject(null);
 
   get() {
+    this.loadingSubject.next(true);
     this.productsService.getCategories()
     .subscribe(ingredients => {
       this.categoriesSubject.next(ingredients);
-    }, err => {
-      if (err.status === 500) {
-        this.router.navigate(['/']);
-      } else {
-        this.errorsSubject.next(err.status);
-      }
+      this.loadingSubject.next(false);
     });
   }
 
   post(category: Category): void {
+    this.loadingSubject.next(true);
       this.productPostService.postCategory(category)
       .subscribe(value => {
           const list = this.addToList(value, this.categoriesSubject.value);
           this.categoriesSubject.next(list);
+          this.loadingSubject.next(false);
       });
   }
 
   update(category: Category): void {
+    this.loadingSubject.next(true);
       this.productPutService.putCategoryData(category)
       .subscribe(value => {
           let list = this.removeFromList(value, this.categoriesSubject.value);
@@ -57,14 +57,17 @@ export class StateService {
           this.categoriesSubject.next(list);
           // In case of update. Get the products again to actualize the table data
           this.ingredientsStateService.get('?product=&&page=0')
+          this.loadingSubject.next(false);
       });
   }
 
   delete(id: string): void {
+    this.loadingSubject.next(true);
       this.productDeleteService.deleteCategory(id)
       .subscribe(category => {
           const list = this.removeFromList(category, this.categoriesSubject.value);
           this.categoriesSubject.next(list);
+          this.loadingSubject.next(false);
       });
   }
 

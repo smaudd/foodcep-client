@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
-import { OrdersGetService } from '../../../core/http/orders-data-service/orders.service';
+import { OrdersService } from '../../../core/http/orders-data-service/orders.service';
 import { Order } from './models/order.model';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class StateService {
   orderSubject = new BehaviorSubject(null);
   loadingSubject = new BehaviorSubject(null);
   constructor(
-    private ordersGetService: OrdersGetService
+    private ordersGetService: OrdersService
     ) {}
 
   getAll(): void {
@@ -29,13 +29,15 @@ export class StateService {
     .subscribe((responseOrder: Order) => {
       this.orderSubject.next(responseOrder);
       this.loadingSubject.next(false);
+    }, err => {
+      this.orderSubject.next(null);
+      this.loadingSubject.next(false);
     });
   }
 
   post(order: Order): void {
     this.ordersGetService.postOrder(order)
     .subscribe((responseOrder: Order) => {
-      console.log(responseOrder)
       this.ordersSubject.next([responseOrder, ...this.ordersSubject.value])
     });
   }

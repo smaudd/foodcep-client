@@ -11,7 +11,9 @@ import { Subscription } from 'rxjs';
         <div>
             <div>
                     <div fxFlex="90">
-                        <h4 mat-line style="text-align: center">Order Checkout</h4>
+                        <h4 mat-line style="text-align: center">
+                          <span translate>ORDERS.CHECKOUT</span>
+                        </h4>
                     </div>
                     <div fxFlex="10">
                         <button mat-icon-button (click)="close()" color="primary">
@@ -32,19 +34,19 @@ import { Subscription } from 'rxjs';
             <div *ngIf="data.isToSubmit" align="end" fxLayout="column">
               <div fxFlex="33.3">
                   <button mat-button color="primary" (click)="submitOrder('whatsapp')">
-                    Send Whatsapp
+                    <span translate>ORDERS.WHATSAPP</span>
                     <mat-icon>chat</mat-icon>
                   </button>
               </div>
               <div fxFlex="33.3">
                   <button mat-button color="warn" (click)="submitOrder('gmail')">
-                    Send Email
+                    <span translate>ORDERS.GMAIL</span>
                     <mat-icon>email</mat-icon>
                   </button>
               </div>
               <div fxFlex="33.3">
                   <button mat-button (click)="submitOrder('none')">
-                    Just save
+                    <span translate>ORDERS.JUST-SAVE</span>
                     <mat-icon>save</mat-icon>
                   </button>
               </div>
@@ -81,16 +83,16 @@ export class OrderOverviewDialogComponent implements OnDestroy {
       const restaurant = localStorage.getItem('Restaurant')
       const subject = `New order from restaurant ${restaurant}`
       let body = order.items.map(item => {
-        return item = `${item.name} => ${item.quantity}${item.unit}`
+        return item = `${item.name} --> ${item.quantity}${item.unit}`
       })
       this.redirect(subject, body, sendUsing)
     }
 
-    redirect(subject: string, body: string[], redirectTo: string) {
+    redirect(subject: string, body, redirectTo: string) {
 
           if (redirectTo === 'whatsapp') {
             // whatsapp
-            // body = body.unshift(subject);
+            body = [subject, ...body];
             const encoded = body.join('%0D%0A')
             window.open(`https://wa.me/${this.data.order.supplier.phone}?text=${encoded}`, '_blank')
           } else if (redirectTo === 'gmail') {

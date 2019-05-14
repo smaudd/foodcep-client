@@ -1,37 +1,38 @@
-<mat-toolbar color="primary" [@toolbarSlide]><span class="page-title" translate>NAV.RESTAURANT</span></mat-toolbar>
-<div class="container" [@fadeInOut]>
-<br>
-  <mat-card>
-      <div fxLayout="column">
-        <form [formGroup]="resForm" (ngSubmit)="updateData(resForm.value)">
-          <mat-form-field>
-          <input matInput placeholder="{{ 'AUTH.NAME' | translate }}" formControlName="restaurant_name">
-            <mat-error *ngIf="restaurant_name.hasError('required')"><a translate>AUTH.NAME-REQUIRED</a></mat-error>
-          </mat-form-field>
+<div [@fader]>
+    <mat-toolbar color="primary"><span class="page-title" translate>NAV.RESTAURANT</span></mat-toolbar>
+    <div class="container">
+    <br>
+      <mat-card>
+          <div fxLayout="column">
+            <form [formGroup]="resForm" (ngSubmit)="updateData(resForm.value)">
+              <mat-form-field appearance="outline">
+              <input matInput placeholder="{{ 'AUTH.NAME' | translate }}" formControlName="restaurant_name">
+                <mat-error *ngIf="restaurant_name.hasError('required')"><span translate>AUTH.NAME-REQUIRED</span></mat-error>
+              </mat-form-field>
 
-          <mat-form-field>
-            <input type="text" matInput placeholder="{{ 'AUTH.ADRESS' | translate }}" formControlName="adress">
-            <mat-error *ngIf="adress.hasError('required')"><a translate>AUTH.ADDRES-REQUIRED</a></mat-error>
-          </mat-form-field>
+              <mat-form-field appearance="outline">
+                <input type="text" matInput placeholder="{{ 'AUTH.ADRESS' | translate }}" formControlName="adress">
+                <mat-error *ngIf="adress.hasError('required')"><span translate>AUTH.ADDRES-REQUIRED</span></mat-error>
+              </mat-form-field>
 
-          <mat-form-field>
-            <span matPrefix>+34 &nbsp;</span>
-            <input type="tel" matInput placeholder="{{ 'AUTH.PHONE' | translate }}" formControlName="phone">
-            <mat-error *ngIf="phone.hasError('required')"><a translate>AUTH.PHONE-REQUIRED</a></mat-error>
-          </mat-form-field>
+              <mat-form-field appearance="outline">
+                <input type="tel" matInput placeholder="{{ 'AUTH.PHONE' | translate }}" formControlName="phone">
+                <mat-error *ngIf="phone.hasError('required')"><span translate>AUTH.PHONE-REQUIRED</span></mat-error>
+              </mat-form-field>
 
-          <mat-form-field>
-            <textarea matInput placeholder="{{ 'AUTH.DESCRIPTION' | translate }}" formControlName="description"></textarea>
-            <mat-error *ngIf="description.hasError('required')"><a translate>AUTH.DESCRIPTION-REQUIRED</a></mat-error>
-          </mat-form-field>
+              <mat-form-field appearance="outline">
+                <textarea matInput placeholder="{{ 'AUTH.DESCRIPTION' | translate }}" formControlName="description"></textarea>
+                <mat-error *ngIf="description.hasError('required')"><span translate>AUTH.DESCRIPTION-REQUIRED</span></mat-error>
+              </mat-form-field>
 
-          <div align="end">
-            <button mat-button [disabled]="resForm.invalid || !resForm.dirty">
-                <a translate>AUTH.SUBMIT</a>
-            </button>
-          </div>
+              <div align="end">
+                <button mat-button [disabled]="resForm.invalid || !resForm.dirty">
+                    <span translate>AUTH.SUBMIT</span>
+                </button>
+              </div>
 
-        </form>
+            </form>
+        </div>
+      </mat-card>
     </div>
-  </mat-card>
 </div>

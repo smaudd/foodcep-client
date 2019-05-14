@@ -1,5 +1,5 @@
 .mat-form-field {
-    width: calc(100% - 0.5rem);
+    width: 100%;
 }
 
 table {
@@ -12,29 +12,7 @@ table {
     overflow-x: hidden;
  }
 
-.table-container::-webkit-scrollbar {
-  width: 4px;
-
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #e1e1e1;
-  border-radius: 4px;
-}
-
-
-.table-container::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
-}
-
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background: #b3b3b3;
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-
-.table-container::-webkit-scrollbar-thumb:active {
-  background-color: #999999;
+.shopping-product {
+  border-radius: 5px;
+  padding: 5px;
 }

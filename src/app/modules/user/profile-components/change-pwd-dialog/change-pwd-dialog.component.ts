@@ -44,9 +44,6 @@ export class ChangePwdDialogComponent implements OnInit {
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(2)]),
     });
     this.matchingPasswordsOnChanges();
-    // if (this.data.isAdmin) {
-    //   this.form.get('currentPassword').setValidators([]);
-    // }
   }
 
   matchingPasswordsOnChanges() {
@@ -74,7 +71,6 @@ export class ChangePwdDialogComponent implements OnInit {
       skip(1)
     )
     .subscribe(error => {
-      console.log(error);
         if (error === 422) {
             this.form.get('currentPassword').setErrors({ 'wrong-password': 'error' });
             } else {

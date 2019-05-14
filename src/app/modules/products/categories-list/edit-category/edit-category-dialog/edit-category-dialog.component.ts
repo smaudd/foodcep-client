@@ -6,14 +6,12 @@ import { StateService } from '../../state.service';
 @Component({
   selector: 'app-edit-category-dialog',
   template: `
-  <h1 mat-dialog-title><a translate>INGREDIENTS.ARE-YOU-SURE-2</a></h1>
+  <h1 mat-dialog-title><span translate>INGREDIENTS.ARE-YOU-SURE-2</span></h1>
           <div mat-dialog-content>
-                <mat-list>
-                    <mat-list-item>
-                        <h4 mat-line>{{ data.name }}</h4>
-                        <p mat-line><small translate>INGREDIENTS.CATEGORY</small></p>
-                    </mat-list-item>
-                </mat-list>
+            <div align="center" fxLayout="column" fxLayoutGap="5px">
+                <h4 class="dialog-content-will-delete">{{ data.name }}</h4>
+                <p mat-line><small translate>INGREDIENTS.CATEGORY</small></p>
+            </div>
           </div>
           <div mat-dialog-actions align="end">
               <button mat-icon-button cdkFocusInitial (click)="putData()">

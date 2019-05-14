@@ -4,15 +4,16 @@ import { MatDialog } from '@angular/material';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { ItemErrorMatcher } from '../../../shared/errorMatcher';
-import { Subscription, fromEvent } from 'rxjs';
-import { skip } from 'rxjs/operators';
+import { Subscription, fromEvent, Observable } from 'rxjs';
+import { skip, tap, mergeMap } from 'rxjs/operators';
 import { StateService } from '../state.service';
 import { StateService as SupplierStateService } from '../../suppliers/state.service';
 import { Item } from '../models/order.model';
 import { CounterService } from './counter.service';
 import { OrderOverviewDialogComponent } from './order-overview-dialog.component';
-import { slide, fadeInOut } from '../../../../animations/navigation-animations';
+import { fadeInOut, fader } from '../../../../animations/navigation-animations';
 import { Ingredient } from '../../../shared/models/ingredient.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -20,19 +21,15 @@ import { Ingredient } from '../../../shared/models/ingredient.model';
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
   animations: [
-    trigger('toolbarSlide', [
-      transition('* <=> void', [useAnimation(slide, { params: { time: '.25s' } })])
-    ]),
     trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '.3s' } })])
-    ])
+      transition('void => *', [useAnimation(fadeInOut, { params: { time: '.3s' } })])
+    ]),
+    fader
   ]
 })
 
-export class OrdersComponent implements OnInit, OnChanges, OnDestroy {
+export class OrdersComponent implements OnInit, OnDestroy {
 
-  @Input() order_id: number;
-  @Output() done = new EventEmitter();
   subscription: Subscription;
   order$ = this.dashboardStateService.orderSubject;
   isLoading$ = this.dashboardStateService.loadingSubject;
@@ -41,6 +38,7 @@ export class OrdersComponent implements OnInit, OnChanges, OnDestroy {
   shoppingForm: FormGroup;
   matcher = new ItemErrorMatcher;
   supplier: string;
+  items$: Observable<Item[]>
   get itemsForms() { return this.shoppingForm.get('items') as FormArray }
 
   constructor(
@@ -49,24 +47,29 @@ export class OrdersComponent implements OnInit, OnChanges, OnDestroy {
     private dashboardStateService: StateService,
     private counterService: CounterService,
     private supplierStateService: SupplierStateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
     ) {}
 
-  ngOnChanges() {
-    if (this.order_id) {
-      this.dashboardStateService.getOne(this.order_id);
-      this.subscription = this.order$
-      .pipe(skip(1))
-      .subscribe(order => {
+  ngOnInit() {
+    this.setForm();
+    this.route.queryParams
+    .pipe(
+      tap(value => this.dashboardStateService.getOne(value.id)),
+      mergeMap(_ => this.order$),
+      skip(1)
+    ).subscribe(order => {
+      if (order !== null) {
         order.items.forEach((item: Item) => {
           // Creates the forms array based on the requested order
           this.itemsForms.push(this.createItem(item, item.quantity, item.unit))
         })
-      })
-    }
+      }
+    })
   }
 
-  ngOnInit() {
+  setForm() {
     this.supplierStateService.get();
     this.shoppingForm = this.fb.group({
       supplier: new FormControl(null, [Validators.required]),
@@ -120,7 +123,7 @@ export class OrdersComponent implements OnInit, OnChanges, OnDestroy {
 
     dialogRef.afterClosed().subscribe(value => {
       if (value === true) {
-        this.done.emit(value);
+        this.router.navigate(['/orders-suppliers'])
       }
     })
   }

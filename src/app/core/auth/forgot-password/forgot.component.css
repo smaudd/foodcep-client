@@ -1,0 +1,12 @@
+h1 {
+  color: #A0C843;
+  font-family: 'Quicksand', sans-serif;
+}
+
+mat-form-field {
+  width: 100%
+}
+
+mat-card {
+  padding: 20px;
+}

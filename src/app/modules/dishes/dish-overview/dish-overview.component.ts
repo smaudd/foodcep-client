@@ -9,10 +9,11 @@ import { SortService } from '../../shared/services/sort.service';
 import { OperationsService } from './services/operations.service';
 import { IDishInfo } from './dishInfo.interface';
 import { StateService } from '../services/state.service';
-import { fadeInOut, tableFadeInOut } from 'src/app/animations/navigation-animations';
+import { fader, tableFadeInOut } from 'src/app/animations/navigation-animations';
 import { DishesService } from '../../../core/http/dishes-data-service/dishes-get-data.service';
 import { PatchService } from './services/patch.service';
 import { BehaviorSubject } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-dish-overview',
@@ -22,9 +23,7 @@ import { BehaviorSubject } from 'rxjs';
     trigger('detailExpand', [
       transition('collapsed <=> expanded', useAnimation(tableFadeInOut)),
     ]),
-    trigger('fadeInOut', [
-      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '.5s' } })])
-    ])
+    fader
   ]
 })
 export class DishOverviewComponent implements OnChanges {
@@ -39,13 +38,15 @@ export class DishOverviewComponent implements OnChanges {
   dishInfo: IDishInfo;
   hideOverview = false;
   ingredients$ = new BehaviorSubject([]);
+  currency = this.cookieService.get('CURRENCY');
 
   constructor(
     private sortService: SortService,
     private operationService: OperationsService,
     private dishesService: DishesService,
     private patchService: PatchService,
-    private stateService: StateService
+    private stateService: StateService,
+    private cookieService: CookieService
     ) { }
 
     ngOnChanges(): void {

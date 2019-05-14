@@ -1,0 +1,39 @@
+<mat-toolbar *ngIf="isUpdate" color="primary">
+  <button mat-button routerLink="/recipes">
+    <mat-icon class="toolbar-button">arrow_back_ios</mat-icon>
+  </button>
+  <span [@fader]>{{recipe.name}}</span>
+</mat-toolbar>
+<div class="container" [@fader]>
+
+  <div *ngIf="!isUpdate">
+    <h3><span translate>RECIPE.CREATE</span></h3>
+    <mat-divider></mat-divider>
+    <br>
+  </div>
+  <form [formGroup]="recipeForm" (ngSubmit)="saveRecipe(recipeForm.value)">
+    <mat-form-field appearance="outline" *ngIf="!isUpdate">
+        <mat-label><span translate>NAV.DISHES</span></mat-label>
+        <mat-select formControlName="dish">
+            <mat-option *ngFor="let dish of dishes$ | async" value="{{dish.dish_id}}">
+              {{ dish.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngIf="dish.value !== null">
+      <app-dish-table [dish_id]="dish.value" (minimum_production)="setMinimumProduction($event)" [isNewOrEditRecipe]="true" [min_prod_value]="minimum_production"></app-dish-table>
+    <br>
+    <mat-form-field appearance="outline">
+        <textarea matInput formControlName="recipeDirections" rows="20" placeholder="Write your recipe.."></textarea>
+    </mat-form-field>
+    <div align="end">
+        <button mat-button type="submit" [disabled]="recipeForm.invalid">
+            <span translate>DISHES.SAVE</span>
+        </button>
+    </div>
+    </div>
+  </form>
+
+
+
+

@@ -1,27 +1,28 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ResendVerificationService } from '../../http/auth-service/resend-verification.service';
+import { delay, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-verification-dialog',
   template: `
   <div fxLayout="column" align="center" *ngIf="!isResended; else resend">
-    <h1>Welcome to foodcep!</h1>
-    <p>We are happy to have you here!</p>
-    <p>But first you need to validate your email to use your account</p>
-    <p>We sended you an email with the verification link. Just go there and you'll be able to login</p>
-    <small>You didn't recieve the email?</small>
+    <h1><span translate>HOME.WELCOME-2</span></h1>
+    <p translate>HOME.HAPPY</p>
+    <p translate>HOME.BUT</p>
+    <p translate>HOME.SENT-EMAIL</p>
+    <small translate>HOME.DIDNT</small>
     <br>
     <div align="center">
       <button mat-button (click)="resendEmail()">
-        <span>Resend</span>
+        <span translate>HOME.RESEND</span>
       </button>
     </div>
   </div>
   <ng-template #resend>
     <div align="center">
-      <h3>The verification email was resended to your account!</h3>
-      <p>Go to your email and verify it!</p>
+      <h3><span translate>HOME.SENT-2</span></h3>
+      <p translate>HOME.GO-TO-EMAIL</p>
     </div>
   </ng-template>
   `
@@ -39,11 +40,12 @@ constructor(
 
   resendEmail() {
     this.resendVerificationService.resend(this.data.user_id)
+    .pipe(
+      tap(_ => this.isResended = true),
+      delay(4000)
+    )
     .subscribe(_ => {
-      this.isResended = true;
-      setTimeout(() => {
-        this.dialogRef.close();
-      }, 2000)
+      this.dialogRef.close();
     })
   }
 

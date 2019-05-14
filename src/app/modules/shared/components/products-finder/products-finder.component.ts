@@ -7,17 +7,18 @@ import { SnackbarService } from 'src/app/modules/shared/services/snackbar.servic
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { StateService } from './state.service';
 import { FilterCorrectFormatService } from '../../services/filter-correct-format.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+
 import { Subscription } from 'rxjs';
+import { fader, fadeInOut } from 'src/app/animations/navigation-animations';
+import { trigger, transition, useAnimation } from '@angular/animations';
 
 @Component({
   selector: 'app-products-finder',
   templateUrl: './products-finder.component.html',
   styleUrls: ['./products-finder.component.css'],
   animations: [
-    trigger('fadeInOut', [
-      state('void', style({opacity: 0})),
-      transition('void <=> *', animate(100)),
+      trigger('fadeInOut', [
+      transition('* <=> void', [useAnimation(fadeInOut, { params: { time: '.2s' } })])
     ])
   ]
 })
@@ -28,6 +29,7 @@ export class ProductsFinderComponent implements OnInit, OnDestroy {
   @Output() add = new EventEmitter(true);
   ingredientsSubject$ = this.stateService.ingredientsSubject;
   errorsSubject$ = this.stateService.errorsSubject;
+  loadingSubject$ = this.stateService.loadingSubject;
   search = new FormControl;
   notFound: boolean;
 
@@ -57,6 +59,7 @@ export class ProductsFinderComponent implements OnInit, OnDestroy {
   }
 
   searchBox() {
+      const expression = new RegExp('[A-za-zñáéíóúü ]');
       this.subscription = this.search.valueChanges
       .pipe(
         map(value => {
@@ -70,9 +73,10 @@ export class ProductsFinderComponent implements OnInit, OnDestroy {
       )
       .subscribe(value => {
         this.notFound = false;
-        if (value === null || value === '') {
+        if (value === null || value === '' || !expression.test(value)) {
           this.ingredientsSubject$.next([]);
         } else {
+          this.notFound = false;
           this.stateService.get(`?product=${value}&&page=0`);
         }
       });
@@ -80,7 +84,6 @@ export class ProductsFinderComponent implements OnInit, OnDestroy {
 
   addIngredientToDish(ingredient: IngredientForDish): void {
     this.add.emit(ingredient);
-    this.snackBar.open('Added!', null, 'green-snackbar', 300);
     this.ingredientsSubject$.next([]);
     this.search.reset();
   }

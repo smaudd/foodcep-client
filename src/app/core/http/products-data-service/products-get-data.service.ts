@@ -17,7 +17,7 @@ const httpOptions = {
 })
 export class ProductsService {
 
-  private getIngredientsRoute = '~/api/products/read/';
+  private getIngredientsRoute = '~/api/products/read';
   private getCategoriesRoute = '~/api/products/categories/read';
   constructor(private http: HttpClient) { }
 

@@ -15,7 +15,7 @@ export interface IEmailChange {
 }
 
 export interface ILanguageChange {
-    user_id: string;
+    user_id: number;
     language: string;
 }
 
@@ -33,4 +33,9 @@ export interface IPasswordChange {
 export interface IRoleChange {
     email: string;
     role: string;
+}
+
+export interface ICurrencyChange {
+  symbol: string;
+  user_id: number;
 }

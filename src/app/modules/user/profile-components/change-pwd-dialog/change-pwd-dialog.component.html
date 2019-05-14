@@ -4,19 +4,19 @@
       <mat-divider></mat-divider>
       <br>
     <form [formGroup]="form" fxLayout="column">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <input matInput type="password" formControlName="currentPassword" placeholder="{{ 'AUTH.CURRENT-PWD' | translate }}">
         <mat-error *ngIf="currentPassword.hasError('required')"><a translate>AUTH.CURRENT-REQUIRED</a></mat-error>
         <mat-error *ngIf="currentPassword.hasError('wrong-password')"><a translate>AUTH.WRONG-PWD</a></mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <input matInput type="password" formControlName="newPassword" placeholder="{{ 'AUTH.NEW-PWD' | translate }}">
         <mat-error *ngIf="newPassword.hasError('required')"><a translate>AUTH.NEW-PWD-REQUIRED</a></mat-error>
         <mat-error *ngIf="newPassword.hasError('pattern')"><a translate>AUTH.PWD-REQ</a></mat-error>
       </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <input matInput type="password" formControlName="confirmPassword" placeholder="{{ 'AUTH.REPEAT-PWD' | translate }}">
             <mat-error *ngIf="confirmPassword.hasError('required')"><a translate>AUTH.REPEAT-PWD</a></mat-error>
             <mat-error *ngIf="confirmPassword.hasError('pattern')"><a translate>AUTH.NOT-MATCH</a></mat-error>

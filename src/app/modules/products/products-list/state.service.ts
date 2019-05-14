@@ -26,7 +26,7 @@ export class StateService {
       private productPutService: ProductPutService
     ) {}
 
-  readonly productsSubject = new BehaviorSubject([]);
+  readonly productsSubject = new BehaviorSubject(null);
   readonly totalSumSubject = new BehaviorSubject(null);
   readonly loadingSubject = new BehaviorSubject(null);
   readonly notFoundSubject = new BehaviorSubject(null);
@@ -42,7 +42,8 @@ export class StateService {
     }, _ => {
       this.productsSubject.next([]);
       this.loadingSubject.next(false);
-      this.notFoundSubject.next(true);
+      // In case we don't have any registered product
+      query === '?product=&&page=0' ? this.notFoundSubject.next(false) :  this.notFoundSubject.next(true);
     });
   }
 
@@ -51,7 +52,6 @@ export class StateService {
       .subscribe(val => {
           const list = this.addToList(val, this.productsSubject.value);
           this.productsSubject.next(list);
-          // this.totalSumSubject.next(this.totalSumSubject.value + 1);
           this.get('?product=&&page=0');
       });
   }
@@ -70,7 +70,6 @@ export class StateService {
       .subscribe(val => {
           const list = this.removeFromList(val, this.productsSubject.value);
           this.productsSubject.next(list);
-          // this.totalSumSubject.next(this.totalSumSubject.value);
           // Actualize the page in order to keep 5 ingredients on it
           this.get('?product=&&page=0');
       });

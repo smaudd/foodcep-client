@@ -1,57 +1,48 @@
-<div fxLayout="row wrap" [hidden]="!loadingSubject$ | async">
-
-  <mat-progress-bar *ngIf="loadingSubject$ | async" mode="query" color="accent"></mat-progress-bar>
-  <div *ngIf="(dishesSubject$ | async)?.length === 0" class="container">
-    <h2>Welcome to your menu dashboard!</h2>
-    <br>
-    <p>Here you can add your menu's dishes to keep track of them</p>
-    <br>
-    <div align="center">
-        <p>Just click this button on top</p>
-        <button mat-raised-button color="primary" [disabled]="true">
-          <mat-icon>add_box</mat-icon>
-          <span translate>DISHES.NEW</span>
-        </button>
-    </div>
-    <p>Create your first dish and start saving time and money!</p>
-    <small>You need to have registered products in order to create your dishes, and don't worry, we'll take care of the calculations.</small>
-  </div>
-  <div *ngFor="let dish of dishesSubject$ | async" [@fadeInOut] [hidden]="loadingSubject$ | async">
-      <mat-card class="dish-card">
-        <mat-card-header>
-          <div mat-card-avatar><mat-icon>restaurant_menu</mat-icon></div>
-          <mat-card-title>{{ dish.name }}</mat-card-title>
-
-          <mat-card-subtitle>{{ dish.category }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-list dense>
-              <div fxLayout="row nowrap">
-                <div>
-                  <button mat-button (click)="selectDish(dish)">
-                  <span translate>DISHES.EDIT</span>
-                </button>
-                <button mat-button color="warn" (click)="openDeleteDialog(dish)">
-                  <span translate>DISHES.DELETE</span>
-                </button>
-                </div>
-                <div>
-                    <button mat-button [disabled]="true">
-                      <b><a translate>DISHES.COST</a> {{ dish.cost | currency:'EUR' }} </b>
-                    </button>
-                </div>
+<mat-progress-bar *ngIf="loadingSubject$ | async" mode="query" color="primary"></mat-progress-bar>
+<div *ngIf="(dishesSubject$ | async)?.length > 0; else manual"
+  fxLayout="row wrap" class="dishes-box">
+    <div *ngFor="let dish of dishesSubject$ | async" [@fader] [hidden]="loadingSubject$ | async">
+        <mat-card class="dish-card">
+          <mat-card-header>
+              <div mat-card-avatar><mat-icon color="primary">restaurant_menu</mat-icon></div>
+              <div fxLayoutAlign.gt-sm="center" fxLayout="column">
+                <mat-card-title style="font-size: 18px"><b>{{ dish.name }}</b></mat-card-title>
+                <mat-card-subtitle>{{ dish.category }}</mat-card-subtitle>
               </div>
-            </mat-list>
-        </mat-card-content>
-        <mat-card-actions>
-          <div align="end">
-            <button mat-button color="primary" (click)="pdf(dish)">
-              <small><a translate>DISHES.PDF</a></small>
-            </button>
-          </div>
-        </mat-card-actions>
-      </mat-card>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list dense>
+                  <div fxLayout="row nowrap">
+                    <div>
+                        <button mat-button [disabled]="true">
+                          <b><span translate>DISHES.COST</span> {{ dish.cost | currency: currency }} </b>
+                        </button>
+                    </div>
+                    <div>
+                      <button mat-icon-button (click)="selectDish(dish)">
+                      <mat-icon color="accent">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="openDeleteDialog(dish)">
+                      <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                    </div>
+                  </div>
+                </mat-list>
+            </mat-card-content>
+            <mat-card-actions>
+              <div align="end">
+                <button mat-button (click)="pdf(dish)">
+                  <span translate>DISHES.PDF</span>
+                </button>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+<ng-template #manual>
+  <div *ngIf="dishesSubject$.value !== null" class="container">
+    <markdown [src]="src"></markdown>
   </div>
-</div>
+</ng-template>
 
 

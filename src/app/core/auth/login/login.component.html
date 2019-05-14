@@ -3,18 +3,21 @@
       <mat-card-content fxLayout="column">
         <mat-form-field appearance="outline">
           <input matInput type="text" [formControl]="email"
-          placeholder="Username" autocomplete="off">
+          placeholder="{{ 'AUTH.EMAIL' | translate }}" autocomplete="off">
         </mat-form-field>
-        <mat-error *ngIf="email.hasError('wrong-credentials')">Invalid credentials</mat-error>
+        <mat-error *ngIf="email.hasError('wrong-credentials')"></mat-error>
         <mat-form-field appearance="outline">
-          <input matInput type="password" [formControl]="password" placeholder="Password">
+          <input matInput type="password" [formControl]="password" placeholder="{{ 'AUTH.PASSWORD' | translate }}">
         </mat-form-field>
+        <mat-error *ngIf="password.hasError('wrong-credentials')"></mat-error>
         </mat-card-content>
         <mat-card-actions>
-          <small routerLink="/signin">Forgot password?</small>
+          <p routerLink="/land/login/forgot" (click)="close()" style="cursor: pointer">
+            <span translate>HOME.FORGOT</span>
+          </p>
             <div align="end">
-                <button type="submit" color="primary" mat-raised-button (click)="doLogin(email.value, password.value)">
-                  <span translate>Login</span>
+                <button type="submit" mat-button (click)="doLogin(email.value, password.value)">
+                  <span translate>HOME.LOGIN</span>
                 </button>
             </div>
         </mat-card-actions>

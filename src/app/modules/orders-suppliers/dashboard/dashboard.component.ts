@@ -1,45 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { StateService } from './state.service';
 import { Order } from './models/order.model';
 import { MatDialog } from '@angular/material';
 import { OrderOverviewDialogComponent } from './orders/order-overview-dialog.component';
 import { skip, take } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+import { fader } from 'src/app/animations/navigation-animations';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
+  animations: [fader]
 
 })
 export class DashboardComponent implements OnInit {
 
   orders$ = this.stateService.ordersSubject;
   order$ = this.stateService.orderSubject;
-  order_id: number | boolean;
-  isOrder = false;
   localDate = new Date();
+  lang = this.translateService.getDefaultLang();
+  src = `assets/documentation/i18n/${this.lang}/manuals/orders.md`
 
   constructor(
     private stateService: StateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translateService: TranslateService
     ) { }
 
   ngOnInit() {
     this.stateService.getAll();
-  }
-
-  newOrder() {
-    this.order_id = null;
-    this.isOrder = true;
-  }
-
-  repeatOrder(order: Order): void {
-    this.order_id = order.order_id;
-    this.isOrder = true;
-  }
-
-  toggleIsOrder() {
-    this.isOrder ? this.isOrder = false : this.isOrder = true;
   }
 
   openOverviewDialog(order: Order, isToSubmit: boolean): void {
@@ -56,6 +46,5 @@ export class DashboardComponent implements OnInit {
       });
     })
   }
-
 
 }

@@ -6,7 +6,6 @@ import { StateService } from '../../services/state.service';
 @Component({
   selector: 'app-delete-dashboard-dialog',
   templateUrl: './delete-dashboard-dialog.component.html',
-  styleUrls: ['./delete-dashboard-dialog.component.css']
 })
 
 export class DeleteDashboardDialogComponent implements OnInit {

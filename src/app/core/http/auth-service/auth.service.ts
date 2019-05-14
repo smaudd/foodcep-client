@@ -42,6 +42,7 @@ export class AuthService {
   private verified = new BehaviorSubject(null);
   private role = new BehaviorSubject<string>(this.sessionDataService.getRole());
   private name = new BehaviorSubject<string>(this.sessionDataService.getUsername());
+  private loginProcess = new BehaviorSubject(null);
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
@@ -59,23 +60,26 @@ export class AuthService {
     return this.name.asObservable();
   }
 
+  get isloginProcessDone() {
+    return this.loginProcess.asObservable();
+  }
+
   askForCookies(user: User): Observable<any> {
     return this.http.post<any>(this.authUrl, user, httpOptions).pipe(
-      tap(response => {
+      tap((response) => {
         const user = {
           name: this.cookieService.get('USER'),
           role: this.cookieService.get('ROLE'),
           lang: this.cookieService.get('LANGUAGE')
         }
-        this.translateService.use(user.lang);
-        this.populateSubject(user, response);
+        // First set the local storage
         this.setRestaurantOnClient();
+        this.populateSubject(user, response);
+        this.translateService.use(user.lang);
       }),
       catchError(err => {
-        console.log(err)
         // User is not verified
         if (err.status === 406) {
-          console.log(err)
           this.dialog.open(VerificationDialogComponent, {
             data: { user_id: err.error.user }
           });
@@ -86,7 +90,7 @@ export class AuthService {
   }
 
   setRestaurantOnClient() {
-    this.chefDataService.getRestaurantData().subscribe(restaurant => {
+  this.chefDataService.getRestaurantData().subscribe(restaurant => {
       localStorage.setItem('Restaurant', restaurant.restaurant_name);
       localStorage.setItem('Adress', restaurant.adress);
       localStorage.setItem('Phone', restaurant.phone);
@@ -98,6 +102,7 @@ export class AuthService {
     this.loggedIn.next(true);
     this.role.next(user.role);
     this.name.next(user.name);
+    this.loginProcess.next(true);
   }
 
   logout(malicious?: boolean): Observable<boolean> {
@@ -112,7 +117,7 @@ export class AuthService {
 
   logoutUser() {
     this.loggedIn.next(false);
-    this.router.navigate(['/home']);
+    this.router.navigate(['/land']);
     localStorage.clear();
   }
 

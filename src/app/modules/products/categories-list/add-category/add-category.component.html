@@ -6,11 +6,14 @@
     <form [formGroup]="addForm" (ngSubmit)="validateForm(addForm.value)">
       <mat-form-field>
           <input matInput placeholder="{{ 'INGREDIENTS.NAME' | translate }}" type="string" autocomplete="off" formControlName="name" [errorStateMatcher]="matcher">
-          <mat-error *ngIf="name.hasError('required')"><a translate>INGREDIENTS.NAME-REQUIRED</a></mat-error>
-          <mat-error *ngIf="name.hasError('pattern')"><a translate>INGREDIENTS.ONLY-LETTERS</a></mat-error>
+          <mat-error *ngIf="name.hasError('required')"><span translate>INGREDIENTS.NAME-REQUIRED</span></mat-error>
+          <mat-error *ngIf="name.hasError('pattern')"><span translate>INGREDIENTS.ONLY-LETTERS</span></mat-error>
+          <mat-error *ngIf="name.hasError('repeated')"><span translate>INGREDIENTS.CAT-REPEATED</span></mat-error>
       </mat-form-field>
     <div align="right">
-      <button mat-button color="primary" class="mdc-icon-button material-icons m-2" type="submit" [disabled]="disableSubmit || name.invalid">Submit</button>
+      <button mat-button class="mdc-icon-button material-icons m-2" type="submit" [disabled]="disableSubmit || name.invalid">
+        <span translate>INGREDIENTS.ADD</span>
+      </button>
     </div>
   </form>
 

@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { IngredientForDish } from '../../../shared/models/ingredient-for-dish.model';
 import { OperationsService } from '../services/operations.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-ingredient-box',
@@ -15,10 +16,9 @@ import { OperationsService } from '../services/operations.service';
                     <mat-error *ngIf="grams.hasError('required')"><span translate>DISHES.GPP-REQUIRED</span></mat-error>
                 </mat-form-field>
                 <br>
-                <small>
-                    <strong><span translate>DISHES.PPP</span>:
-                    {{ (grams.value * ingredient.pPP / ingredient.gPP).toFixed(2) | currency:'EUR' }}</strong>
-                </small>
+                <div class="little-text">
+                    <span><span translate>DISHES.PPP</span>: {{ (grams.value * ingredient.pPP / ingredient.gPP).toFixed(2) | currency:currency }}</span>
+                </div>
                 <div align="end">
                     <button mat-icon-button type="submit"
                         (click)="edition(ingredient, grams.value)"
@@ -45,14 +45,15 @@ export class IngredientBoxComponent implements OnInit {
     @Input() ingredient: IngredientForDish = null;
     @Output() setGrams = new EventEmitter(true);
     @Output() removeIngredient = new EventEmitter(true);
+    currency = this.cookieService.get('CURRENCY');
 
     boxForm: FormGroup;
     isInfoSet = false;
-    constructor(private fb: FormBuilder, private operationService: OperationsService) {}
+    constructor(private fb: FormBuilder, private operationService: OperationsService, private cookieService: CookieService) {}
 
     ngOnInit() {
         this.boxForm = this.fb.group({
-            grams: new FormControl('', [Validators.required, Validators.pattern('([1-9](\.[0-9]+)?)|(0\.[0-9]*[1-9])')])
+            grams: new FormControl('', [Validators.required, Validators.pattern('([1-9](\.[0-9]+)?)|(0\.[0-9]*[1-9])'), Validators.max(10000)])
         });
 
         this.boxForm.get('grams').setValue(this.ingredient.gPP);

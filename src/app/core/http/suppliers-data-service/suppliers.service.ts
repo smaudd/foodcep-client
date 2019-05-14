@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Supplier } from '../../../modules/orders-suppliers/suppliers/models/supplier.model';
 
 const httpOptions = {
@@ -17,11 +16,15 @@ const httpOptions = {
 export class SuppliersService {
 
   endpoint = '~/api/suppliers';
+  cached: Supplier[] = null;
 
   constructor(private http: HttpClient) {}
 
 
   getSuppliers(): Observable<Supplier[]> {
+    if (this.cached !== null) {
+      return of(this.cached)
+    }
     return this.http.get<Supplier[]>(this.endpoint + '/read')
   }
 

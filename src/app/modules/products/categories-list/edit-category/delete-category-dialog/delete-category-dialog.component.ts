@@ -6,14 +6,13 @@ import { StateService } from '../../state.service';
 @Component({
   selector: 'app-delete-category-dialog',
   template: `
-  <h1 mat-dialog-title><a translate>INGREDIENTS.ARE-YOU-SURE</a></h1>
+  <h1 mat-dialog-title><span translate>INGREDIENTS.ARE-YOU-SURE</span></h1>
     <div mat-dialog-content>
-      <mat-list>
-          <mat-list-item>
-            <h4 mat-line>{{ data.name }}</h4>
-              <p mat-line><small translate>INGREDIENTS.CATEGORY</small></p>
-          </mat-list-item>
-        </mat-list>
+    <strong translate>INGREDIENTS.BE-CAREFULL</strong>
+      <div align="center" fxLayout="column" fxLayoutGap="5px">
+        <h4 class="dialog-content-will-delete">{{ data.name }}</h4>
+        <p mat-line><small translate>INGREDIENTS.CATEGORY</small></p>
+      </div>
     </div>
     <div mat-dialog-actions align="end">
         <button mat-icon-button (click)="deleteData()">
@@ -23,8 +22,7 @@ import { StateService } from '../../state.service';
             <mat-icon color="warn">cancel</mat-icon>
         </button>
     </div>
-  `,
-  styleUrls: ['./delete-category-dialog.component.css']
+  `
 })
 export class DeleteCategoryDialogComponent implements OnInit {
   constructor(

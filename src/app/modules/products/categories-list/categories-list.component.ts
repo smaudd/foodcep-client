@@ -1,47 +1,26 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StateService } from './state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-categories-list',
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.css']
 })
-export class CategoriesListComponent implements OnInit, OnDestroy {
+export class CategoriesListComponent implements OnInit {
   categoriesSubject$ = this.stateService.categoriesSubject;
   errorsSubject$ = this.stateService.errorsSubject;
   isLoading = true;
   emptyCollection: boolean;
+  subscription: Subscription;
+  loadingSubject$ = this.stateService.loadingSubject;
 
   constructor(private stateService: StateService) { }
 
   ngOnInit() {
     this.stateService.get();
-    this.dataStore();
-    this.dataStoreErrors();
   }
 
-  dataStore() {
-    this.categoriesSubject$
-    .subscribe(value => {
-      if (value.length === 0) {
-        this.emptyCollection = true;
-        this.isLoading = false;
-        return;
-      }
-      this.emptyCollection = false;
-      this.isLoading = false;
-    });
-  }
 
-  dataStoreErrors() {
-    this.errorsSubject$
-    .subscribe(_ => {
-      this.emptyCollection = true;
-    });
-  }
-
-  ngOnDestroy() {
-    // this.categoriesSubject$.unsubscribe();
-  }
 
 }

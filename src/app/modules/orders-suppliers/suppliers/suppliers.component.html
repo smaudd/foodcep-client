@@ -1,46 +1,26 @@
 <div class="container">
-    <div align="start" style="margin: 10px">
-      <button mat-button (click)="toggleNew()" color="primary" *ngIf="!newMenu">
-        <span translate>New Supplier</span>
-        <mat-icon>add_box</mat-icon>
-      </button>
-    </div>
     <div *ngIf="data.length === 0 && !newMenu">
-      <h3 style="text-align: center">Welcome to your suppliers list!</h3>
-      <br>
-      <p style="text-align: center">Click on</p>
-      <br>
-      <div align="center">
-          <button mat-button [disabled]="true">
-              <span translate>New Supplier</span>
-              <mat-icon>add_box</mat-icon>
-          </button>
-      </div>
-      <br>
-      <span align="center">To registre your first supplier</span>
-      <p>
-        Your supplier's information will be used to contact your supplier via Whatsapp or Gmail every time you make an order.
-      </p>
+      <markdown [src]="src"></markdown>
     </div>
-    <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z2" matSort *ngIf="!newMenu && data.length !== 0">
+    <table mat-table [dataSource]="data" multiTemplateDataRows class="mat-elevation-z2" matSort *ngIf="!newMenu && data.length !== 0" [@fader]>
       <!-- Column Cells -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Name</span></th>
+        <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>AUTH.NAME</span></th>
         <td mat-cell *matCellDef="let supplier">{{ supplier.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Email</span></th>
+          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>AUTH.EMAIL</span></th>
           <td mat-cell *matCellDef="let supplier">{{ supplier.email }}</td>
         </ng-container>
 
       <ng-container matColumnDef="phone">
-          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Telephone</span></th>
+          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>AUTH.PHONE</span></th>
           <td mat-cell *matCellDef="let supplier">{{ supplier.phone }}</td>
         </ng-container>
 
       <ng-container matColumnDef="comertial">
-          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>Comertial</span></th>
+          <th mat-header-cell *matHeaderCellDef style="font-weight: bold"><span translate>ORDERS.COMERTIAL</span></th>
           <td mat-cell *matCellDef="let supplier">{{ supplier.comertial }}</td>
       </ng-container>
 
@@ -72,5 +52,10 @@
     </table>
     <app-new-supplier *ngIf="newMenu" (done)="toggleNew()"></app-new-supplier>
 </div>
-
+<div align="end" style="margin: 10px" >
+    <button mat-button (click)="toggleNew()" color="primary" *ngIf="!newMenu">
+      <span translate>ORDERS.NEW-SUPPLIER</span>
+      <mat-icon>add_box</mat-icon>
+    </button>
+</div>
 

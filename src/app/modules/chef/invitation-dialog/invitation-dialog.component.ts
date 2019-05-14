@@ -11,30 +11,37 @@ interface InvitationData {
   selector: 'app-invitation-dialog',
   template: `
   <div *ngIf="invitation === null; else codeView" align="center" fxLayout="column">
-    <h5>Invite to your team!</h5>
+    <h5>
+      <span translate>TEAM.INV</span>
+    </h5>
     <mat-form-field appearance="outline">
-      <mat-label>Select a role for your invitation</mat-label>
+      <mat-label><span translate>TEAM.SEL-ROLE</span></mat-label>
       <mat-select [formControl]="role">
         <mat-option value="sous">Sous</mat-option>
-        <mat-option value="cook">Cook</mat-option>
+        <mat-option value="cook"><span translate>AUTH.COOK</span></mat-option>
       </mat-select>
     </mat-form-field>
     <button mat-button color="primary" (click)="createCode(role.value)">
-      <span translate>Generate Invitation Code</span>
+      <span translate>TEAM.GEN</span>
     </button>
   </div>
   <ng-template #codeView>
-    <p>Share this code with the person you want to invite to your team.</p>
+    <p translate>TEAM.SHARE</p>
     <mat-form-field style="width: 100%">
       <input matInput appearence="outline" [disabled]="true" value="{{ invitation.code }}" #code>
     </mat-form-field>
     <div align="center">
       <button mat-raised-button (click)="copyToClipboard(code.value)" color="{{ !isCopied ? null : 'primary' }}">
-          <span translate>{{ !isCopied ? 'Copy to clipboard' : 'Code copied to clipboard!' }}</span>
+          <div *ngIf="!isCopied; else copied">
+            <span translate>TEAM.COPY</span>
+          </div>
+          <ng-template #copied>
+            <span translate class="toolbar-button">TEAM.COPIED</span>
+          </ng-template>
       </button>
     </div>
     <br>
-    <small>This code will expire on 24 hours</small>
+    <small translate>TEAM.EXP</small>
   </ng-template>
   `,
   styleUrls: ['./invitation-dialog.component.css']
