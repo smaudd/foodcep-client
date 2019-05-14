@@ -48,12 +48,12 @@ constructor(
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close(undefined);
+    this.dialogRef.close();
   }
 
   putData() {
     this.stateService.update(this.data);
-    this.dialogRef.close(true);
+    this.dialogRef.close();
   }
 
 }

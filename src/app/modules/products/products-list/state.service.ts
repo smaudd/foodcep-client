@@ -49,42 +49,23 @@ export class StateService {
 
   post(ingredient: Ingredient): void {
       this.productsPostService.postProduct(ingredient)
-      .subscribe(val => {
-          const list = this.addToList(val, this.productsSubject.value);
-          this.productsSubject.next(list);
+      .subscribe(_ => {
           this.get('?product=&&page=0');
       });
   }
 
   update(ingredient: Ingredient): void {
       this.productPutService.putProductData(ingredient)
-      .subscribe(val => {
-          let list = this.removeFromList(val, this.productsSubject.value);
-          list = this.addToList(val, list);
-          this.productsSubject.next(list);
+      .subscribe(_ => {
+        this.get('?product=&&page=0');
       });
   }
 
   delete(id: string): void {
       this.productDeleteService.deleteIngredient(id)
-      .subscribe(val => {
-          const list = this.removeFromList(val, this.productsSubject.value);
-          this.productsSubject.next(list);
-          // Actualize the page in order to keep 5 ingredients on it
-          this.get('?product=&&page=0');
+      .subscribe(_ => {
+        this.get('?product=&&page=0');
       });
-  }
-
-  addToList(ingredient: any, list: Ingredient[]): Ingredient[] {
-      list.push(ingredient);
-      list = this.sortService.sortList(list);
-      return list;
-  }
-
-  removeFromList(ingredient: Ingredient, list: Ingredient[]): Ingredient[] {
-      const filter = list.filter(value => ingredient.product_id !== value.product_id);
-      list = this.sortService.sortList(list);
-      return filter;
   }
 
 }

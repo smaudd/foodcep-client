@@ -37,12 +37,12 @@ constructor(
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close(undefined);
+    this.dialogRef.close();
   }
 
   deleteData() {
       this.stateService.delete(this.data.product_id);
-      this.dialogRef.close(true);
+      this.dialogRef.close();
   }
 
 }

@@ -52,11 +52,11 @@
                   <div class="edit-box">
                     <br>
                       <div align="end">
-                          <button mat-icon-button (click)="cancel()" color="primary">
+                          <button mat-icon-button (click)="cancel(true)" color="primary">
                               <mat-icon>clear</mat-icon>
                           </button>
                       </div>
-                      <app-edit-product [ingredient]="ingredient" [categories]="categoriesSubject$ | async" (init)="cancel()">
+                      <app-edit-product (cancel)="cancel($event)" [ingredient]="ingredient" [categories]="categoriesSubject$ | async">
                       </app-edit-product>
                   </div>
                 </div>

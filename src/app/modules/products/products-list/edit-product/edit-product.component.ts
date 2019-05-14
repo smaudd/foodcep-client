@@ -34,7 +34,7 @@ export class EditProductComponent implements OnChanges {
 
   @Input() ingredient: Ingredient;
   @Input() categories: Category[];
-  @Output() init = new EventEmitter();
+  @Output() cancel = new EventEmitter(true);
   editForm: FormGroup;
   ingredients$ = this.stateService.productsSubject;
 
@@ -81,7 +81,9 @@ export class EditProductComponent implements OnChanges {
         width: '550px',
         data: edition
       });
-      dialogEditRef.afterClosed().subscribe(_ => this.init.emit(true))
+      dialogEditRef.afterClosed().subscribe(_ => {
+        this.cancel.emit(true);
+      })
     }
 
     openDeleteDialog(current: Ingredient): void {
@@ -89,7 +91,9 @@ export class EditProductComponent implements OnChanges {
         width: '500px',
         data: current
       });
-      dialogDeleteRef.afterClosed().subscribe(_ => this.init.emit(true))
+      dialogDeleteRef.afterClosed().subscribe(_ => {
+        this.cancel.emit(true);
+      })
     }
 
 }
