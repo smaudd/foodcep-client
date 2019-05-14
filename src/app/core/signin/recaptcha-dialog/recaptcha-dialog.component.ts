@@ -23,7 +23,7 @@ import { RecaptchaService } from '../../http/auth-service/captcha.service';
 export class RecaptchaDialogComponent implements AfterViewInit {
 
   private _reCaptchaId: number;
-  private SITE_ID = ['6LdjYaMUAAAAAHDI6a1EkmhqX7NyXtoIG4WtNW87'];
+  private SITE_ID = ['6LccZaMUAAAAAHC0IpDIOJJln8DMBTn61o--BPYb'];
   captchaSuccess = false;
   token: string;
   grecaptcha = (window as any).grecaptcha;

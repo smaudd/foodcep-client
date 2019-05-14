@@ -53,7 +53,7 @@ export class ForgotPasswordComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email, Validators.maxLength(30)]);
   isEmailSended = false;
   private _reCaptchaId: number;
-  private SITE_ID = ['6LdjYaMUAAAAAHDI6a1EkmhqX7NyXtoIG4WtNW87'];
+  private SITE_ID = ['6LccZaMUAAAAAHC0IpDIOJJln8DMBTn61o--BPYb'];
   captchaSuccess = false;
   token: string;
   grecaptcha = (window as any).grecaptcha;
