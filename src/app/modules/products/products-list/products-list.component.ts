@@ -78,7 +78,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.expandedIngredient = null;
-    this.data = this.productsSubject$.value;
+    this.data = [this.productsSubject$.value];
   }
 
   handlePaginator(e: any) {

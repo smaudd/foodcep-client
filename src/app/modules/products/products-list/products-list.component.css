@@ -20,7 +20,6 @@ tr.ingredient-detail-row {
 }
 
 tr.ingredient-row:not(.example-expanded-row):hover {
-  opacity: 0.4;
   cursor: pointer;
 }
 
