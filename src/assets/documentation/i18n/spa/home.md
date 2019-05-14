@@ -9,9 +9,9 @@ Foodcep es una forma moderna de manejar la labor administrativa de tu cocina.
 
 Deja a un lado las hojas de Excel y empieza a confiar en software moderno para calcular los costos de producción en una forma progresiva.
      
-Maneja tus pedidos diarios y guárdalos fácilmente.
+Administra tus pedidos diarios y guárdalos fácilmente.
    
-Involucra tu equipo en el proceso de hacer un mejor negocio con su manejo inteligente.
+Involucra a tu equipo en el proceso de hacer un mejor negocio con herramientas inteligentes.
 
 </p>
 </div>   

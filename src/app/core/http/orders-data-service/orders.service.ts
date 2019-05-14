@@ -18,7 +18,7 @@ const httpOptions = {
 })
 export class OrdersService {
 
-  odersEndpoint = '~api/orders';
+  odersEndpoint = '~/api/orders';
   cached: Order[] = null;
   constructor(
     private http: HttpClient
