@@ -81,7 +81,7 @@ export class OrderOverviewDialogComponent implements OnDestroy {
       // Get the supplier data to make the order
       // Restaurant name to use as subject
       const restaurant = localStorage.getItem('Restaurant')
-      const subject = `New order from restaurant ${restaurant}`
+      const subject = `Nuevo pedido de ${restaurant}`
       let body = order.items.map(item => {
         return item = `${item.name} --> ${item.quantity}${item.unit}`
       })

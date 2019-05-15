@@ -30,7 +30,7 @@
       "HOWS-GOING": "How's {{value}} going?",
       "LAST-ORDER": "Last order of your restaurant",
       "O-BY": "Ordered by {{value}}",
-      "TRAKED": "Work tracked"
+      "TRAKED": "Work tracker"
     },
     "ERROR": {
       "NOT-FOUND": "Page Not found!",

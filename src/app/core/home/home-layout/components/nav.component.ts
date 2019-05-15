@@ -19,8 +19,8 @@ import { TranslateService } from '@ngx-translate/core';
     <button mat-button routerLink="get-started">
         <span translate>HOME.GET-STARTED</span>
     </button>
-    <button mat-button>
-      <span #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="login" translate>HOME.LOGIN</span>
+    <button mat-button [matMenuTriggerFor]="login">
+      <span #menuTrigger="matMenuTrigger" translate>HOME.LOGIN</span>
     </button>
     <mat-menu #login="matMenu">
         <app-login (closeMe)="menuTrigger.closeMenu()"></app-login>
