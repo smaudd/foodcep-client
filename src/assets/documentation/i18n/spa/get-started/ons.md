@@ -10,8 +10,6 @@ Haz click en el botón **Nuevo Pedido** y realiza tu orden. Escoge un proveedor 
 
 Registra cada orden que tu equipo realiza y repitelas de ser necesario.
 
-> If you're logged in on the same browser you use **Foodcep** on your Gmail and Whatsapp account. You can make your orders with just one click!
-
 > Si estas logueado en el mismo navegador con tu cuenta de Gmail o Whatsapp, podrás realizar las ordenes con sólo un click.
 
 Realiza la orden y escoge entre *Enviar con Gmail* o *Enviar con Whatsapp* y la aplicación abrira automáticamente una nueva pestaña en el explorador con tu orden formateada en un mensaje de Whatsapp o un correo de Gmail.

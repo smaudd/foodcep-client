@@ -65,7 +65,7 @@ export class GetStartedComponent implements OnInit, OnDestroy {
       { name: 'Productos', src: 'assets/documentation/i18n/spa/get-started/products.md' },
       { name: 'Platos', src: 'assets/documentation/i18n/spa/get-started/dishes.md' },
       { name: 'Pedidos & Proveedores', src: 'assets/documentation/i18n/spa/get-started/ons.md' },
-      { name: 'Pedidos & Proveedores', src: 'assets/documentation/i18n/spa/get-started/recipes.md' },
+      { name: 'Recetas', src: 'assets/documentation/i18n/spa/get-started/recipes.md' },
 
       ]
     } else {
@@ -75,7 +75,7 @@ export class GetStartedComponent implements OnInit, OnDestroy {
         { name: 'Products', src: 'assets/documentation/i18n/en/get-started/products.md' },
         { name: 'Dishes', src: 'assets/documentation/i18n/en/get-started/dishes.md' },
         { name: 'Orders & Suppliers', src: 'assets/documentation/i18n/en/get-started/ons.md' },
-        { name: 'Pedidos & Proveedores', src: 'assets/documentation/i18n/en/get-started/recipes.md' },
+        { name: 'Recipes', src: 'assets/documentation/i18n/en/get-started/recipes.md' },
       ]
     }
 
