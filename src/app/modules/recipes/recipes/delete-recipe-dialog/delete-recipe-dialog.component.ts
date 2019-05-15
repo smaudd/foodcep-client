@@ -7,7 +7,7 @@ import { StateService } from '../services/state.service';
 @Component({
   selector: 'app-delete-recipe-dialog',
   template: `
-  <h1 mat-dialog-title><span translate>Are you sure you want to delete this recipe?</span></h1>
+  <h1 mat-dialog-title><span translate>RECIPE.ARE-YOU-SURE</span></h1>
     <div mat-dialog-content>
       <mat-list>
           <mat-list-item align="center">

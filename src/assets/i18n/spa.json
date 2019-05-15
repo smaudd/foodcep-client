@@ -68,7 +68,8 @@
       "DIRECTIONS": "Pasos a seguir",
       "PROD": "Producción",
       "GRAMS": "Gramos",
-      "CREATE": "Escribe recetas para platos ya registrados"
+      "CREATE": "Escribe recetas para platos ya registrados",
+      "ARE-YOU-SURE": "Esta seguro que desea eliminar esta receta?"
     },
     "TEAM": {
       "INV": "Invita a tu equipo!",
