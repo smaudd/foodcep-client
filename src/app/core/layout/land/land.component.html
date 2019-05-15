@@ -33,47 +33,49 @@
           <mat-list>
             <mat-list-item>
               <mat-icon mat-list-icon color="primary">kitchen</mat-icon>
-              <button mat-button routerLink="/products">
-                <span mat-line translate>NAV.INGREDIENTS</span>
-              </button>
+              <a mat-line routerLink="/products">
+                <span translate>NAV.INGREDIENTS</span>
+              </a>
               <span class="stats">{{ stats.products }}</span>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
                 <mat-icon mat-list-icon color="primary">restaurant_menu</mat-icon>
-                <button mat-button routerLink="/dishes">
-                  <span mat-line translate>NAV.DISHES</span>
-                </button>
+                <a mat-line routerLink="/dishes">
+                  <span translate>NAV.DISHES</span>
+                </a>
                 <span class="stats">{{ stats.dishes }}</span>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
                 <mat-icon mat-list-icon color="primary">book</mat-icon>
-                <button mat-button routerLink="/recipes">
-                  <span mat-line translate>NAV.RECIPES</span>
-                </button>
+                <a mat-line routerLink="/recipes">
+                  <span translate>NAV.RECIPES</span>
+                </a>
                 <span class="stats">{{ stats.recipes }}</span>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
                 <mat-icon mat-list-icon color="primary">shopping_basket</mat-icon>
-                <button mat-button routerLink="/orders-suppliers">
-                  <span mat-line translate>ORDERS.ORDERS</span>
-                </button>
+                <a mat-line routerLink="/orders-suppliers">
+                  <span translate>ORDERS.ORDERS</span>
+                </a>
                 <span class="stats">{{ stats.orders }}</span>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item>
                 <mat-icon mat-list-icon color="primary">shop</mat-icon>
-                <button mat-button routerLink="/orders-suppliers">
-                  <span mat-line translate>ORDERS.SUPPLIERS</span>
-                </button>
+                <a mat-line routerLink="/orders-suppliers">
+                  <span translate>ORDERS.SUPPLIERS</span>
+                </a>
                 <span class="stats">{{ stats.suppliers }}</span>
             </mat-list-item>
             <mat-divider></mat-divider>
             <mat-list-item *ngIf="role === 'chef'">
                 <mat-icon mat-list-icon color="primary">supervised_user_circle</mat-icon>
-                <span mat-line translate>RESTAURANT.TEAM-MEMBERS</span>
+                <a mat-line routerLink="/chef/team">
+                  <span translate>RESTAURANT.TEAM-MEMBERS</span>
+                </a>
                 <span class="stats">{{ stats.users }}</span>
             </mat-list-item>
           </mat-list>
