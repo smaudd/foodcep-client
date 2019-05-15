@@ -2,7 +2,7 @@
 SAVE TIME AND FOOD</h3>
 
 
-<div style="font-family: Lakton; font-weight: bold; color: #356859;" align="center">
+<div style="font-family: Lakton; color: #356859;" align="center">
 <p style="text-align: justify; font-family: Lakton">
 
 Foodcep is a modern way to manage your kitchen administrative labor.

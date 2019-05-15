@@ -2,7 +2,7 @@
 SALVA TIEMPO Y COMIDA</h3>
 
 
-<div style="font-family: Lakton; font-weight: bold; color: #356859;" align="center">
+<div style="font-family: Lakton; color: #356859;" align="center">
 <p style="text-align: center">
 
 Foodcep es una forma moderna de manejar la labor administrativa de tu cocina.

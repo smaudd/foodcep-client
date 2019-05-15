@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-home-header',
   template: `
   <div class="header" fxLayoutAlign="center">
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.gt-md="30px">
+  <div fxLayout="row" fxLayout.lt-md="column">
     <div class="image">
         <img class="main-img" src="../../../assets/logo/loco-circle.png">
     </div>

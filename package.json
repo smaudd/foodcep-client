@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng serve --proxy-config proxy.config.json",
-    "start": "node ./server/index.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

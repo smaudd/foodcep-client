@@ -15,7 +15,7 @@ ul, li, .mat-form-field, .mat-select, .mat-option {
 }
 
 p, .mat-list, .mat-line {
-  font-family: Lekton;
+  font-family: Karla;
   font-size: 18px;
   color: #356859;
 }
@@ -27,13 +27,13 @@ tr, td, b {
 
 small > span, strong {
   font-size: 16px;
-  font-family: Lekton;
+  font-family: Karla;
   color: #356859;
 }
 
 .little-text {
   font-size: 14px;
-  font-family: Lekton;
+  font-family: Karla;
 }
 
 .mat-line, .mat-list-item {
@@ -85,12 +85,12 @@ table,
 
 .mat-tab-label {
   color: #356859;
-  font-family: Lekton;
+  font-family: Karla;
   font-size: 16px;
 }
 
 .mat-card {
-  font-family: Lekton;
+  font-family: Karla;
   background-color: #FFFBE6;
 }
 

@@ -6,11 +6,11 @@ import { Subscription } from 'rxjs';
   selector: 'app-home-content',
   template: `
   <app-home-header></app-home-header>
-  <div fxLayout="row" class="container">
-  <div fxLayoutAlign="center">
-    <div class="box-paragraph">
+  <div fxLayout="row" fxLayoutAlign="center">
+  <div>
+    <div>
       <div fxLayout="column">
-        <markdown [src]="src"></markdown>
+        <markdown class="box-paragraph" [src]="src"></markdown>
       </div>
       <br><br>
       <div align="center">

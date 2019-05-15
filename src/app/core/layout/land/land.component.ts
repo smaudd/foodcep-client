@@ -13,6 +13,7 @@ import { fader } from 'src/app/animations/navigation-animations';
 export class LandComponent implements OnInit {
 
   user = this.sessionDataService.getUsername();
+  role = this.sessionDataService.getRole();
   restaurant = this.sessionDataService.getRestaurantName();
   lastOrder$ = this.ordersDataService.getLastOrder();
   stats$ = this.statsDataService.getStats();
