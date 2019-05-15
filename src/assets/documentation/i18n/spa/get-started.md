@@ -4,7 +4,7 @@ Empieza con Foodcep!
 
 ---
 
-Usar Foodcep es muy facil! Sólo registrate con tu email.
+Usar Foodcep es muy facil! Solo registrate con tu email.
 
 Tendrás disponibles diversas funcionalidades para optimizar la labor administrativa de la cocina en tu restaurante.
 
