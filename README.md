@@ -2,6 +2,8 @@
 
 <img  alt="alt text" src="https://foodcep.com/assets/logo/loco-circle.png" width="200">
 
+[Foodcep](https://www.foodcep.com "Foodcep") is an open source web app made to manage a restaurant-s administrative labor more easily.
+
 The goal of this app is to create an ideal enviroment for the management and administration of restaurants' kitchens, providing the user with essential planning and organization tools to keep track of the expenditures of any common restaurant kitchen.
 
 Through a simple "roles" system, the user can invite their restaurant teammates in order to centralize product orders, cost evaluation, and writing & sharing recipes.
